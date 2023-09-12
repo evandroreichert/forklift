@@ -1,0 +1,21 @@
+.fotos{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 40px;
+    align-items: center;
+    text-align: center;
+}
+
+.video img{
+    width: 600px;
+    filter: drop-shadow(4px 4px 5px black);
+}
+
+@media screen and (max-width: 768px) {
+    .fotos{
+    grid-template-columns: 1fr;
+    }
+    .video img{
+        max-width: 80vw;
+    }
+}

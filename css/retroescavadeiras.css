@@ -1,0 +1,12 @@
+@media screen and (max-width: 768px) {
+    .fotos{
+     display: block;
+     }
+
+    .video img{
+            width: 350px;
+            filter: drop-shadow(4px 4px 5px black);
+        }
+     }
+
+     

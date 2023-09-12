@@ -1,0 +1,10 @@
+.video img{
+    width: 550px;
+    filter: drop-shadow(4px 4px 5px black);
+}
+
+@media screen and (max-width: 768px) {
+    .video img{
+        max-width: 80vw;
+    }
+}

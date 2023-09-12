@@ -1,0 +1,12 @@
+.fotos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
+
+@media screen and (max-width: 768px) {
+   .fotos{
+    display: block;
+    }
+}
