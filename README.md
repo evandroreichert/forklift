@@ -1,5 +1,9 @@
 # Forklift
 
-Solução - site de portifólio para venda de empilhadeiras
+Solução - site de portfólio para venda de empilhadeiras
 
-fabianobratti.com/
+| ![Mobile Preview](assets/mobile-preview.gif) | ![PC Preview](assets/pc-preview.gif) |
+| :---------------------------------------: | :-----------------------------------: |
+|          **Mobile Preview**             |         **PC Preview**               |
+
+https://fabianobratti.com
