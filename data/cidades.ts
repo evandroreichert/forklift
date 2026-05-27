@@ -2,12 +2,39 @@ import type { Cidade } from '@/lib/types';
 
 export const CIDADES: Cidade[] = [
   {
+    slug: 'penha',
+    nome: 'Penha',
+    nomeCompleto: 'Penha',
+    uf: 'SC',
+    descricaoEconomica:
+      'Sede da Fabiano Bratti Empilhadeiras. Cidade litorânea com economia ligada ao turismo (Beto Carrero World), pesca e indústria local. Hotelaria, parques, indústria pesqueira e construção civil utilizam empilhadeiras e equipamentos pesados para operações diárias — todos com atendimento imediato a partir da nossa base.',
+    tempoAtendimentoEstimado: 'atendimento imediato (sede)',
+  },
+  {
+    slug: 'navegantes',
+    nome: 'Navegantes',
+    nomeCompleto: 'Navegantes',
+    uf: 'SC',
+    descricaoEconomica:
+      'Lar de aeroporto regional e porto privado, Navegantes é hub de logística aérea e marítima vizinho à nossa sede em Penha. Operações de cargo, armazéns aeroportuários e estaleiros utilizam empilhadeiras de diversos portes diariamente — com atendimento técnico em até 1 hora.',
+    tempoAtendimentoEstimado: 'até 1 hora',
+  },
+  {
+    slug: 'balneario-picarras',
+    nome: 'Balneário Piçarras',
+    nomeCompleto: 'Balneário Piçarras',
+    uf: 'SC',
+    descricaoEconomica:
+      'Município litorâneo vizinho à nossa sede em Penha, em forte crescimento na construção civil, comércio local e operações sazonais. Empilhadeiras suportam obras, estoques de varejo e atividades industriais com atendimento ágil pela proximidade.',
+    tempoAtendimentoEstimado: 'até 1 hora',
+  },
+  {
     slug: 'itajai',
     nome: 'Itajaí',
     nomeCompleto: 'Itajaí',
     uf: 'SC',
     descricaoEconomica:
-      'Sede de um dos maiores portos do Brasil, Itajaí concentra operações logísticas, indústrias de pesca, transporte e distribuição. Empilhadeiras e equipamentos de movimentação são essenciais para a operação portuária, armazéns alfandegados e centros de distribuição da cidade.',
+      'Sede de um dos maiores portos do Brasil, Itajaí concentra operações logísticas, indústrias de pesca, transporte e distribuição. Empilhadeiras e equipamentos de movimentação são essenciais para a operação portuária, armazéns alfandegados e centros de distribuição da cidade — atendidos rapidamente a partir da nossa base em Penha.',
     tempoAtendimentoEstimado: 'até 2 horas',
   },
   {
@@ -27,33 +54,6 @@ export const CIDADES: Cidade[] = [
     descricaoEconomica:
       'Cidade vizinha de Balneário Camboriú com forte expansão industrial e logística. Distritos industriais, atacadistas e operações de transporte dependem de empilhadeiras para movimentação eficiente de produtos.',
     tempoAtendimentoEstimado: 'até 2 horas',
-  },
-  {
-    slug: 'navegantes',
-    nome: 'Navegantes',
-    nomeCompleto: 'Navegantes',
-    uf: 'SC',
-    descricaoEconomica:
-      'Lar de aeroporto regional e porto privado, Navegantes é hub de logística aérea e marítima. Operações de cargo, armazéns aeroportuários e estaleiros utilizam empilhadeiras de diversos portes diariamente.',
-    tempoAtendimentoEstimado: 'até 2 horas',
-  },
-  {
-    slug: 'penha',
-    nome: 'Penha',
-    nomeCompleto: 'Penha',
-    uf: 'SC',
-    descricaoEconomica:
-      'Cidade litorânea com economia ligada ao turismo (Beto Carrero World) e pesca. Hotelaria, parques e indústria pesqueira utilizam empilhadeiras para movimentação de cargas e operações de manutenção sazonal.',
-    tempoAtendimentoEstimado: 'até 3 horas',
-  },
-  {
-    slug: 'balneario-picarras',
-    nome: 'Balneário Piçarras',
-    nomeCompleto: 'Balneário Piçarras',
-    uf: 'SC',
-    descricaoEconomica:
-      'Município litorâneo em crescimento com forte demanda da construção civil, comércio local e operações sazonais. Empilhadeiras suportam obras, estoques de varejo e atividades industriais leves.',
-    tempoAtendimentoEstimado: 'até 3 horas',
   },
   {
     slug: 'itapema',

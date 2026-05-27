@@ -14,7 +14,7 @@ export const FAQ_MANUTENCAO: FAQItem[] = [
   {
     pergunta: 'Qual o tempo médio de atendimento?',
     resposta:
-      'Em Itajaí, Navegantes, Balneário Camboriú e Camboriú o atendimento é em até 2 horas. Em Penha, Piçarras, Bombinhas e Porto Belo, em até 3 horas. Casos emergenciais têm prioridade.',
+      'Nossa base é em Penha. Em Penha, Navegantes e Piçarras o atendimento é em até 1 hora. Em Itajaí, Balneário Camboriú, Camboriú e Itapema, em até 2 horas. Em Bombinhas e Porto Belo, em até 3 horas. Casos emergenciais têm prioridade.',
   },
   {
     pergunta: 'Vocês usam peças originais?',

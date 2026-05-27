@@ -11,13 +11,13 @@ export const WHATSAPP_NUMBER = '5547991926463';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20seu%20site`;
 export const PHONE = '+55 47 99192-6463';
 export const ADDRESS = {
-  streetAddress: 'Itajaí, SC',
-  addressLocality: 'Itajaí',
+  streetAddress: 'Penha, SC',
+  addressLocality: 'Penha',
   addressRegion: 'SC',
-  postalCode: '88301-000',
+  postalCode: '88385-000',
   addressCountry: 'BR',
 };
-export const GEO = { latitude: -26.9077, longitude: -48.6614 };
+export const GEO = { latitude: -26.7711, longitude: -48.6438 };
 
 interface BuildMetadataOptions {
   title: string;
