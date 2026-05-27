@@ -108,97 +108,88 @@ git commit -m "chore: inicializa projeto Next.js 15 com TypeScript estrito"
 
 ---
 
-## Task 2: Configure Tailwind tokens and global styles
+## Task 2: Configure Tailwind v4 tokens and global styles
+
+**Note:** Next 15.5 ships **Tailwind v4** (CSS-based config, no `tailwind.config.ts`). Tokens go directly into `globals.css` via the `@theme` directive.
 
 **Files:**
-- Modify: `tailwind.config.ts`, `app/globals.css`
+- Modify: `app/globals.css`
 
-- [ ] **Step 1: Write `tailwind.config.ts`**
+- [ ] **Step 1: Replace `app/globals.css` with the full theme**
 
-Replace `tailwind.config.ts`:
-```ts
-import type { Config } from 'tailwindcss';
-
-const config: Config = {
-  content: [
-    './app/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './lib/**/*.{ts,tsx}',
-  ],
-  darkMode: 'class',
-  theme: {
-    container: {
-      center: true,
-      padding: '1.5rem',
-      screens: { '2xl': '1280px' },
-    },
-    extend: {
-      colors: {
-        brand: {
-          yellow: '#FFE34B',
-          'yellow-dim': '#D4BC32',
-        },
-        ink: {
-          50: '#F5F5F5',
-          100: '#E5E5E5',
-          300: '#888888',
-          500: '#555555',
-          700: '#1F1F1F',
-          900: '#111111',
-          950: '#0A0A0A',
-        },
-      },
-      fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'monospace'],
-      },
-      fontSize: {
-        display: ['72px', { lineHeight: '1.0', letterSpacing: '-0.04em' }],
-        h1: ['56px', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
-        h2: ['36px', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        h3: ['24px', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
-        body: ['16px', { lineHeight: '1.6' }],
-        small: ['13px', { lineHeight: '1.5' }],
-        label: ['12px', { lineHeight: '1', letterSpacing: '0.15em' }],
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(8px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-      },
-    },
-  },
-  plugins: [],
-};
-
-export default config;
-```
-
-- [ ] **Step 2: Write `app/globals.css`**
-
-Replace `app/globals.css`:
+Replace `app/globals.css` (entire file):
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-yellow: #FFE34B;
+  --color-brand-yellow-dim: #D4BC32;
+
+  --color-ink-50: #F5F5F5;
+  --color-ink-100: #E5E5E5;
+  --color-ink-300: #888888;
+  --color-ink-500: #555555;
+  --color-ink-700: #1F1F1F;
+  --color-ink-900: #111111;
+  --color-ink-950: #0A0A0A;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --text-display: 72px;
+  --text-display--line-height: 1.0;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-h1: 56px;
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.03em;
+
+  --text-h2: 36px;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h3: 24px;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.6;
+
+  --text-small: 13px;
+  --text-small--line-height: 1.5;
+
+  --text-label: 12px;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.15em;
+
+  --animate-fade-in: fadeIn 0.6s ease-out;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+}
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-ink-950 text-ink-50 font-sans antialiased;
+    background: var(--color-ink-950);
+    color: var(--color-ink-50);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-yellow;
+    outline: 2px solid var(--color-brand-yellow);
+    outline-offset: 2px;
   }
   ::selection {
-    @apply bg-brand-yellow text-ink-950;
+    background: var(--color-brand-yellow);
+    color: var(--color-ink-950);
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -208,29 +199,52 @@ Replace `app/globals.css`:
   }
 }
 
-@layer utilities {
-  .container-tight {
-    @apply mx-auto max-w-6xl px-6;
-  }
-  .container-wide {
-    @apply mx-auto max-w-7xl px-6;
-  }
-  .label-tracked {
-    @apply text-label uppercase font-medium text-ink-300;
-  }
+@utility container-tight {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1.5rem;
+}
+
+@utility container-wide {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.5rem;
+}
+
+@utility label-tracked {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-ink-300);
 }
 ```
 
-- [ ] **Step 3: Verify build**
+**Notes for the implementer:**
+- Do NOT create `tailwind.config.ts`. Tailwind v4 reads tokens from the CSS `@theme` block.
+- The token names use Tailwind v4 conventions: `--color-<name>` produces utilities `bg-<name>`, `text-<name>`, `border-<name>`, etc. `--font-<name>` produces `font-<name>`. `--text-<name>` produces a paired `text-<name>` size + bundled line-height/letter-spacing.
+- `@custom-variant dark` enables class-based dark mode (`<html class="dark">` to opt in).
+- `@utility` declares the three custom utilities (`container-tight`, `container-wide`, `label-tracked`).
+- Subsequent tasks will use class names like `bg-ink-950`, `text-brand-yellow`, `font-display`, `text-h1`, `text-label`, `container-wide`, `label-tracked` — verify these compile.
+
+- [ ] **Step 2: Verify build produces working Tailwind classes**
 
 Run: `npm run build`
-Expected: Build succeeds, no Tailwind errors.
+Expected: Build succeeds with no errors.
 
-- [ ] **Step 4: Commit**
+Quick smoke test that custom tokens compile: add a temporary class on `app/page.tsx` like `<main className="p-8 bg-ink-950 text-brand-yellow font-display text-h2">...` and run `npm run build` once more. If it builds and the generated CSS contains those utilities, revert `app/page.tsx` back to its plain placeholder:
+```tsx
+export default function Home() {
+  return <main className="p-8">Forklift site — under construction</main>;
+}
+```
+
+- [ ] **Step 3: Commit**
 
 ```bash
-git add tailwind.config.ts app/globals.css
-git commit -m "feat: define tokens de design (cores, tipografia, escala)"
+git add app/globals.css
+git commit -m "feat: define tokens de design (Tailwind v4 @theme)"
 ```
 
 ---
