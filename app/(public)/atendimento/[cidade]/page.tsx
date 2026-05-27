@@ -39,14 +39,14 @@ export default async function AtendimentoCidadePage({ params }: Props) {
     <>
       <JsonLd data={buildLocalBusinessSchema(c.nomeCompleto)} />
 
-      <section className="border-b border-ink-700 bg-ink-900 py-20">
+      <section className="border-b border-paper-200 bg-paper-100 py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Atendimento Local</span>
-          <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-50">
+          <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
             Empilhadeiras e manutenção em {c.nome}
           </h1>
-          <p className="mt-6 max-w-3xl text-body text-ink-300">{c.descricaoEconomica}</p>
-          <p className="mt-6 max-w-3xl text-body text-ink-300">
+          <p className="mt-6 max-w-3xl text-body text-ink-500">{c.descricaoEconomica}</p>
+          <p className="mt-6 max-w-3xl text-body text-ink-500">
             Atendemos {c.nome} com venda, aluguel e manutenção de empilhadeiras GLP, diesel e
             elétricas, além de equipamentos para construção civil. Tempo médio de atendimento
             técnico: <span className="text-brand-yellow">{c.tempoAtendimentoEstimado}</span>.
@@ -62,13 +62,13 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-ink-700 bg-ink-950 py-24">
+      <section className="border-b border-paper-200 bg-paper-50 py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Equipamentos para {c.nome}</span>
-          <h2 className="mt-4 font-display text-h2 text-ink-50">
+          <h2 className="mt-4 font-display text-h2 text-ink-950">
             Linha completa de equipamentos
           </h2>
-          <p className="mt-3 max-w-2xl text-body text-ink-300">
+          <p className="mt-3 max-w-2xl text-body text-ink-500">
             Empilhadeiras industriais e equipamentos pesados disponíveis para venda e aluguel em {c.nome}.
           </p>
           <div className="mt-12">
@@ -77,13 +77,13 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-ink-700 bg-ink-900 py-24">
+      <section className="border-b border-paper-200 bg-paper-100 py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Manutenção em {c.nome}</span>
-          <h2 className="mt-4 font-display text-h2 text-ink-50">
+          <h2 className="mt-4 font-display text-h2 text-ink-950">
             Manutenção técnica especializada
           </h2>
-          <p className="mt-6 max-w-2xl text-body text-ink-300">
+          <p className="mt-6 max-w-2xl text-body text-ink-500">
             Manutenção preventiva, corretiva e atendimento emergencial em {c.nome}. Técnicos
             certificados, peças originais e relatório técnico após cada serviço.
           </p>
@@ -96,16 +96,16 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="bg-ink-950 py-24">
+      <section className="bg-paper-50 py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Outras cidades</span>
-          <h2 className="mt-4 font-display text-h2 text-ink-50">Também atendemos</h2>
+          <h2 className="mt-4 font-display text-h2 text-ink-950">Também atendemos</h2>
           <ul className="mt-8 flex flex-wrap gap-3">
             {CIDADES.filter((other) => other.slug !== c.slug).map((other) => (
               <li key={other.slug}>
                 <Link
                   href={`/atendimento/${other.slug}`}
-                  className="block border border-ink-700 px-4 py-2 text-small text-ink-50 hover:border-brand-yellow hover:text-brand-yellow"
+                  className="block border border-paper-200 px-4 py-2 text-small text-ink-950 hover:border-brand-yellow hover:text-brand-yellow"
                 >
                   {other.nome}
                 </Link>

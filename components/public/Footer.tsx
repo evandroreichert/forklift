@@ -16,12 +16,12 @@ const WhatsAppIcon = () => (
 
 export function Footer() {
   return (
-    <footer className="border-t border-ink-700 bg-ink-900 text-ink-50">
+    <footer className="border-t border-paper-200 bg-paper-100 text-ink-950">
       <div className="container-wide py-16">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-small text-ink-300">
+            <p className="mt-4 max-w-xs text-small text-ink-500">
               Venda, aluguel e manutenção de empilhadeiras e equipamentos pesados no Vale do Itajaí.
             </p>
             <div className="mt-6 flex gap-3">
@@ -47,7 +47,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-label uppercase text-ink-300">Navegação</h3>
+            <h3 className="text-label uppercase text-ink-500">Navegação</h3>
             <ul className="mt-4 space-y-2 text-small">
               <li><Link href="/empilhadeiras" className="hover:text-brand-yellow">Empilhadeiras</Link></li>
               <li><Link href="/construcao-civil" className="hover:text-brand-yellow">Construção Civil</Link></li>
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-label uppercase text-ink-300">Cidades atendidas</h3>
+            <h3 className="text-label uppercase text-ink-500">Cidades atendidas</h3>
             <ul className="mt-4 grid grid-cols-2 gap-1 text-small">
               {CIDADES.map((c) => (
                 <li key={c.slug}>
@@ -69,13 +69,13 @@ export function Footer() {
               ))}
             </ul>
             <div className="mt-6 space-y-1 text-small">
-              <p className="text-ink-300">Telefone</p>
+              <p className="text-ink-500">Telefone</p>
               <a href={`tel:${PHONE.replace(/\D/g, '')}`} className="block hover:text-brand-yellow">{PHONE}</a>
               <a
                 href={GOOGLE_BUSINESS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block text-ink-300 hover:text-brand-yellow"
+                className="mt-2 inline-block text-ink-500 hover:text-brand-yellow"
               >
                 Ver no Google →
               </a>
@@ -83,7 +83,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-ink-700 pt-6 text-center text-small text-ink-300">
+        <div className="mt-12 border-t border-paper-200 pt-6 text-center text-small text-ink-500">
           © {new Date().getFullYear()} Fabiano Bratti Empilhadeiras. Todos os direitos reservados.
         </div>
       </div>

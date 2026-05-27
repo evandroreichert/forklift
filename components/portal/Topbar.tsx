@@ -9,11 +9,11 @@ export function Topbar() {
     .join('');
 
   return (
-    <header className="flex h-14 items-center justify-between border-b border-ink-700 bg-ink-900 px-6">
-      <span className="text-label uppercase text-ink-300">Modo demonstração</span>
+    <header className="flex h-14 items-center justify-between border-b border-paper-200 bg-paper-100 px-6">
+      <span className="text-label uppercase text-ink-500">Modo demonstração</span>
       <div className="flex items-center gap-4">
         <button
-          className="text-ink-300 hover:text-brand-yellow"
+          className="text-ink-500 hover:text-brand-yellow"
           aria-label="Notificações"
         >
           <Bell className="size-5" />

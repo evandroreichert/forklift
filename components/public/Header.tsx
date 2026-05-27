@@ -17,7 +17,7 @@ const NAV_ITEMS = [
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 border-b border-ink-700/50 bg-ink-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-paper-200/50 bg-paper-50/80 backdrop-blur-md">
       <div className="container-wide flex h-16 items-center justify-between">
         <Logo />
         <nav className="hidden items-center gap-1 md:flex" aria-label="Navegação principal">
@@ -25,7 +25,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="px-3 py-2 text-small font-medium text-ink-50 transition-colors hover:text-brand-yellow"
+              className="px-3 py-2 text-small font-medium text-ink-950 transition-colors hover:text-brand-yellow"
             >
               {item.label}
             </Link>
@@ -39,9 +39,9 @@ export function Header() {
         </nav>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger className="md:hidden" aria-label="Abrir menu">
-            <Menu className="size-6 text-ink-50" />
+            <Menu className="size-6 text-ink-950" />
           </SheetTrigger>
-          <SheetContent side="right" className="bg-ink-950 border-ink-700">
+          <SheetContent side="right" className="bg-paper-50 border-paper-200">
             <SheetTitle className="sr-only">Menu</SheetTitle>
             <nav className="mt-8 flex flex-col gap-2" aria-label="Navegação móvel">
               {NAV_ITEMS.map((item) => (
@@ -49,7 +49,7 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="px-3 py-3 text-body font-medium text-ink-50 transition-colors hover:text-brand-yellow"
+                  className="px-3 py-3 text-body font-medium text-ink-950 transition-colors hover:text-brand-yellow"
                 >
                   {item.label}
                 </Link>

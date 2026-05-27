@@ -21,8 +21,8 @@ export default function PortalPage() {
   return (
     <div className="space-y-10">
       <div>
-        <p className="text-label uppercase text-ink-300">Bem-vindo</p>
-        <h1 className="mt-2 font-display text-h1 text-ink-50">
+        <p className="text-label uppercase text-ink-500">Bem-vindo</p>
+        <h1 className="mt-2 font-display text-h1 text-ink-950">
           Olá, <span className="text-brand-yellow">{CLIENTE_DEMO.nomeEmpresa}</span>
         </h1>
       </div>
@@ -31,8 +31,8 @@ export default function PortalPage() {
 
       <div>
         <div className="flex items-baseline justify-between">
-          <h2 className="font-display text-h2 text-ink-50">Manutenções recentes</h2>
-          <p className="text-small text-ink-300">{manutencoes.length} no total</p>
+          <h2 className="font-display text-h2 text-ink-950">Manutenções recentes</h2>
+          <p className="text-small text-ink-500">{manutencoes.length} no total</p>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {manutencoes.map((m) => (

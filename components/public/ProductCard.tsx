@@ -6,7 +6,7 @@ export function ProductCard({ produto }: { produto: Produto }) {
   const href = `/${produto.categoriaPai}/${produto.slug}`;
   return (
     <Link href={href} className="group block">
-      <div className="relative aspect-[4/3] overflow-hidden bg-ink-900">
+      <div className="relative aspect-[4/3] overflow-hidden bg-paper-100">
         <Image
           src={produto.imagemCapa}
           alt={produto.nome}
@@ -16,10 +16,10 @@ export function ProductCard({ produto }: { produto: Produto }) {
         />
       </div>
       <div className="mt-4 flex items-baseline justify-between">
-        <h3 className="font-display text-h3 text-ink-50 transition-colors group-hover:text-brand-yellow">
+        <h3 className="font-display text-h3 text-ink-950 transition-colors group-hover:text-brand-yellow">
           {produto.nome}
         </h3>
-        <span className="text-label text-ink-300 transition-colors group-hover:text-brand-yellow">→</span>
+        <span className="text-label text-ink-500 transition-colors group-hover:text-brand-yellow">→</span>
       </div>
     </Link>
   );

@@ -8,31 +8,38 @@
   --color-brand-yellow: #FFE34B;
   --color-brand-yellow-dim: #D4BC32;
 
-  --color-ink-50: #F5F5F5;
-  --color-ink-100: #E5E5E5;
-  --color-ink-300: #888888;
-  --color-ink-500: #555555;
-  --color-ink-700: #1F1F1F;
-  --color-ink-900: #111111;
-  --color-ink-950: #0A0A0A;
+  /* Paper: warm cream surfaces (light mode) */
+  --color-paper-50: #FAF8F1;
+  --color-paper-100: #F5F1E8;
+  --color-paper-200: #E8E3D4;
+  --color-paper-300: #D8D2C1;
 
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  /* Ink: text colors */
+  --color-ink-50: #FAFAFA;
+  --color-ink-100: #EDEDED;
+  --color-ink-300: #9A9A9A;
+  --color-ink-500: #5A5A5A;
+  --color-ink-700: #2A2A2A;
+  --color-ink-900: #1A1A1A;
+  --color-ink-950: #0F0F0F;
+
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-display: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --text-display: 72px;
-  --text-display--line-height: 1.0;
-  --text-display--letter-spacing: -0.04em;
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.035em;
 
   --text-h1: 56px;
-  --text-h1--line-height: 1.05;
+  --text-h1--line-height: 1.0;
   --text-h1--letter-spacing: -0.03em;
 
   --text-h2: 36px;
   --text-h2--line-height: 1.1;
   --text-h2--letter-spacing: -0.02em;
 
-  --text-h3: 24px;
+  --text-h3: 22px;
   --text-h3--line-height: 1.2;
   --text-h3--letter-spacing: -0.01em;
 
@@ -42,9 +49,9 @@
   --text-small: 13px;
   --text-small--line-height: 1.5;
 
-  --text-label: 12px;
+  --text-label: 11px;
   --text-label--line-height: 1;
-  --text-label--letter-spacing: 0.15em;
+  --text-label--letter-spacing: 0.18em;
 
   --animate-fade-in: fadeIn 0.6s ease-out;
 
@@ -60,11 +67,10 @@
     @apply font-sans;
   }
   body {
-    background: var(--color-ink-950);
-    color: var(--color-ink-50);
+    background: var(--color-paper-50);
+    color: var(--color-ink-950);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    @apply bg-background text-foreground;
   }
   *:focus-visible {
     outline: 2px solid var(--color-brand-yellow);
@@ -98,12 +104,13 @@
 }
 
 @utility label-tracked {
+  font-family: var(--font-mono);
   font-size: var(--text-label);
   line-height: var(--text-label--line-height);
   letter-spacing: var(--text-label--letter-spacing);
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-ink-300);
+  color: var(--color-ink-500);
 }
 
 @theme inline {

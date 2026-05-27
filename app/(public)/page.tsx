@@ -35,11 +35,11 @@ export default function HomePage() {
       />
       <Hero />
 
-      <section id="produtos" className="border-t border-ink-700 bg-ink-950 py-24">
+      <section id="produtos" className="border-t border-paper-200 bg-paper-50 py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Catálogo / 01</span>
-          <h2 className="mt-4 font-display text-h1 text-ink-50">Nossos equipamentos</h2>
-          <p className="mt-3 max-w-2xl text-body text-ink-300">
+          <h2 className="mt-4 font-display text-h1 text-ink-950">Nossos equipamentos</h2>
+          <p className="mt-3 max-w-2xl text-body text-ink-500">
             Variedade de modelos e configurações para empilhadeiras industriais e equipamentos para
             construção civil.
           </p>
@@ -49,14 +49,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-ink-700 bg-ink-900 py-24">
+      <section className="border-t border-paper-200 bg-paper-100 py-24">
         <div className="container-wide grid items-center gap-12 md:grid-cols-2">
           <div>
             <span className="label-tracked text-brand-yellow">— Destaque / 02</span>
-            <h2 className="mt-4 font-display text-h1 text-ink-50">
+            <h2 className="mt-4 font-display text-h1 text-ink-950">
               Empilhadeira GLP: potência e robustez
             </h2>
-            <p className="mt-6 text-body text-ink-300">
+            <p className="mt-6 text-body text-ink-500">
               Desempenho é a chave. A Empilhadeira GLP da UN Forklift é a resposta quando a demanda é
               alta — pronta para superar tarefas complexas e elevar sua produtividade.
             </p>
@@ -68,7 +68,7 @@ export default function HomePage() {
             </Link>
           </div>
           <video
-            className="aspect-video w-full border border-ink-700"
+            className="aspect-video w-full border border-paper-200"
             src="/videos/glp.mp4"
             controls
             poster="/images/empilhadeira-glp.jpeg"
@@ -76,10 +76,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-ink-700 bg-ink-950 py-24">
+      <section className="border-t border-paper-200 bg-paper-50 py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Clientes / 03</span>
-          <h2 className="mt-4 font-display text-h2 text-ink-50">O que dizem sobre nós</h2>
+          <h2 className="mt-4 font-display text-h2 text-ink-950">O que dizem sobre nós</h2>
           <div className="mt-12">
             <ReviewsWidget />
           </div>

@@ -9,9 +9,9 @@ export function ProductDetail({ produto }: { produto: Produto }) {
 
   return (
     <>
-      <section className="border-b border-ink-700 bg-ink-900 py-20">
+      <section className="border-b border-paper-200 bg-paper-100 py-20">
         <div className="container-wide grid items-center gap-12 md:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden bg-ink-950">
+          <div className="relative aspect-[4/3] overflow-hidden bg-paper-50">
             <Image
               src={produto.imagemCapa}
               alt={produto.nome}
@@ -23,9 +23,9 @@ export function ProductDetail({ produto }: { produto: Produto }) {
           </div>
           <div>
             <span className="label-tracked text-brand-yellow">— {produto.categoriaPai === 'empilhadeiras' ? 'Empilhadeira' : 'Construção Civil'}</span>
-            <h1 className="mt-4 font-display text-h1 text-ink-50">{produto.nome}</h1>
+            <h1 className="mt-4 font-display text-h1 text-ink-950">{produto.nome}</h1>
             <p className="mt-3 text-body text-brand-yellow">{produto.titulo}</p>
-            <p className="mt-6 text-body text-ink-300">{produto.descricao}</p>
+            <p className="mt-6 text-body text-ink-500">{produto.descricao}</p>
             <a
               href={whatsappUrl}
               target="_blank"
@@ -39,14 +39,14 @@ export function ProductDetail({ produto }: { produto: Produto }) {
       </section>
 
       {produto.variantes && produto.variantes.length > 0 && (
-        <section className="border-b border-ink-700 bg-ink-950 py-20">
+        <section className="border-b border-paper-200 bg-paper-50 py-20">
           <div className="container-wide">
             <span className="label-tracked text-brand-yellow">— Variantes</span>
-            <h2 className="mt-4 font-display text-h2 text-ink-50">Modelos disponíveis</h2>
+            <h2 className="mt-4 font-display text-h2 text-ink-950">Modelos disponíveis</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {produto.variantes.map((v) => (
-                <div key={v.nome} className="border border-ink-700 p-6">
-                  <h3 className="font-display text-h3 text-ink-50">{v.nome}</h3>
+                <div key={v.nome} className="border border-paper-200 p-6">
+                  <h3 className="font-display text-h3 text-ink-950">{v.nome}</h3>
                   <p className="mt-2 font-mono text-small text-brand-yellow">{v.capacidade}</p>
                 </div>
               ))}
@@ -56,15 +56,15 @@ export function ProductDetail({ produto }: { produto: Produto }) {
       )}
 
       {produto.specs && produto.specs.length > 0 && (
-        <section className="border-b border-ink-700 bg-ink-900 py-20">
+        <section className="border-b border-paper-200 bg-paper-100 py-20">
           <div className="container-wide">
             <span className="label-tracked text-brand-yellow">— Especificações</span>
-            <h2 className="mt-4 font-display text-h2 text-ink-50">Specs técnicas</h2>
+            <h2 className="mt-4 font-display text-h2 text-ink-950">Specs técnicas</h2>
             <dl className="mt-10 grid gap-x-12 gap-y-4 sm:grid-cols-2">
               {produto.specs.map((s) => (
-                <div key={s.label} className="flex justify-between border-b border-ink-700 py-3">
-                  <dt className="text-small text-ink-300">{s.label}</dt>
-                  <dd className="font-mono text-small text-ink-50">{s.valor}</dd>
+                <div key={s.label} className="flex justify-between border-b border-paper-200 py-3">
+                  <dt className="text-small text-ink-500">{s.label}</dt>
+                  <dd className="font-mono text-small text-ink-950">{s.valor}</dd>
                 </div>
               ))}
             </dl>
@@ -72,10 +72,10 @@ export function ProductDetail({ produto }: { produto: Produto }) {
         </section>
       )}
 
-      <section className="bg-ink-950 py-20">
-        <div className="container-wide rounded border border-ink-700 bg-ink-900 p-10 text-center">
-          <h2 className="font-display text-h2 text-ink-50">Pronto para o próximo passo?</h2>
-          <p className="mt-3 text-body text-ink-300">Solicite um orçamento sem compromisso.</p>
+      <section className="bg-paper-50 py-20">
+        <div className="container-wide rounded border border-paper-200 bg-paper-100 p-10 text-center">
+          <h2 className="font-display text-h2 text-ink-950">Pronto para o próximo passo?</h2>
+          <p className="mt-3 text-body text-ink-500">Solicite um orçamento sem compromisso.</p>
           <a
             href={whatsappUrl}
             target="_blank"

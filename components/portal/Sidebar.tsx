@@ -19,8 +19,8 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="hidden w-60 shrink-0 flex-col border-r border-ink-700 bg-ink-900 md:flex">
-      <div className="border-b border-ink-700 p-6">
+    <aside className="hidden w-60 shrink-0 flex-col border-r border-paper-200 bg-paper-100 md:flex">
+      <div className="border-b border-paper-200 p-6">
         <Logo />
       </div>
 
@@ -34,8 +34,8 @@ export function Sidebar() {
                   href={item.href}
                   className={`flex items-center gap-3 rounded px-3 py-2 text-small font-medium ${
                     active
-                      ? 'bg-ink-700 text-brand-yellow'
-                      : 'text-ink-50 hover:bg-ink-700/50'
+                      ? 'bg-paper-200 text-brand-yellow'
+                      : 'text-ink-950 hover:bg-paper-200/50'
                   }`}
                 >
                   <item.icon className="size-4" />
@@ -47,14 +47,14 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <div className="border-t border-ink-700 p-4">
-        <p className="text-label text-ink-300">Cliente</p>
-        <p className="mt-1 truncate text-small font-medium text-ink-50">
+      <div className="border-t border-paper-200 p-4">
+        <p className="text-label text-ink-500">Cliente</p>
+        <p className="mt-1 truncate text-small font-medium text-ink-950">
           {CLIENTE_DEMO.nomeEmpresa}
         </p>
         <button
           onClick={handleLogout}
-          className="mt-4 flex w-full items-center gap-2 rounded border border-ink-700 px-3 py-2 text-small text-ink-300 hover:border-brand-yellow hover:text-brand-yellow"
+          className="mt-4 flex w-full items-center gap-2 rounded border border-paper-200 px-3 py-2 text-small text-ink-500 hover:border-brand-yellow hover:text-brand-yellow"
         >
           <LogOut className="size-4" />
           Sair
