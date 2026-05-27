@@ -5,6 +5,7 @@ import type { Cliente } from '@/lib/types';
 
 const STORAGE_KEY = 'forklift-mock-auth';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function login(_email: string, _senha: string): Cliente {
   if (typeof window !== 'undefined') {
     window.localStorage.setItem(STORAGE_KEY, '1');
