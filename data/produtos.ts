@@ -63,8 +63,8 @@ export const PRODUTOS: Produto[] = [
     titulo: 'Versatilidade para todo tipo de obra',
     descricao:
       'Retroescavadeiras combinam carregadeira frontal e escavadeira traseira em um único equipamento. Solução econômica e versátil para obras urbanas e rurais.',
-    imagemCapa: '/images/retroescavadeira.jpeg',
-    imagensGaleria: ['/images/retroescavadeira.jpeg'],
+    imagemCapa: '/images/empilhadeira-diesel.jpeg', // TODO: substituir por foto real de retroescavadeira
+    imagensGaleria: ['/images/empilhadeira-diesel.jpeg'],
   },
   {
     slug: 'rolo-compactador',
