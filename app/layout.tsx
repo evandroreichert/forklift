@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
-import { GAScript } from '@/components/shared/GAScript';
 import './globals.css';
 
 const inter = Inter({
@@ -37,10 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="pt-BR"
       className={`dark ${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body>
-        {children}
-        <GAScript />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
