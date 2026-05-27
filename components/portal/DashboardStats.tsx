@@ -5,7 +5,7 @@ import { MANUTENCOES_DEMO } from '@/data/mock/manutencoes';
 
 function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div className="border border-paper-200 bg-paper-100 p-6">
+    <div className="border border-ink-100 bg-surface-alt p-6">
       <p className="text-label uppercase text-ink-500">{label}</p>
       <p className="mt-3 font-display text-h2 text-ink-950">{value}</p>
       {hint && <p className="mt-2 text-small text-ink-500">{hint}</p>}

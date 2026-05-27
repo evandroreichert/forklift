@@ -16,7 +16,7 @@ const WhatsAppIcon = () => (
 
 export function Footer() {
   return (
-    <footer className="border-t border-paper-200 bg-paper-100 text-ink-950">
+    <footer className="border-t border-ink-100 bg-surface-alt text-ink-950">
       <div className="container-wide py-16">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
@@ -83,7 +83,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-paper-200 pt-6 text-center text-small text-ink-500">
+        <div className="mt-12 border-t border-ink-100 pt-6 text-center text-small text-ink-500">
           © {new Date().getFullYear()} Fabiano Bratti Empilhadeiras. Todos os direitos reservados.
         </div>
       </div>

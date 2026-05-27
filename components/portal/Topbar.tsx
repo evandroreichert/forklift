@@ -9,7 +9,7 @@ export function Topbar() {
     .join('');
 
   return (
-    <header className="flex h-14 items-center justify-between border-b border-paper-200 bg-paper-100 px-6">
+    <header className="flex h-14 items-center justify-between border-b border-ink-100 bg-surface-alt px-6">
       <span className="text-label uppercase text-ink-500">Modo demonstração</span>
       <div className="flex items-center gap-4">
         <button

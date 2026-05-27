@@ -20,7 +20,7 @@ export default function ConstrucaoCivilPage() {
         titulo="Equipamentos para construção civil"
         descricao="Linha completa de equipamentos pesados para obras, terraplanagem e pavimentação. Atendemos obras residenciais, comerciais e de infraestrutura em toda a região."
       />
-      <section className="bg-paper-50 py-24">
+      <section className="bg-white py-24">
         <div className="container-wide">
           <ProductGrid produtos={produtos} />
         </div>

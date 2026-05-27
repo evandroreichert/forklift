@@ -29,13 +29,13 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-paper-50 px-6 py-12">
+    <main className="flex min-h-screen items-center justify-center bg-white px-6 py-12">
       <div className="w-full max-w-md">
         <div className="flex justify-center">
           <Logo />
         </div>
 
-        <div className="mt-10 border border-paper-200 bg-paper-100 p-8">
+        <div className="mt-10 border border-ink-100 bg-surface-alt p-8">
           <h1 className="font-display text-h2 text-ink-950">Área do Cliente</h1>
           <p className="mt-2 text-small text-ink-500">
             Acompanhe relatórios de manutenção da sua frota de empilhadeiras.
@@ -50,7 +50,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="mt-2 bg-paper-50 border-paper-200 text-ink-950"
+                className="mt-2 bg-white border-ink-100 text-ink-950"
                 placeholder="seu@email.com"
               />
             </div>
@@ -62,7 +62,7 @@ export default function LoginPage() {
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 required
-                className="mt-2 bg-paper-50 border-paper-200 text-ink-950"
+                className="mt-2 bg-white border-ink-100 text-ink-950"
                 placeholder="••••••••"
               />
             </div>
@@ -78,12 +78,12 @@ export default function LoginPage() {
           <button
             onClick={handleDemo}
             disabled={submitting}
-            className="mt-3 w-full border border-paper-200 px-6 py-3 text-small font-medium uppercase tracking-wider text-ink-500 hover:border-brand-yellow hover:text-brand-yellow disabled:opacity-50"
+            className="mt-3 w-full border border-ink-100 px-6 py-3 text-small font-medium uppercase tracking-wider text-ink-500 hover:border-brand-yellow hover:text-brand-yellow disabled:opacity-50"
           >
             Entrar como demonstração
           </button>
 
-          <div className="mt-6 border-t border-paper-200 pt-4 text-center text-small text-ink-500">
+          <div className="mt-6 border-t border-ink-100 pt-4 text-center text-small text-ink-500">
             <Link href="/" className="hover:text-brand-yellow">← Voltar ao site</Link>
           </div>
         </div>

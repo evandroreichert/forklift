@@ -14,7 +14,7 @@ export const metadata: Metadata = buildMetadata({
 export default function PortalLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthGate>
-      <div className="flex min-h-screen bg-paper-50">
+      <div className="flex min-h-screen bg-white">
         <Sidebar />
         <div className="flex flex-1 flex-col">
           <Topbar />

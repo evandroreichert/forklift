@@ -8,7 +8,7 @@ export function CategoryHero({
   descricao: string;
 }) {
   return (
-    <section className="border-b border-paper-200 bg-paper-100 py-20">
+    <section className="border-b border-ink-100 bg-surface-alt py-20">
       <div className="container-wide">
         <span className="label-tracked text-brand-yellow">— {label}</span>
         <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">{titulo}</h1>

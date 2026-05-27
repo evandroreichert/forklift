@@ -21,7 +21,7 @@ export default function ContatoPage() {
   return (
     <>
       <JsonLd data={buildLocalBusinessSchema()} />
-      <section className="border-b border-paper-200 bg-paper-100 py-20">
+      <section className="border-b border-ink-100 bg-surface-alt py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Contato</span>
           <h1 className="mt-4 font-display text-h1 text-ink-950">Fale com a gente</h1>
@@ -32,7 +32,7 @@ export default function ContatoPage() {
         </div>
       </section>
 
-      <section className="bg-paper-50 py-24">
+      <section className="bg-white py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
             <h2 className="font-display text-h2 text-ink-950">Envie uma mensagem</h2>
@@ -50,14 +50,14 @@ export default function ContatoPage() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block border border-paper-200 p-5 hover:border-brand-yellow"
+                  className="block border border-ink-100 p-5 hover:border-brand-yellow"
                 >
                   <span className="label-tracked text-ink-500">WhatsApp</span>
                   <p className="mt-1 font-display text-h3 text-ink-950">{PHONE}</p>
                 </a>
                 <a
                   href={`tel:${PHONE.replace(/\D/g, '')}`}
-                  className="block border border-paper-200 p-5 hover:border-brand-yellow"
+                  className="block border border-ink-100 p-5 hover:border-brand-yellow"
                 >
                   <span className="label-tracked text-ink-500">Telefone</span>
                   <p className="mt-1 font-display text-h3 text-ink-950">{PHONE}</p>
@@ -66,7 +66,7 @@ export default function ContatoPage() {
                   href={GOOGLE_BUSINESS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block border border-paper-200 p-5 hover:border-brand-yellow"
+                  className="block border border-ink-100 p-5 hover:border-brand-yellow"
                 >
                   <span className="label-tracked text-ink-500">Google Maps & Avaliações</span>
                   <p className="mt-1 font-display text-h3 text-ink-950">Ver no Google →</p>
@@ -75,7 +75,7 @@ export default function ContatoPage() {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block border border-paper-200 p-5 hover:border-brand-yellow"
+                  className="block border border-ink-100 p-5 hover:border-brand-yellow"
                 >
                   <span className="label-tracked text-ink-500">Instagram</span>
                   <p className="mt-1 font-display text-h3 text-ink-950">@fabianobratti.empilhadeiras</p>

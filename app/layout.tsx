@@ -1,17 +1,10 @@
 import type { Metadata } from 'next';
-import { Manrope, IBM_Plex_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-plex-mono',
+  variable: '--font-inter',
   display: 'swap',
 });
 
@@ -27,10 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${manrope.variable} ${plexMono.variable}`}
-    >
+    <html lang="pt-BR" className={inter.variable}>
       <body>{children}</body>
     </html>
   );

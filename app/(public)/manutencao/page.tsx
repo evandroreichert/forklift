@@ -58,7 +58,7 @@ export default function ManutencaoPage() {
     <>
       <JsonLd data={[buildServiceSchema(), buildFaqSchema(FAQ_MANUTENCAO)]} />
 
-      <section className="border-b border-paper-200 bg-paper-100 py-20">
+      <section className="border-b border-ink-100 bg-surface-alt py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Serviço</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
@@ -80,7 +80,7 @@ export default function ManutencaoPage() {
             </a>
             <Link
               href="/login"
-              className="border border-paper-300 px-6 py-3 text-small font-semibold uppercase tracking-wider text-ink-950 hover:border-brand-yellow hover:text-brand-yellow"
+              className="border border-ink-200 px-6 py-3 text-small font-semibold uppercase tracking-wider text-ink-950 hover:border-brand-yellow hover:text-brand-yellow"
             >
               Já é cliente? Acessar portal
             </Link>
@@ -88,13 +88,13 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-paper-200 bg-paper-50 py-24">
+      <section className="border-b border-ink-100 bg-white py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Tipos de manutenção</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Atendemos toda demanda</h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {TIPOS_SERVICO.map((s) => (
-              <div key={s.titulo} className="border border-paper-200 p-8">
+              <div key={s.titulo} className="border border-ink-100 p-8">
                 <h3 className="font-display text-h3 text-brand-yellow">{s.titulo}</h3>
                 <p className="mt-3 text-body text-ink-500">{s.descricao}</p>
               </div>
@@ -103,7 +103,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-paper-200 bg-paper-100 py-24">
+      <section className="border-b border-ink-100 bg-surface-alt py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">— Cobertura</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Cidades onde atendemos</h2>
@@ -116,7 +116,7 @@ export default function ManutencaoPage() {
               <li key={c.slug}>
                 <Link
                   href={`/atendimento/${c.slug}`}
-                  className="block border border-paper-200 px-5 py-4 transition-colors hover:border-brand-yellow"
+                  className="block border border-ink-100 px-5 py-4 transition-colors hover:border-brand-yellow"
                 >
                   <span className="font-display text-h3 text-ink-950">{c.nome}</span>
                   <span className="ml-2 font-mono text-small text-ink-500">{c.uf}</span>
@@ -127,7 +127,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-paper-200 bg-paper-50 py-24">
+      <section className="border-b border-ink-100 bg-white py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
             <span className="label-tracked text-brand-yellow">— Diferenciais</span>
@@ -135,7 +135,7 @@ export default function ManutencaoPage() {
           </div>
           <ul className="space-y-4 text-body text-ink-950">
             {DIFERENCIAIS.map((d) => (
-              <li key={d} className="flex gap-3 border-b border-paper-200 pb-4">
+              <li key={d} className="flex gap-3 border-b border-ink-100 pb-4">
                 <span className="text-brand-yellow">●</span>
                 <span>{d}</span>
               </li>
@@ -144,13 +144,13 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="bg-paper-100 py-24">
+      <section className="bg-surface-alt py-24">
         <div className="container-wide max-w-3xl">
           <span className="label-tracked text-brand-yellow">— Dúvidas frequentes</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Perguntas comuns</h2>
           <Accordion className="mt-10">
             {FAQ_MANUTENCAO.map((item, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-paper-200">
+              <AccordionItem key={i} value={`item-${i}`} className="border-ink-100">
                 <AccordionTrigger className="text-left text-ink-950 hover:text-brand-yellow">
                   {item.pergunta}
                 </AccordionTrigger>

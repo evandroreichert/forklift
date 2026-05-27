@@ -29,7 +29,7 @@ export function MaintenanceDialog({
 
   return (
     <Dialog open={open} onOpenChange={(v) => onOpenChange(v)}>
-      <DialogContent className="max-w-2xl border-paper-200 bg-paper-100 text-ink-950">
+      <DialogContent className="max-w-2xl border-ink-100 bg-surface-alt text-ink-950">
         <DialogHeader>
           <DialogTitle className="font-display text-h2 text-ink-950">
             {eq?.modelo}
@@ -71,7 +71,7 @@ export function MaintenanceDialog({
           {manutencao.pecasTrocadas && manutencao.pecasTrocadas.length > 0 && (
             <div>
               <p className="text-label uppercase text-ink-500">Peças trocadas</p>
-              <ul className="mt-2 divide-y divide-paper-200 border border-paper-200">
+              <ul className="mt-2 divide-y divide-ink-100 border border-ink-100">
                 {manutencao.pecasTrocadas.map((p, i) => (
                   <li key={i} className="flex items-center justify-between px-4 py-3 text-small">
                     <span className="text-ink-950">{p.nome}</span>
@@ -89,7 +89,7 @@ export function MaintenanceDialog({
             </div>
           )}
 
-          <div className="flex justify-end gap-3 border-t border-paper-200 pt-4">
+          <div className="flex justify-end gap-3 border-t border-ink-100 pt-4">
             <button
               onClick={handleDownloadPdf}
               className="border border-brand-yellow px-5 py-2 text-small font-semibold uppercase tracking-wider text-brand-yellow hover:bg-brand-yellow hover:text-ink-950"

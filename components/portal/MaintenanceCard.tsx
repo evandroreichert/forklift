@@ -29,7 +29,7 @@ export function MaintenanceCard({
   return (
     <button
       onClick={onClick}
-      className="block w-full border border-paper-200 bg-paper-100 p-6 text-left transition-colors hover:border-brand-yellow"
+      className="block w-full border border-ink-100 bg-surface-alt p-6 text-left transition-colors hover:border-brand-yellow"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
