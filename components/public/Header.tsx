@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Logo } from './Logo';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -42,6 +42,7 @@ export function Header() {
             <Menu className="size-6 text-ink-50" />
           </SheetTrigger>
           <SheetContent side="right" className="bg-ink-950 border-ink-700">
+            <SheetTitle className="sr-only">Menu</SheetTitle>
             <nav className="mt-8 flex flex-col gap-2" aria-label="Navegação móvel">
               {NAV_ITEMS.map((item) => (
                 <Link
