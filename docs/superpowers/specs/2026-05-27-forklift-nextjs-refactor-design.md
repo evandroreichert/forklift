@@ -27,6 +27,7 @@ Hospedagem alvo: **Vercel**, mantendo domínio `fabianobratti.com`.
 - Estrutura escalável: adicionar/editar produtos sem mexer em código de UI
 - Área do cliente funcional como mock visual (sem backend real ainda), preparada para receber lógica real depois
 - Deploy contínuo na Vercel, performance e SEO superiores ao site atual
+- **SEO local de excelência** — rankear bem no Google para "empilhadeiras [cidade]" e "manutenção de empilhadeiras" nas cidades da região de Itajaí (ver seção SEO)
 
 ## Não-objetivos
 
@@ -67,6 +68,9 @@ app/
 │   ├── construcao-civil/
 │   │   ├── page.tsx
 │   │   └── [slug]/page.tsx           ← Carregadeiras, Escavadeiras, etc.
+│   ├── manutencao/page.tsx           ← landing SEO de serviço de manutenção
+│   ├── atendimento/
+│   │   └── [cidade]/page.tsx         ← landings SEO por cidade
 │   └── contato/page.tsx
 ├── (portal)/
 │   ├── login/page.tsx                ← sem sidebar (usa só layout root)
@@ -84,6 +88,8 @@ app/
 | `/empilhadeiras` | `app/(public)/empilhadeiras/page.tsx` |
 | `/empilhadeiras/glp` | `app/(public)/empilhadeiras/[slug]/page.tsx` |
 | `/construcao-civil/escavadeiras` | `app/(public)/construcao-civil/[slug]/page.tsx` |
+| `/manutencao` | `app/(public)/manutencao/page.tsx` |
+| `/atendimento/itajai` | `app/(public)/atendimento/[cidade]/page.tsx` |
 | `/contato` | `app/(public)/contato/page.tsx` |
 | `/login` | `app/(portal)/login/page.tsx` |
 | `/portal` | `app/(portal)/portal/page.tsx` |
@@ -100,12 +106,15 @@ forklift/
 │   └── shared/                ← Logo, WhatsAppWidget, ReviewsWidget, GAScript
 ├── data/
 │   ├── produtos.ts            ← catálogo tipado (todas empilhadeiras + construção civil)
+│   ├── cidades.ts             ← cidades atendidas (slug, nome, descrição, foco econômico)
+│   ├── faq.ts                 ← perguntas frequentes (usado em /manutencao)
 │   └── mock/
 │       ├── cliente.ts         ← cliente fake logado
 │       └── manutencoes.ts     ← array de manutenções mock
 ├── lib/
 │   ├── auth-mock.ts           ← funções login/logout/getCurrentUser via localStorage
-│   ├── types.ts               ← Produto, Categoria, Manutencao, Equipamento, Cliente
+│   ├── seo.ts                 ← helpers de metadata + JSON-LD (Organization, LocalBusiness, Product, FAQ)
+│   ├── types.ts               ← Produto, Categoria, Cidade, Manutencao, Equipamento, Cliente
 │   └── utils.ts               ← cn() do shadcn, formatadores (data, moeda)
 ├── public/
 │   ├── images/                ← fotos de produtos (migradas de assets/)
@@ -245,7 +254,7 @@ Escala:
 
 ### Home (`/`)
 
-1. **Header sticky** com fundo translúcido + blur. Logo à esquerda, nav à direita: Início, Empilhadeiras, Construção Civil, Contato + botão "Área do Cliente" destacado
+1. **Header sticky** com fundo translúcido + blur. Logo à esquerda, nav à direita: Início, Empilhadeiras, Construção Civil, Manutenção, Contato + botão "Área do Cliente" destacado
 2. **Hero full-screen** (90vh):
    - Vídeo de fundo (mantido, mas com overlay gradiente preto)
    - Título display em Space Grotesk: "Produtividade sem compromissos."
@@ -260,7 +269,7 @@ Escala:
 5. **Reviews Elfsight** (mantido, container redesenhado)
 6. **Footer** escuro com 3 colunas:
    - Coluna 1: Logo + descrição curta + ícones sociais
-   - Coluna 2: Links rápidos (Empilhadeiras, Construção Civil, Contato, Área do Cliente)
+   - Coluna 2: Links rápidos (Empilhadeiras, Construção Civil, Manutenção, Cidades atendidas, Contato, Área do Cliente)
    - Coluna 3: Contato (telefone, WhatsApp, endereço, horário)
    - Linha de baixo: copyright + créditos
 
@@ -276,6 +285,31 @@ Escala:
 - Tabela de specs (se houver)
 - Variantes em cards (ex: GLP 2.5T, GLP 3T 3.5T)
 - CTA fixo: "Solicitar Orçamento" → abre WhatsApp pré-preenchido com nome do produto
+
+### Manutenção (`/manutencao`)
+
+Página de serviço com foco em SEO (ver seção SEO):
+
+- Hero: "Manutenção especializada de empilhadeiras no Vale do Itajaí"
+- Seção "Tipos de manutenção": preventiva, corretiva, peças, atendimento emergencial (cards)
+- Seção "Marcas e modelos atendidos" (lista visual)
+- Seção "Cidades atendidas" com links para `/atendimento/[cidade]`
+- Seção "Por que escolher" (diferenciais)
+- FAQ (Accordion shadcn)
+- CTA dupla: "Solicitar via WhatsApp" + "Já é cliente? Acessar portal"
+
+### Atendimento por cidade (`/atendimento/[cidade]`)
+
+Landing SEO local (ver seção SEO):
+
+- Hero específico da cidade: "Empilhadeiras e manutenção em {Cidade}"
+- Parágrafo contextual (porto, indústria, comércio — único por cidade)
+- Seção "Equipamentos para {Cidade}" → grid + link `/empilhadeiras` e `/construcao-civil`
+- Seção "Serviços de manutenção em {Cidade}" → link `/manutencao`
+- Tempo de atendimento estimado
+- Mapa estático da região
+- Depoimentos locais (mock)
+- CTA WhatsApp pré-preenchido com o nome da cidade
 
 ### Contato (`/contato`)
 
@@ -326,16 +360,213 @@ A sidebar começa com 1 item, mas o layout suporta adicionar items futuros sem r
 
 Todos com `next/script` estratégia `afterInteractive` ou `lazyOnload` para não bloquear render.
 
-## SEO e acessibilidade
+## SEO
 
-- `metadata` por página usando Next 15 Metadata API (title, description, OG image)
-- Schema.org JSON-LD para produtos (`Product` type) em páginas de detalhe
-- `sitemap.ts` e `robots.ts` gerados automaticamente
+O site atende uma região geográfica específica (litoral norte de Santa Catarina) e dois grupos de clientes — empresas precisando comprar/alugar equipamentos e empresas precisando de **manutenção** de empilhadeiras. A estratégia de SEO é construída em torno disso.
+
+### Cidades-alvo (região de Itajaí)
+
+Núcleo principal:
+
+- **Itajaí**
+- **Balneário Camboriú**
+- **Camboriú**
+- **Navegantes**
+- **Penha**
+- **Balneário Piçarras**
+- **Itapema**
+- **Bombinhas**
+- **Porto Belo**
+
+Secundárias (cobertas no conteúdo, sem landing dedicada):
+
+- Brusque, Tijucas, Ilhota, Luiz Alves, Ilhota, São João Batista
+
+### Mapa de palavras-chave (keyword strategy)
+
+| Cluster | Termos principais (intenção) | Página(s) alvo |
+|---|---|---|
+| Categoria geral | "empilhadeiras", "venda de empilhadeiras", "aluguel de empilhadeiras" | `/empilhadeiras` |
+| Subcategorias | "empilhadeira GLP", "empilhadeira diesel", "empilhadeira elétrica", "empilhadeira a gás", "empilhadeira lítio" | `/empilhadeiras/[slug]` |
+| Equipamentos pesados | "carregadeira", "escavadeira hidráulica", "retroescavadeira", "rolo compactador", "trator de esteira" | `/construcao-civil/[slug]` |
+| Manutenção (serviço) | "manutenção de empilhadeiras", "assistência técnica empilhadeira", "conserto de empilhadeira", "manutenção preventiva empilhadeira", "manutenção corretiva empilhadeira", "peças para empilhadeira" | `/manutencao` (página de serviço **nova**) |
+| Local (combinatório) | "empilhadeiras em Itajaí", "manutenção de empilhadeiras em Navegantes", "aluguel de empilhadeira em Balneário Camboriú", etc. — uma combinação por cidade × intenção | Página de cidade `/atendimento/[cidade]` |
+| Branded | "Fabiano Bratti", "Fabiano Bratti empilhadeiras", "UN Forklift Itajaí" | `/` (home) |
+
+### Páginas SEO novas a criar
+
+#### 1. `/manutencao` — Página de serviço de manutenção
+
+Página de serviço completa (não apenas o portal logado). Conteúdo:
+
+- Hero: "Manutenção especializada de empilhadeiras no Vale do Itajaí"
+- Tipos de serviço (preventiva, corretiva, peças, emergencial)
+- Marcas e modelos atendidos
+- Cidades onde atende (lista com links para `/atendimento/[cidade]`)
+- Diferenciais (técnicos certificados, peças originais, agilidade)
+- FAQ (com `FAQPage` Schema)
+- CTA: WhatsApp + "Cliente já cadastrado? Acessar portal"
+- Mínimo 600 palavras, naturalmente densas em variações do termo principal
+
+#### 2. `/atendimento/[cidade]` — Landing pages por cidade
+
+Uma página dinâmica gerada para cada cidade-alvo. Slugs:
+
+```
+/atendimento/itajai
+/atendimento/balneario-camboriu
+/atendimento/camboriu
+/atendimento/navegantes
+/atendimento/penha
+/atendimento/balneario-picarras
+/atendimento/itapema
+/atendimento/bombinhas
+/atendimento/porto-belo
+```
+
+Cada página inclui:
+
+- Hero: "Empilhadeiras e manutenção em {Cidade} — Fabiano Bratti"
+- Texto contextual da cidade (porto, indústria, comércio local — específico de cada uma; por exemplo Itajaí menciona porto/logística, Balneário Camboriú menciona hotéis/comércio)
+- Equipamentos disponíveis (resumo + link para `/empilhadeiras` e `/construcao-civil`)
+- Serviços de manutenção atendidos naquela cidade
+- Tempo de atendimento estimado
+- Depoimentos de clientes da região (mock por enquanto)
+- Mapa estático da cidade com destaque
+- CTA WhatsApp pré-preenchido com a cidade no texto
+- Schema `LocalBusiness` + `areaServed` apontando para a cidade
+
+Conteúdo gerado a partir de `data/cidades.ts` (objeto por cidade com slug, nome, descrição contextual, foco econômico, foto).
+
+#### 3. Páginas existentes — otimização
+
+Cada página atual recebe:
+
+- `<title>` com keyword principal + cidade-âncora (ex: "Empilhadeira GLP — Vale do Itajaí | Fabiano Bratti")
+- `<meta description>` com 150-160 caracteres, CTA + palavra-chave
+- `<h1>` único e descritivo
+- URLs em kebab-case, sem stop words desnecessárias
+
+### Metadata API (Next 15)
+
+Cada `page.tsx` exporta `metadata` ou `generateMetadata`:
+
+```ts
+export const metadata: Metadata = {
+  title: 'Empilhadeira GLP — Venda e Manutenção em Itajaí | Fabiano Bratti',
+  description: '...',
+  alternates: { canonical: 'https://fabianobratti.com/empilhadeiras/glp' },
+  openGraph: { ... },
+  twitter: { ... },
+};
+```
+
+Configuração centralizada em `lib/seo.ts`:
+
+- `SITE_URL`, `SITE_NAME`, `DEFAULT_OG_IMAGE`, `LOCATION`
+- Helper `buildMetadata({ title, description, path, image })`
+- Helper `buildLocalBusinessSchema(cidade?)`
+
+### Open Graph e Twitter Cards
+
+- OG image padrão: 1200×630 com logo + texto editorial
+- Imagens OG específicas para páginas de produto (foto do produto + título)
+- `twitter:card` = `summary_large_image`
+
+### Dados estruturados (Schema.org JSON-LD)
+
+Injetados via `<script type="application/ld+json">` em cada página relevante:
+
+| Página | Schema |
+|---|---|
+| Todas | `Organization` no layout root (nome, logo, endereço, telefone, sameAs Instagram/WhatsApp) |
+| Home | `Organization` + `WebSite` com `SearchAction` |
+| `/empilhadeiras/[slug]`, `/construcao-civil/[slug]` | `Product` (nome, descrição, imagem, brand, offers se houver preço — caso contrário "Solicite orçamento") |
+| `/manutencao` | `Service` + `FAQPage` (perguntas frequentes) |
+| `/atendimento/[cidade]` | `LocalBusiness` com `areaServed`, `geo`, `address` |
+| `/contato` | `LocalBusiness` completo |
+
+Componente `<JsonLd data={...} />` em `components/seo/JsonLd.tsx`.
+
+### Sitemap e robots
+
+- `app/sitemap.ts` (gerado dinamicamente) — inclui todas as rotas estáticas + dinâmicas (produtos, cidades)
+- `app/robots.ts` — permite tudo exceto `/portal/*`, `/login` (não devem ser indexados)
+- `sitemap.xml` registrado no Google Search Console
+
+### Conteúdo on-page
+
+- **H1 único por página**, contendo a palavra-chave principal naturalmente
+- **H2/H3 hierárquicos** organizando subtópicos com variações da keyword
+- **Densidade natural** — proibido keyword stuffing; objetivo é leitura humana fluida
+- **Textos longos onde fazem sentido** (manutenção, cidades, categoria) — mínimo 400 palavras em landings de SEO
+- **Links internos contextuais** entre páginas relacionadas:
+  - `/manutencao` → cada cidade
+  - `/atendimento/[cidade]` → produtos + `/manutencao`
+  - Produto → `/manutencao` ("Já tem este equipamento? Conheça nosso serviço de manutenção")
+- **Alt text** de imagens descritivo e quando aplicável incluindo localização
+
+### SEO técnico
+
+- **Performance** — Lighthouse ≥ 90 (Core Web Vitals dentro do verde: LCP < 2.5s, FID < 100ms, CLS < 0.1)
+- **Imagens** — `next/image` com `priority` em hero, dimensões corretas, formatos WebP/AVIF
+- **Fontes** — `next/font` (sem FOUT/CLS)
+- **HTML semântico** — `<header>`, `<main>`, `<nav>`, `<article>`, `<section>`, `<footer>`
+- **Lang** — `lang="pt-BR"` no `<html>`
+- **Canonical URLs** em todas as páginas
+- **Hreflang** — não necessário (pt-BR único)
+- **404 e 500** — páginas customizadas (`not-found.tsx`, `error.tsx`) com links de navegação para reter usuário
+- **HTTPS** — automático na Vercel
+- **Redirects 301** — se algum URL antigo mudar (ex: `/paginas/empilhadeiras/glp.html` → `/empilhadeiras/glp`), configurar em `next.config.ts`
+
+### Google Business e off-page
+
+**Google Business Profile já existe:** https://share.google/qlJlxWgMJJtevQxeo
+
+Aproveitar e integrar:
+
+- Extrair dados oficiais do perfil (endereço, telefone, horário, categoria, sameAs) e usar como **fonte de verdade** no `Organization` / `LocalBusiness` Schema.org do site
+- Adicionar **link direto para o perfil** no rodapé do site e na página `/contato` ("Ver no Google Maps" / "Avaliações no Google")
+- Garantir **NAP consistente** (Name, Address, Phone) entre site, GBP, Instagram e WhatsApp — qualquer divergência prejudica SEO local
+- Configurar `sameAs` no JSON-LD apontando para o perfil GBP, Instagram (`fabianobratti.empilhadeiras`) e WhatsApp
+- Incluir GBP no `lib/seo.ts` como constante `GOOGLE_BUSINESS_URL`
+
+Itens recomendados para o cliente fazer (fora do código):
+
+- [ ] Validar/completar perfil GBP: fotos atualizadas, descrição com palavras-chave, categoria principal "Loja de empilhadeiras" + secundárias (Serviço de manutenção de máquinas, Aluguel de equipamentos pesados)
+- [ ] Pedir avaliações de clientes existentes via GBP (Reviews também aparecem no site via Elfsight)
+- [ ] Adicionar posts/atualizações regulares no GBP (sinaliza atividade para o Google)
+- [ ] Cadastrar no **Bing Webmaster Tools**
+- [ ] Considerar listagens locais (Solutudo, ACII, lista da Câmara de Comércio de Itajaí)
+
+### Monitoramento
+
+- **Google Search Console** — adicionar propriedade, enviar sitemap
+- **Google Analytics 4** — já configurado (`G-SZ721W5TLQ`), validar funcionando no novo site
+- Eventos GA4 customizados:
+  - Click em CTA WhatsApp
+  - Submit do form de contato
+  - Click em "Solicitar Orçamento"
+  - Login no portal
+- Relatórios mensais para acompanhar tráfego orgânico por keyword/cidade
+
+### Critérios de sucesso SEO
+
+- [ ] Top 3 do Google para "empilhadeiras Itajaí" e "manutenção de empilhadeiras Vale do Itajaí" em até 6 meses
+- [ ] Página `/manutencao` rankeando para "manutenção de empilhadeiras"
+- [ ] Cada landing de cidade indexada e aparecendo nas buscas locais
+- [ ] Tráfego orgânico mensal crescendo a partir do baseline atual do GA
+- [ ] CTR melhor que média da indústria para snippets (titles e descriptions otimizados)
+
+## Acessibilidade
+
 - Imagens com `alt` descritivo (migrado de cada `<img>` atual)
 - Foco visível em todos interativos
 - Navegação por teclado funcional em sidebar e dialogs
 - `prefers-reduced-motion` respeitado nas animações
-- Lighthouse alvo: ≥ 90 em Performance, Accessibility, Best Practices, SEO
+- Contraste mínimo WCAG AA (4.5:1) em texto sobre fundo
+- Roles ARIA em componentes interativos (shadcn/ui já entrega correto)
+- Lighthouse Accessibility ≥ 95
 
 ## Migração de assets
 
@@ -362,13 +593,18 @@ Todos com `next/script` estratégia `afterInteractive` ou `lazyOnload` para não
 - [ ] Todas as páginas do site atual têm equivalente no novo (sem perda de conteúdo)
 - [ ] Site público segue direção visual "Premium Industrial" aprovada
 - [ ] Área do cliente acessível em `/login` → `/portal`, com mock funcional (entra com qualquer credencial)
-- [ ] Lighthouse ≥ 90 em todas as métricas principais
+- [ ] Lighthouse ≥ 90 em Performance, Best Practices, SEO; ≥ 95 em Accessibility
 - [ ] Build sem warnings de TypeScript
 - [ ] Deploy em Vercel funcional com domínio `fabianobratti.com`
 - [ ] Google Analytics rastreando público (não rastreando portal)
 - [ ] WhatsApp widget aparece no público (não no portal)
 - [ ] Reviews Elfsight aparece na home
 - [ ] Todos os assets atuais migrados, arquivos antigos deletados
+- [ ] Página `/manutencao` criada e otimizada para SEO
+- [ ] Landings `/atendimento/[cidade]` geradas para todas as cidades-alvo
+- [ ] Schema.org JSON-LD injetado em todas as páginas relevantes
+- [ ] `sitemap.xml` e `robots.txt` gerados e válidos
+- [ ] Search Console configurado e sitemap enviado pós-deploy
 
 ## Riscos e mitigações
 
