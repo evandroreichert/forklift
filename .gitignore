@@ -1,0 +1,26 @@
+# Brainstorming companion artifacts
+.superpowers/
+
+# Next.js
+node_modules/
+.next/
+out/
+build/
+.vercel
+.env*.local
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
