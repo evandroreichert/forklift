@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Logo } from './Logo';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, Phone, MapPin, ChevronRight } from 'lucide-react';
 import { PHONE, WHATSAPP_URL } from '@/lib/seo';
 
 const NAV_ITEMS = [
@@ -23,17 +24,40 @@ const WaIcon = () => (
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <>
+      {/* Yellow accent strip */}
+      <div className="h-1 w-full bg-brand-yellow" aria-hidden />
+
       {/* Top utility bar */}
-      <div className="hidden border-b border-ink-100 bg-surface-alt md:block">
-        <div className="container-wide flex h-9 items-center justify-between text-[12px] text-ink-500">
-          <span>Atendimento técnico em até 1h · Penha · Vale do Itajaí</span>
+      <div className="hidden border-b border-white/10 bg-ink-950 md:block">
+        <div className="container-wide flex h-10 items-center justify-between text-[12px] text-ink-100/70">
           <div className="flex items-center gap-5">
-            <a href={`tel:${PHONE.replace(/\D/g, '')}`} className="font-medium text-ink-700 hover:text-ink-950">
+            <span className="inline-flex items-center gap-1.5">
+              <MapPin className="size-3.5 text-brand-yellow" />
+              Sede em Penha · Vale do Itajaí · SC
+            </span>
+            <span className="hidden lg:inline-flex items-center gap-1.5">
+              <span className="size-1.5 animate-pulse rounded-full bg-brand-wa" />
+              Atendimento técnico em até 1 hora
+            </span>
+          </div>
+          <div className="flex items-center gap-5">
+            <a href={`tel:${PHONE.replace(/\D/g, '')}`} className="inline-flex items-center gap-1.5 font-medium text-white hover:text-brand-yellow">
+              <Phone className="size-3.5" />
               {PHONE}
             </a>
-            <Link href="/login" className="font-medium text-ink-700 hover:text-ink-950">
+            <Link href="/login" className="font-medium text-ink-100/70 hover:text-brand-yellow">
               Área do Cliente
             </Link>
           </div>
@@ -41,37 +65,45 @@ export function Header() {
       </div>
 
       {/* Main header */}
-      <header className="sticky top-0 z-50 border-b border-ink-100 bg-white/95 backdrop-blur-md">
-        <div className="container-wide flex h-16 items-center justify-between gap-6">
-          <Logo />
+      <header className={`sticky top-0 z-50 border-b transition-shadow ${scrolled ? 'border-white/10 shadow-lg shadow-black/30' : 'border-white/5'} bg-ink-950/95 backdrop-blur-md`}>
+        <div className="container-wide flex h-16 items-center justify-between gap-6 md:h-18">
+          <Logo className="brightness-0 invert" />
+
           <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex" aria-label="Navegação principal">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-3 py-2 text-small font-medium text-ink-700 transition-colors hover:text-ink-950"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const active = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`relative px-3 py-2 text-small font-medium transition-colors ${active ? 'text-brand-yellow' : 'text-ink-100/85 hover:text-white'}`}
+                >
+                  {item.label}
+                  {active && <span className="absolute inset-x-3 -bottom-px h-px bg-brand-yellow" aria-hidden />}
+                </Link>
+              );
+            })}
           </nav>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-2 rounded bg-brand-wa px-4 py-2 text-small font-semibold text-white transition-colors hover:bg-brand-wa-dark md:inline-flex"
-          >
-            <WaIcon />
-            <span className="hidden lg:inline">Solicitar Orçamento</span>
-            <span className="lg:hidden">WhatsApp</span>
-          </a>
+
+          <div className="hidden items-center gap-2 md:flex">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded bg-brand-wa px-4 py-2.5 text-small font-semibold text-white transition-colors hover:bg-brand-wa-dark"
+            >
+              <WaIcon />
+              <span className="hidden lg:inline">Solicitar Orçamento</span>
+              <span className="lg:hidden">WhatsApp</span>
+            </a>
+          </div>
 
           {/* Mobile drawer trigger */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger className="lg:hidden" aria-label="Abrir menu">
-              <Menu className="size-6 text-ink-950" />
+              <Menu className="size-6 text-white" />
             </SheetTrigger>
-            <SheetContent side="right" className="bg-white border-ink-100">
+            <SheetContent side="right" className="bg-ink-950 border-white/10">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <nav className="mt-8 flex flex-col gap-1" aria-label="Navegação móvel">
                 {NAV_ITEMS.map((item) => (
@@ -79,9 +111,10 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="px-3 py-3 text-body font-medium text-ink-950 transition-colors hover:text-brand-yellow-dim"
+                    className="flex items-center justify-between rounded px-3 py-3 text-body font-medium text-white transition-colors hover:bg-white/5 hover:text-brand-yellow"
                   >
                     {item.label}
+                    <ChevronRight className="size-4 text-ink-300" />
                   </Link>
                 ))}
                 <a
@@ -97,14 +130,15 @@ export function Header() {
                 <Link
                   href="/login"
                   onClick={() => setOpen(false)}
-                  className="mt-2 flex items-center justify-center gap-2 rounded border border-ink-200 px-4 py-3 text-body font-medium text-ink-950"
+                  className="mt-2 flex items-center justify-center gap-2 rounded border border-brand-yellow px-4 py-3 text-body font-medium text-brand-yellow"
                 >
                   Área do Cliente
                 </Link>
                 <a
                   href={`tel:${PHONE.replace(/\D/g, '')}`}
-                  className="mt-4 text-center text-small text-ink-500"
+                  className="mt-4 inline-flex items-center justify-center gap-1.5 text-center text-small text-ink-100/80"
                 >
+                  <Phone className="size-3.5 text-brand-yellow" />
                   {PHONE}
                 </a>
               </nav>
