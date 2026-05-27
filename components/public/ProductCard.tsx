@@ -48,20 +48,21 @@ export function ProductCard({ produto }: { produto: Produto }) {
         </Link>
         <p className="mt-1 line-clamp-2 text-small text-ink-500">{produto.titulo}</p>
 
-        <div className="mt-4 flex flex-1 items-end gap-2">
+        <div className="mt-5 flex flex-1 flex-col items-stretch justify-end gap-2.5">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 rounded bg-brand-yellow px-3 py-2.5 text-center text-small font-semibold text-ink-950 transition-colors hover:bg-brand-yellow-dim"
+            className="inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded bg-brand-yellow px-4 py-3 text-small font-semibold text-ink-950 transition-colors hover:bg-brand-yellow-dim"
           >
             Solicitar Orçamento
           </a>
           <Link
             href={href}
-            className="rounded border border-ink-200 px-3 py-2.5 text-small font-medium text-ink-700 transition-colors hover:border-ink-950 hover:text-ink-950"
+            className="inline-flex items-center justify-center gap-1 text-small font-medium text-ink-500 transition-colors hover:text-ink-950"
           >
-            Detalhes
+            Ver detalhes
+            <span aria-hidden>→</span>
           </Link>
         </div>
       </div>

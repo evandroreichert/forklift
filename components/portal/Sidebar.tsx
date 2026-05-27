@@ -19,9 +19,9 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="hidden w-60 shrink-0 flex-col border-r border-ink-100 bg-surface-alt md:flex">
-      <div className="border-b border-ink-100 p-6">
-        <Logo />
+    <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-ink-900 md:flex">
+      <div className="border-b border-white/10 p-6">
+        <Logo className="brightness-0 invert" />
       </div>
 
       <nav className="flex-1 p-4" aria-label="Navegação do portal">
@@ -32,10 +32,10 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 rounded px-3 py-2 text-small font-medium ${
+                  className={`flex items-center gap-3 rounded px-3 py-2.5 text-small font-medium transition-colors ${
                     active
-                      ? 'bg-ink-100 text-brand-yellow'
-                      : 'text-ink-950 hover:bg-ink-100/50'
+                      ? 'bg-brand-yellow/10 text-brand-yellow'
+                      : 'text-ink-100/80 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <item.icon className="size-4" />
@@ -47,14 +47,14 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <div className="border-t border-ink-100 p-4">
-        <p className="text-label text-ink-500">Cliente</p>
-        <p className="mt-1 truncate text-small font-medium text-ink-950">
+      <div className="border-t border-white/10 p-4">
+        <p className="text-label uppercase tracking-wider text-ink-100/50">Cliente</p>
+        <p className="mt-1.5 truncate text-small font-medium text-white">
           {CLIENTE_DEMO.nomeEmpresa}
         </p>
         <button
           onClick={handleLogout}
-          className="mt-4 flex w-full items-center gap-2 rounded border border-ink-100 px-3 py-2 text-small text-ink-500 hover:border-brand-yellow hover:text-brand-yellow"
+          className="mt-4 flex w-full items-center gap-2 rounded border border-white/10 px-3 py-2 text-small text-ink-100/70 transition-colors hover:border-brand-yellow hover:text-brand-yellow"
         >
           <LogOut className="size-4" />
           Sair

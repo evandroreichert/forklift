@@ -30,7 +30,7 @@ export function Hero() {
         <div className="max-w-3xl">
           <p className="inline-flex items-center gap-3 text-label uppercase tracking-[0.18em] text-brand-yellow">
             <span className="h-px w-8 bg-brand-yellow" aria-hidden />
-            Desde Penha · Vale do Itajaí
+            Fabiano Bratti · Vale do Itajaí
           </p>
 
           <h1 className="mt-6 font-display text-h1 font-bold leading-[1.02] text-white md:text-display">

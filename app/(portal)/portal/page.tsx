@@ -19,20 +19,23 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <div>
-        <p className="text-label uppercase text-ink-500">Bem-vindo</p>
-        <h1 className="mt-2 font-display text-h1 text-ink-950">
+        <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
+        <h1 className="mt-2 font-display text-h1 font-bold text-white">
           Olá, <span className="text-brand-yellow">{CLIENTE_DEMO.nomeEmpresa}</span>
         </h1>
+        <p className="mt-2 text-body text-ink-100/65">
+          Acompanhe relatórios técnicos da sua frota.
+        </p>
       </div>
 
       <DashboardStats />
 
       <div>
-        <div className="flex items-baseline justify-between">
-          <h2 className="font-display text-h2 text-ink-950">Manutenções recentes</h2>
-          <p className="text-small text-ink-500">{manutencoes.length} no total</p>
+        <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
+          <h2 className="font-display text-h2 font-bold text-white">Manutenções recentes</h2>
+          <p className="text-small text-ink-100/60">{manutencoes.length} no total</p>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {manutencoes.map((m) => (

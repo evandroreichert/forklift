@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Logo } from './Logo';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Phone, MapPin, ChevronRight } from 'lucide-react';
+import { Menu, Phone, MapPin, ChevronRight, User } from 'lucide-react';
 import { PHONE, WHATSAPP_URL } from '@/lib/seo';
 
 const NAV_ITEMS = [
@@ -57,9 +57,6 @@ export function Header() {
               <Phone className="size-3.5" />
               {PHONE}
             </a>
-            <Link href="/login" className="font-medium text-ink-100/70 hover:text-brand-yellow">
-              Área do Cliente
-            </Link>
           </div>
         </div>
       </div>
@@ -86,15 +83,22 @@ export function Header() {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-2 rounded border border-brand-yellow/60 bg-brand-yellow/10 px-3.5 py-2 text-small font-semibold text-brand-yellow transition-colors hover:bg-brand-yellow hover:text-ink-950"
+            >
+              <User className="size-4" />
+              <span className="hidden lg:inline">Área do Cliente</span>
+              <span className="lg:hidden">Cliente</span>
+            </Link>
             <a
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded bg-brand-wa px-4 py-2.5 text-small font-semibold text-white transition-colors hover:bg-brand-wa-dark"
+              className="inline-flex items-center gap-2 rounded bg-brand-wa px-3.5 py-2 text-small font-semibold text-white transition-colors hover:bg-brand-wa-dark"
             >
               <WaIcon />
-              <span className="hidden lg:inline">Solicitar Orçamento</span>
-              <span className="lg:hidden">WhatsApp</span>
+              <span className="hidden lg:inline">WhatsApp</span>
             </a>
           </div>
 

@@ -2,13 +2,29 @@
 
 import { EQUIPAMENTOS_DEMO } from '@/data/mock/equipamentos';
 import { MANUTENCOES_DEMO } from '@/data/mock/manutencoes';
+import { Truck, CheckCircle2, CalendarClock, Activity } from 'lucide-react';
 
-function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
+function Stat({
+  label,
+  value,
+  hint,
+  icon: Icon,
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
   return (
-    <div className="border border-ink-100 bg-surface-alt p-6">
-      <p className="text-label uppercase text-ink-500">{label}</p>
-      <p className="mt-3 font-display text-h2 text-ink-950">{value}</p>
-      {hint && <p className="mt-2 text-small text-ink-500">{hint}</p>}
+    <div className="rounded-lg border border-white/10 bg-ink-900 p-6">
+      <div className="flex items-center gap-3">
+        <div className="flex size-9 items-center justify-center rounded-md bg-brand-yellow/10 text-brand-yellow">
+          <Icon className="size-4" />
+        </div>
+        <p className="text-label uppercase tracking-wider text-ink-100/55">{label}</p>
+      </div>
+      <p className="mt-4 font-display text-h2 font-bold text-white">{value}</p>
+      {hint && <p className="mt-1.5 text-small text-ink-100/60">{hint}</p>}
     </div>
   );
 }
@@ -31,14 +47,15 @@ export function DashboardStats() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <Stat label="Equipamentos ativos" value={String(equipamentosAtivos)} />
-      <Stat label="Manutenções no mês" value={String(noMes)} hint="Concluídas" />
+      <Stat label="Equipamentos ativos" value={String(equipamentosAtivos)} icon={Truck} />
+      <Stat label="Manutenções no mês" value={String(noMes)} hint="Concluídas" icon={CheckCircle2} />
       <Stat
         label="Próxima agendada"
         value={proximaAgendada ? new Date(proximaAgendada.data).toLocaleDateString('pt-BR') : '—'}
         hint={proxEquip?.modelo}
+        icon={CalendarClock}
       />
-      <Stat label="Em andamento" value={String(pendentes)} />
+      <Stat label="Em andamento" value={String(pendentes)} icon={Activity} />
     </div>
   );
 }

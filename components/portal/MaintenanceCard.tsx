@@ -6,9 +6,9 @@ import { formatDate } from '@/lib/utils';
 import type { Manutencao } from '@/lib/types';
 
 const statusLabel = {
-  concluida: { label: 'Concluída', className: 'bg-green-100 text-green-800 border-green-300' },
-  em_andamento: { label: 'Em andamento', className: 'bg-amber-100 text-amber-800 border-amber-300' },
-  agendada: { label: 'Agendada', className: 'bg-blue-100 text-blue-800 border-blue-300' },
+  concluida: { label: 'Concluída', className: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' },
+  em_andamento: { label: 'Em andamento', className: 'bg-amber-500/10 text-amber-300 border-amber-500/30' },
+  agendada: { label: 'Agendada', className: 'bg-sky-500/10 text-sky-300 border-sky-500/30' },
 } as const;
 
 const tipoLabel = {
@@ -29,24 +29,24 @@ export function MaintenanceCard({
   return (
     <button
       onClick={onClick}
-      className="block w-full border border-ink-100 bg-surface-alt p-6 text-left transition-colors hover:border-brand-yellow"
+      className="block w-full rounded-lg border border-white/10 bg-ink-900 p-6 text-left transition-colors hover:border-brand-yellow/50"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-label uppercase text-ink-500">{formatDate(manutencao.data)}</p>
-          <h3 className="mt-2 truncate font-display text-h3 text-ink-950">
+          <p className="text-label uppercase tracking-wider text-ink-100/55">{formatDate(manutencao.data)}</p>
+          <h3 className="mt-2 truncate font-display text-h3 font-semibold text-white">
             {eq?.modelo ?? 'Equipamento'}
           </h3>
-          <p className="mt-1 font-mono text-small text-ink-500">{eq?.serie}</p>
+          <p className="mt-1 font-mono text-small text-ink-100/60">{eq?.serie}</p>
         </div>
         <Badge className={`shrink-0 border ${status.className}`}>{status.label}</Badge>
       </div>
-      <div className="mt-4 flex items-center gap-3 text-small">
-        <span className="text-ink-500">Tipo:</span>
-        <span className="text-ink-950">{tipoLabel[manutencao.tipo]}</span>
-        <span className="text-ink-700">|</span>
-        <span className="text-ink-500">Técnico:</span>
-        <span className="text-ink-950">{manutencao.tecnico}</span>
+      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-small">
+        <span className="text-ink-100/55">Tipo:</span>
+        <span className="text-white">{tipoLabel[manutencao.tipo]}</span>
+        <span className="text-white/20">|</span>
+        <span className="text-ink-100/55">Técnico:</span>
+        <span className="text-white">{manutencao.tecnico}</span>
       </div>
     </button>
   );

@@ -201,7 +201,7 @@ export default function HomePage() {
           <div className="relative">
             <div className="relative aspect-[5/6] overflow-hidden rounded-xl bg-ink-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)]">
               <Image
-                src="https://images.unsplash.com/photo-1581092446327-9b52bd1570c2?w=1000&q=85&auto=format&fit=crop"
+                src="https://images.unsplash.com/photo-1605600659908-0ef719419d41?w=1200&q=85&auto=format&fit=crop"
                 alt="Técnico realizando manutenção em empilhadeira"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
