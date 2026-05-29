@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "db:apply": "dotenv -e .env.local -- node scripts/apply-migrations.mjs",
     "db:types": "supabase gen types typescript --linked > lib/database.types.ts",
     "test": "dotenv -e .env.local -- vitest run",
     "test:watch": "dotenv -e .env.local -- vitest"
