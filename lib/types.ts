@@ -74,3 +74,12 @@ export interface Manutencao {
   proximaSugerida?: string;
   custo?: number;
 }
+
+// Portal — domain types (Fatia 1)
+import type { Database } from '@/lib/database.types';
+
+export type UserRole = Database['public']['Enums']['user_role'];
+export type FuelType = Database['public']['Enums']['fuel_type'];
+export type Profile = Database['public']['Tables']['profiles']['Row'];
+export type ClientCompany = Database['public']['Tables']['client_companies']['Row'];
+export type Machine = Database['public']['Tables']['machines']['Row'];
