@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { Suspense, useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,6 +12,14 @@ import { loginAction, type LoginState } from './actions';
 const INITIAL: LoginState = { error: null };
 
 export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const [state, formAction, pending] = useActionState(loginAction, INITIAL);
   const searchParams = useSearchParams();
   const inactiveError = searchParams.get('error') === 'inactive'

@@ -1,50 +1,70 @@
-'use client';
+import { requireProfile } from '@/lib/auth';
+import { createClient } from '@/lib/supabase/server';
+import Link from 'next/link';
+import { Users, Building2, Settings, Wrench } from 'lucide-react';
 
-import { useState } from 'react';
-import { DashboardStats } from '@/components/portal/DashboardStats';
-import { MaintenanceCard } from '@/components/portal/MaintenanceCard';
-import { MaintenanceDialog } from '@/components/portal/MaintenanceDialog';
-import { CLIENTE_DEMO } from '@/data/mock/cliente';
-import { getManutencoesRecentes } from '@/data/mock/manutencoes';
-import type { Manutencao } from '@/lib/types';
+async function getAdminStats() {
+  const supabase = await createClient();
+  const [{ count: usuarios }, { count: clientes }, { count: maquinas }] = await Promise.all([
+    supabase.from('profiles').select('*', { count: 'exact', head: true }),
+    supabase.from('client_companies').select('*', { count: 'exact', head: true }),
+    supabase.from('machines').select('*', { count: 'exact', head: true }),
+  ]);
+  return { usuarios: usuarios ?? 0, clientes: clientes ?? 0, maquinas: maquinas ?? 0 };
+}
 
-export default function PortalPage() {
-  const [selected, setSelected] = useState<Manutencao | null>(null);
-  const [open, setOpen] = useState(false);
-  const manutencoes = getManutencoesRecentes();
+export default async function PortalPage() {
+  const profile = await requireProfile();
 
-  function handleOpen(m: Manutencao) {
-    setSelected(m);
-    setOpen(true);
-  }
-
-  return (
-    <div className="space-y-12">
-      <div>
-        <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
-        <h1 className="mt-2 font-display text-h1 font-bold text-white">
-          Olá, <span className="text-brand-yellow">{CLIENTE_DEMO.nomeEmpresa}</span>
-        </h1>
-        <p className="mt-2 text-body text-ink-100/65">
-          Acompanhe relatórios técnicos da sua frota.
-        </p>
-      </div>
-
-      <DashboardStats />
-
-      <div>
-        <div className="flex items-baseline justify-between border-b border-white/10 pb-4">
-          <h2 className="font-display text-h2 font-bold text-white">Manutenções recentes</h2>
-          <p className="text-small text-ink-100/60">{manutencoes.length} no total</p>
+  if (profile.role === 'admin') {
+    const stats = await getAdminStats();
+    const cards = [
+      { href: '/portal/admin/usuarios', label: 'Usuários', count: stats.usuarios, icon: Users },
+      { href: '/portal/admin/clientes', label: 'Clientes', count: stats.clientes, icon: Building2 },
+      { href: '/portal/admin/maquinas', label: 'Máquinas', count: stats.maquinas, icon: Settings },
+    ];
+    return (
+      <div className="space-y-10">
+        <div>
+          <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
+          <h1 className="mt-2 font-display text-h1 font-bold text-white">
+            Olá, <span className="text-brand-yellow">{profile.full_name}</span>
+          </h1>
         </div>
-        <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          {manutencoes.map((m) => (
-            <MaintenanceCard key={m.id} manutencao={m} onClick={() => handleOpen(m)} />
+        <div className="grid gap-4 sm:grid-cols-3">
+          {cards.map(({ href, label, count, icon: Icon }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group rounded-xl border border-white/10 bg-ink-900/60 p-6 transition-colors hover:border-brand-yellow/40"
+            >
+              <Icon className="size-6 text-brand-yellow" />
+              <p className="mt-4 text-label uppercase tracking-wider text-ink-100/60">{label}</p>
+              <p className="mt-1 font-display text-h2 font-bold text-white">{count}</p>
+            </Link>
           ))}
         </div>
       </div>
+    );
+  }
 
-      <MaintenanceDialog manutencao={selected} open={open} onOpenChange={setOpen} />
+  const placeholderTitle = profile.role === 'mechanic'
+    ? 'Em breve: criar relatório de manutenção'
+    : 'Em breve: visualizar relatórios da sua empresa';
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
+        <h1 className="mt-2 font-display text-h1 font-bold text-white">
+          Olá, <span className="text-brand-yellow">{profile.full_name}</span>
+        </h1>
+      </div>
+      <div className="rounded-xl border border-dashed border-white/15 bg-ink-900/40 px-8 py-12 text-center">
+        <Wrench className="mx-auto size-10 text-brand-yellow/70" />
+        <h2 className="mt-4 font-display text-h3 font-bold text-white">{placeholderTitle}</h2>
+        <p className="mt-2 text-small text-ink-100/60">Esta funcionalidade chega na próxima fatia.</p>
+      </div>
     </div>
   );
 }
