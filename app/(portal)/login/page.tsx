@@ -1,33 +1,23 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useActionState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/public/Logo';
-import { login } from '@/lib/auth-mock';
-import { ArrowLeft, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowLeft, ShieldCheck } from 'lucide-react';
+import { loginAction, type LoginState } from './actions';
+
+const INITIAL: LoginState = { error: null };
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (submitting) return;
-    setSubmitting(true);
-    login(email, senha);
-    router.push('/portal');
-  }
-
-  function handleDemo() {
-    setSubmitting(true);
-    login('demo@fabianobratti.com', 'demo');
-    router.push('/portal');
-  }
+  const [state, formAction, pending] = useActionState(loginAction, INITIAL);
+  const searchParams = useSearchParams();
+  const inactiveError = searchParams.get('error') === 'inactive'
+    ? 'Sua conta foi desativada. Contate o admin.'
+    : null;
+  const displayError = state.error ?? inactiveError;
 
   return (
     <main className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-6 py-12 text-white">
@@ -57,61 +47,57 @@ export default function LoginPage() {
               <ShieldCheck className="size-3.5" />
               Acesso restrito
             </p>
-            <h1 className="mt-3 font-display text-h2 font-bold text-white">Área do Cliente</h1>
+            <h1 className="mt-3 font-display text-h2 font-bold text-white">Portal FB Empilhadeiras</h1>
             <p className="mt-2 text-small text-ink-100/65">
-              Acompanhe relatórios de manutenção da sua frota de empilhadeiras.
+              Acesso para mecânicos, clientes e administradores.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 px-8 py-7">
+          <form action={formAction} className="space-y-5 px-8 py-7">
             <div>
               <Label htmlFor="email" className="text-ink-100">E-mail</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 required
+                autoComplete="email"
                 className="mt-2 border-white/15 bg-ink-950/50 text-white placeholder:text-ink-300"
                 placeholder="seu@email.com"
               />
             </div>
             <div>
-              <Label htmlFor="senha" className="text-ink-100">Senha</Label>
+              <Label htmlFor="password" className="text-ink-100">Senha</Label>
               <Input
-                id="senha"
+                id="password"
+                name="password"
                 type="password"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
                 required
+                autoComplete="current-password"
                 className="mt-2 border-white/15 bg-ink-950/50 text-white placeholder:text-ink-300"
                 placeholder="••••••••"
               />
             </div>
+
+            {displayError && (
+              <p className="rounded border border-red-500/40 bg-red-500/10 px-3 py-2 text-small text-red-200">
+                {displayError}
+              </p>
+            )}
+
             <button
               type="submit"
-              disabled={submitting}
+              disabled={pending}
               className="inline-flex w-full items-center justify-center gap-2 rounded bg-brand-yellow px-6 py-3 text-small font-bold uppercase tracking-wider text-ink-950 transition-colors hover:bg-white disabled:opacity-50"
             >
-              {submitting ? 'Entrando…' : 'Entrar no portal'}
+              {pending ? 'Entrando…' : 'Entrar no portal'}
             </button>
+
+            <p className="text-center text-[12px] text-ink-100/55">
+              Esqueceu a senha? Contate o administrador para resetar.
+            </p>
           </form>
-
-          <div className="border-t border-white/10 px-8 py-5">
-            <button
-              onClick={handleDemo}
-              disabled={submitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded border border-white/15 bg-white/[0.03] px-6 py-3 text-small font-medium uppercase tracking-wider text-white/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow disabled:opacity-50"
-            >
-              <Sparkles className="size-4" />
-              Entrar como demonstração
-            </button>
-          </div>
         </div>
-
-        <p className="mt-6 text-center text-[12px] text-ink-100/45">
-          Modo demonstração — qualquer e-mail e senha entram. Os dados exibidos são fictícios.
-        </p>
       </div>
     </main>
   );
