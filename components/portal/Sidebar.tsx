@@ -1,33 +1,43 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/public/Logo';
-import { CLIENTE_DEMO } from '@/data/mock/cliente';
-import { logout } from '@/lib/auth-mock';
-import { Wrench, LogOut } from 'lucide-react';
+import { Wrench, LogOut, Users, Building2, Settings, LayoutDashboard } from 'lucide-react';
+import type { Profile } from '@/lib/types';
+import { logoutAction } from '@/app/(portal)/portal/actions';
 
-const NAV = [{ href: '/portal', label: 'Manutenções', icon: Wrench }];
+type NavItem = { href: string; label: string; icon: React.ComponentType<{ className?: string }> };
 
-export function Sidebar() {
+const NAV_BY_ROLE: Record<Profile['role'], NavItem[]> = {
+  admin: [
+    { href: '/portal', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/portal/admin/usuarios', label: 'Usuários', icon: Users },
+    { href: '/portal/admin/clientes', label: 'Clientes', icon: Building2 },
+    { href: '/portal/admin/maquinas', label: 'Máquinas', icon: Settings },
+  ],
+  mechanic: [
+    { href: '/portal', label: 'Manutenções', icon: Wrench },
+  ],
+  client: [
+    { href: '/portal', label: 'Relatórios', icon: Wrench },
+  ],
+};
+
+export function Sidebar({ profile }: { profile: Profile }) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  function handleLogout() {
-    logout();
-    router.replace('/login');
-  }
+  const nav = NAV_BY_ROLE[profile.role];
 
   return (
-    <aside className="hidden w-60 shrink-0 flex-col border-r border-white/10 bg-ink-900 md:flex">
+    <aside className="hidden w-64 shrink-0 flex-col border-r border-white/10 bg-ink-900 md:flex">
       <div className="border-b border-white/10 p-6">
         <Logo className="brightness-0 invert" />
       </div>
 
       <nav className="flex-1 p-4" aria-label="Navegação do portal">
         <ul className="space-y-1">
-          {NAV.map((item) => {
-            const active = pathname === item.href;
+          {nav.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <li key={item.href}>
                 <Link
@@ -47,19 +57,15 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <div className="border-t border-white/10 p-4">
-        <p className="text-label uppercase tracking-wider text-ink-100/50">Cliente</p>
-        <p className="mt-1.5 truncate text-small font-medium text-white">
-          {CLIENTE_DEMO.nomeEmpresa}
-        </p>
+      <form action={logoutAction} className="border-t border-white/10 p-4">
         <button
-          onClick={handleLogout}
-          className="mt-4 flex w-full items-center gap-2 rounded border border-white/10 px-3 py-2 text-small text-ink-100/70 transition-colors hover:border-brand-yellow hover:text-brand-yellow"
+          type="submit"
+          className="flex w-full items-center gap-2 rounded border border-white/10 px-3 py-2 text-small text-ink-100/70 transition-colors hover:border-brand-yellow hover:text-brand-yellow"
         >
           <LogOut className="size-4" />
           Sair
         </button>
-      </div>
+      </form>
     </aside>
   );
 }
