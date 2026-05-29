@@ -1,0 +1,22 @@
+-- Este arquivo NÃO é executado em produção automaticamente.
+-- Em produção, o bootstrap do user admin é feito manualmente:
+--
+-- 1. Supabase Dashboard > Authentication > Add user
+--    Email: fabiano@fb.com.br
+--    Senha: <senha forte temporária>
+--    "Auto Confirm User": ON
+--
+-- 2. Pegar o UUID do user criado e rodar no SQL Editor:
+--
+--    insert into profiles (id, full_name, role)
+--    values ('<uuid>', 'Fabiano Bratti', 'admin');
+--
+-- 3. Logar em /login e criar demais usuários pelo painel.
+
+-- Para DEV local (supabase start), o supabase db reset roda este arquivo —
+-- útil pra pré-popular um admin de teste. Descomente as 2 linhas abaixo
+-- se quiser admin pré-criado em dev:
+
+-- insert into auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, aud, role)
+-- values ('00000000-0000-0000-0000-000000000001', 'admin@local.dev', crypt('admin123', gen_salt('bf')), now(), '{}', '{}', 'authenticated', 'authenticated');
+-- insert into profiles (id, full_name, role) values ('00000000-0000-0000-0000-000000000001', 'Admin Dev', 'admin');
