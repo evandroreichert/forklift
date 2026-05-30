@@ -1,16 +1,15 @@
 import { requireProfile } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { Users, Building2, Settings, Wrench } from 'lucide-react';
+import { Users, Building2, Wrench } from 'lucide-react';
 
 async function getAdminStats() {
   const supabase = await createClient();
-  const [{ count: usuarios }, { count: clientes }, { count: maquinas }] = await Promise.all([
+  const [{ count: usuarios }, { count: clientes }] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
     supabase.from('client_companies').select('*', { count: 'exact', head: true }),
-    supabase.from('machines').select('*', { count: 'exact', head: true }),
   ]);
-  return { usuarios: usuarios ?? 0, clientes: clientes ?? 0, maquinas: maquinas ?? 0 };
+  return { usuarios: usuarios ?? 0, clientes: clientes ?? 0 };
 }
 
 export default async function PortalPage() {
@@ -21,7 +20,6 @@ export default async function PortalPage() {
     const cards = [
       { href: '/portal/admin/usuarios', label: 'Usuários', count: stats.usuarios, icon: Users },
       { href: '/portal/admin/clientes', label: 'Clientes', count: stats.clientes, icon: Building2 },
-      { href: '/portal/admin/maquinas', label: 'Máquinas', count: stats.maquinas, icon: Settings },
     ];
     return (
       <div className="space-y-10">
@@ -31,7 +29,7 @@ export default async function PortalPage() {
             Olá, <span className="text-brand-yellow">{profile.full_name}</span>
           </h1>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           {cards.map(({ href, label, count, icon: Icon }) => (
             <Link
               key={href}

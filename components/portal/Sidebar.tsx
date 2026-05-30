@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/public/Logo';
-import { Wrench, LogOut, Users, Building2, Settings, LayoutDashboard } from 'lucide-react';
+import { Wrench, LogOut, Users, Building2, LayoutDashboard } from 'lucide-react';
 import type { Profile } from '@/lib/types';
 import { logoutAction } from '@/app/(portal)/portal/actions';
 
@@ -14,7 +14,6 @@ const NAV_BY_ROLE: Record<Profile['role'], NavItem[]> = {
     { href: '/portal', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/portal/admin/usuarios', label: 'Usuários', icon: Users },
     { href: '/portal/admin/clientes', label: 'Clientes', icon: Building2 },
-    { href: '/portal/admin/maquinas', label: 'Máquinas', icon: Settings },
   ],
   mechanic: [
     { href: '/portal', label: 'Manutenções', icon: Wrench },

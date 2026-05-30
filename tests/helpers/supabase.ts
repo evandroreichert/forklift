@@ -52,7 +52,6 @@ export async function createTestUser(args: {
 
 export async function wipeAll() {
   const admin = adminClient();
-  await admin.from('machines').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('profiles').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('client_companies').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   const { data: users } = await admin.auth.admin.listUsers();

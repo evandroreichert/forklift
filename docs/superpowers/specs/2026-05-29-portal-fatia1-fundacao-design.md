@@ -18,6 +18,7 @@ A FB Empilhadeiras usa hoje o sistema externo **Produttivo** pra gerar relatóri
 
 **Decisões fundamentais já tomadas (todas as fatias):**
 - **Sem upload de fotos** no escopo do projeto
+- **Sem cadastro de máquinas** (decisão pós-walkthrough Fatia 1, 2026-05-29) — mecânico digita identificador e horímetro como texto livre no form do relatório (Fatia 2)
 - **Stack:** Next.js 15 + Supabase (Auth + Postgres) + Resend (email) + Vercel
 - **Numeração de relatórios:** sequencial global, gerada **apenas quando o admin aprova** (não em rascunho). Numeração nova, não precisa continuar do 145 do sistema antigo
 - **3 papéis flat (sem hierarquia):** `admin`, `mechanic`, `client`. Fabiano = admin (faz tudo: gerencia usuários e aprova relatórios)

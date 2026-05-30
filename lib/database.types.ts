@@ -76,62 +76,11 @@ export type Database = {
           },
         ];
       };
-      machines: {
-        Row: {
-          id: string;
-          client_company_id: string;
-          numero_maquina: string;
-          horimetro_atual: number;
-          modelo: string | null;
-          fabricante: string | null;
-          tipo_combustivel: Database['public']['Enums']['fuel_type'] | null;
-          numero_serie: string | null;
-          active: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          client_company_id: string;
-          numero_maquina: string;
-          horimetro_atual?: number;
-          modelo?: string | null;
-          fabricante?: string | null;
-          tipo_combustivel?: Database['public']['Enums']['fuel_type'] | null;
-          numero_serie?: string | null;
-          active?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          client_company_id?: string;
-          numero_maquina?: string;
-          horimetro_atual?: number;
-          modelo?: string | null;
-          fabricante?: string | null;
-          tipo_combustivel?: Database['public']['Enums']['fuel_type'] | null;
-          numero_serie?: string | null;
-          active?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'machines_client_company_id_fkey';
-            columns: ['client_company_id'];
-            isOneToOne: false;
-            referencedRelation: 'client_companies';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
       user_role: 'admin' | 'mechanic' | 'client';
-      fuel_type: 'glp' | 'diesel' | 'eletrica' | 'gasolina' | 'outro';
     };
     CompositeTypes: Record<string, never>;
   };

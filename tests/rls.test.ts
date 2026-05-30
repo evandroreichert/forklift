@@ -3,8 +3,6 @@ import { adminClient, anonClient, loggedClient, createTestUser, wipeAll } from '
 
 let companyAId: string;
 let companyBId: string;
-let machineAId: string;
-let machineBId: string;
 
 beforeAll(async () => {
   await wipeAll();
@@ -20,16 +18,6 @@ beforeAll(async () => {
     .from('client_companies').insert({ name: 'Empresa B' }).select().single();
   if (eB) throw eB;
   companyBId = cB.id;
-
-  const { data: mA, error: emA } = await admin
-    .from('machines').insert({ client_company_id: companyAId, numero_maquina: '1', horimetro_atual: 100 }).select().single();
-  if (emA) throw emA;
-  machineAId = mA.id;
-
-  const { data: mB, error: emB } = await admin
-    .from('machines').insert({ client_company_id: companyBId, numero_maquina: '1', horimetro_atual: 200 }).select().single();
-  if (emB) throw emB;
-  machineBId = mB.id;
 
   await createTestUser({ email: 'admin@test.com', password: 'senha123', fullName: 'Admin', role: 'admin' });
   await createTestUser({ email: 'mech@test.com', password: 'senha123', fullName: 'Mech', role: 'mechanic' });
@@ -50,10 +38,6 @@ describe('RLS: anon client', () => {
     const { data } = await anonClient().from('profiles').select('*');
     expect(data ?? []).toHaveLength(0);
   });
-  it('vê 0 rows em machines', async () => {
-    const { data } = await anonClient().from('machines').select('*');
-    expect(data ?? []).toHaveLength(0);
-  });
 });
 
 describe('RLS: cliente A isolamento', () => {
@@ -65,20 +49,10 @@ describe('RLS: cliente A isolamento', () => {
     expect(first?.id).toBe(companyAId);
   });
 
-  it('vê só suas próprias máquinas', async () => {
+  it('NÃO vê company de outro cliente (B)', async () => {
     const client = await loggedClient('clienteA@test.com', 'senha123');
-    const { data } = await client.from('machines').select('*');
-    expect(data).toHaveLength(1);
-    const first = data?.[0];
-    expect(first?.id).toBe(machineAId);
-  });
-
-  it('NÃO consegue inserir máquina', async () => {
-    const client = await loggedClient('clienteA@test.com', 'senha123');
-    const { error } = await client.from('machines').insert({
-      client_company_id: companyAId, numero_maquina: '99', horimetro_atual: 0,
-    });
-    expect(error).not.toBeNull();
+    const { data } = await client.from('client_companies').select('*').eq('id', companyBId);
+    expect(data ?? []).toHaveLength(0);
   });
 
   it('NÃO consegue atualizar company', async () => {
@@ -88,18 +62,18 @@ describe('RLS: cliente A isolamento', () => {
     // RLS pode retornar erro OU silenciosamente filtrar (0 rows afetadas)
     expect(error !== null || (data ?? []).length === 0).toBe(true);
   });
+
+  it('NÃO consegue inserir company', async () => {
+    const client = await loggedClient('clienteA@test.com', 'senha123');
+    const { error } = await client.from('client_companies').insert({ name: 'Tentativa' });
+    expect(error).not.toBeNull();
+  });
 });
 
 describe('RLS: mechanic', () => {
-  it('lê todas as companies', async () => {
+  it('lê todas as companies (precisa pra criar relatório na Fatia 2)', async () => {
     const client = await loggedClient('mech@test.com', 'senha123');
     const { data } = await client.from('client_companies').select('*');
-    expect(data).toHaveLength(2);
-  });
-
-  it('lê todas as machines', async () => {
-    const client = await loggedClient('mech@test.com', 'senha123');
-    const { data } = await client.from('machines').select('*');
     expect(data).toHaveLength(2);
   });
 
@@ -109,17 +83,11 @@ describe('RLS: mechanic', () => {
     expect(error).not.toBeNull();
   });
 
-  it('NÃO consegue inserir machine', async () => {
+  it('NÃO consegue atualizar company', async () => {
     const client = await loggedClient('mech@test.com', 'senha123');
-    const { error } = await client.from('machines').insert({
-      client_company_id: companyAId, numero_maquina: '88', horimetro_atual: 0,
-    });
-    expect(error).not.toBeNull();
-  });
-
-  it('garante isolamento: cliente B não confunde com mechanic', () => {
-    // sentinel — só pra silenciar lint sobre variáveis não usadas (machineBId)
-    expect(machineBId).toBeDefined();
+    const { error, data } = await client.from('client_companies')
+      .update({ name: 'Hack' }).eq('id', companyAId).select();
+    expect(error !== null || (data ?? []).length === 0).toBe(true);
   });
 });
 
