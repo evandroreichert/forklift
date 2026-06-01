@@ -17,7 +17,6 @@ const NAV_BY_ROLE: Record<Profile['role'], NavItem[]> = {
     { href: '/portal/admin/clientes', label: 'Clientes', icon: Building2 },
   ],
   mechanic: [
-    { href: '/portal', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/portal/mecanico/relatorios', label: 'Relatórios', icon: Wrench },
   ],
   client: [

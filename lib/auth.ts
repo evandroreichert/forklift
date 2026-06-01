@@ -1,9 +1,13 @@
 import 'server-only';
+import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import type { Profile, UserRole } from '@/lib/types';
 
-export async function getCurrentProfile(): Promise<Profile | null> {
+// React.cache dedupica chamadas dentro do mesmo request — layout e page
+// que ambos chamam requireProfile() compartilham o resultado (1 getUser + 1 select
+// em vez de 2x cada). Não persiste entre requests.
+export const getCurrentProfile = cache(async (): Promise<Profile | null> => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
@@ -15,7 +19,7 @@ export async function getCurrentProfile(): Promise<Profile | null> {
     .single();
 
   return profile;
-}
+});
 
 export async function requireProfile(): Promise<Profile> {
   const profile = await getCurrentProfile();

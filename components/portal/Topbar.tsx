@@ -1,5 +1,6 @@
-import { Bell } from 'lucide-react';
+import { Bell, LogOut } from 'lucide-react';
 import type { Profile } from '@/lib/types';
+import { logoutAction } from '@/app/(portal)/portal/actions';
 
 const ROLE_LABEL: Record<Profile['role'], string> = {
   admin: 'Administrador',
@@ -31,6 +32,15 @@ export function Topbar({ profile }: { profile: Profile }) {
         <div className="flex size-9 items-center justify-center rounded-full bg-brand-yellow text-small font-bold text-ink-950">
           {iniciais}
         </div>
+        <form action={logoutAction} className="md:hidden">
+          <button
+            type="submit"
+            className="text-ink-100/70 transition-colors hover:text-brand-yellow"
+            aria-label="Sair"
+          >
+            <LogOut className="size-5" />
+          </button>
+        </form>
       </div>
     </header>
   );

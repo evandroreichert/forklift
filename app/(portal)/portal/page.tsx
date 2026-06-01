@@ -1,5 +1,6 @@
 import { requireProfile } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Users, Building2, Wrench, ClipboardList } from 'lucide-react';
 
@@ -20,24 +21,13 @@ async function getAdminStats() {
   };
 }
 
-async function getMechanicStats(mechanicId: string) {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from('reports')
-    .select('status')
-    .eq('mechanic_id', mechanicId);
-  const rows = data ?? [];
-  return {
-    total: rows.length,
-    draft: rows.filter((r) => r.status === 'draft').length,
-    pending: rows.filter((r) => r.status === 'pending_approval').length,
-    rejected: rows.filter((r) => r.status === 'rejected').length,
-    approved: rows.filter((r) => r.status === 'approved').length,
-  };
-}
-
 export default async function PortalPage() {
   const profile = await requireProfile();
+
+  // Mecânico não precisa de dashboard intermediário — vai direto pra lista de relatórios
+  if (profile.role === 'mechanic') {
+    redirect('/portal/mecanico/relatorios');
+  }
 
   if (profile.role === 'admin') {
     const stats = await getAdminStats();
@@ -87,34 +77,6 @@ export default async function PortalPage() {
             </Link>
           ))}
         </div>
-      </div>
-    );
-  }
-
-  if (profile.role === 'mechanic') {
-    const stats = await getMechanicStats(profile.id);
-    return (
-      <div className="space-y-10">
-        <div>
-          <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
-          <h1 className="mt-2 font-display text-h1 font-bold text-white">
-            Olá, <span className="text-brand-yellow">{profile.full_name}</span>
-          </h1>
-        </div>
-        <Link
-          href="/portal/mecanico/relatorios"
-          className="block rounded-xl border border-white/10 bg-ink-900/60 p-6 hover:border-brand-yellow/40"
-        >
-          <Wrench className="size-6 text-brand-yellow" />
-          <p className="mt-4 text-label uppercase tracking-wider text-ink-100/60">
-            Meus relatórios
-          </p>
-          <p className="mt-1 font-display text-h2 font-bold text-white">{stats.total}</p>
-          <p className="mt-2 text-small text-ink-100/60">
-            {stats.draft} rascunho · {stats.pending} aguardando · {stats.rejected} rejeitado ·{' '}
-            {stats.approved} aprovado
-          </p>
-        </Link>
       </div>
     );
   }
