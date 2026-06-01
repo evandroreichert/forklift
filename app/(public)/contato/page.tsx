@@ -21,7 +21,7 @@ export default function ContatoPage() {
   return (
     <>
       <JsonLd data={buildLocalBusinessSchema()} />
-      <section className="border-b border-ink-100 bg-surface-alt py-20">
+      <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Contato</span>
           <h1 className="mt-4 font-display text-h1 text-ink-950">Fale com a gente</h1>
@@ -32,7 +32,7 @@ export default function ContatoPage() {
         </div>
       </section>
 
-      <section className="bg-white py-24">
+      <section className="bg-white py-14 md:py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
             <h2 className="font-display text-h2 text-ink-950">Envie uma mensagem</h2>

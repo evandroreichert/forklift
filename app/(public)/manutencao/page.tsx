@@ -58,7 +58,7 @@ export default function ManutencaoPage() {
     <>
       <JsonLd data={[buildServiceSchema(), buildFaqSchema(FAQ_MANUTENCAO)]} />
 
-      <section className="border-b border-ink-100 bg-surface-alt py-20">
+      <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Serviço</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
@@ -88,7 +88,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-ink-100 bg-white py-24">
+      <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Tipos de manutenção</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Atendemos toda demanda</h2>
@@ -103,7 +103,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-ink-100 bg-surface-alt py-24">
+      <section className="border-b border-ink-100 bg-surface-alt py-14 md:py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Cobertura</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Cidades onde atendemos</h2>
@@ -127,7 +127,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="border-b border-ink-100 bg-white py-24">
+      <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
             <span className="label-tracked text-brand-yellow">Diferenciais</span>
@@ -144,7 +144,7 @@ export default function ManutencaoPage() {
         </div>
       </section>
 
-      <section className="bg-surface-alt py-24">
+      <section className="bg-surface-alt py-14 md:py-24">
         <div className="container-wide max-w-3xl">
           <span className="label-tracked text-brand-yellow">Dúvidas frequentes</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Perguntas comuns</h2>

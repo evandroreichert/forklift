@@ -30,7 +30,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const STATS = [
-  { v: '9', k: 'Cidades atendidas', icon: MapPin },
+  { v: '300km', k: 'Raio de atendimento', icon: MapPin },
   { v: '8', k: 'Categorias de equipamento', icon: Truck },
   { v: '1h', k: 'Atendimento técnico mínimo', icon: Clock },
   { v: '100%', k: 'Equipamentos com garantia', icon: Award },
@@ -92,26 +92,40 @@ export default function HomePage() {
       <section className="relative -mt-12 bg-transparent md:-mt-16">
         <div className="container-wide">
           <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-ink-100 bg-white shadow-[0_30px_60px_-30px_rgba(0,0,0,0.25)] md:grid-cols-4">
-            {STATS.map((s, i) => (
-              <div
-                key={s.k}
-                className={`flex items-center gap-4 px-6 py-7 ${i > 0 ? 'border-t border-ink-100 md:border-t-0 md:border-l' : ''}`}
-              >
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-brand-yellow/15 text-brand-yellow-dim">
-                  <s.icon className="size-5" />
+            {STATS.map((s, i) => {
+              const classes = [
+                'flex min-w-0 items-center gap-3 px-4 py-5 md:gap-4 md:px-6 md:py-7',
+                // mobile (2 colunas): borda topo na segunda linha, borda esquerda na coluna direita
+                i >= 2 ? 'border-t border-ink-100' : '',
+                i % 2 === 1 ? 'border-l border-ink-100' : '',
+                // desktop (4 colunas): só borda esquerda entre items, sem topo
+                i > 0 ? 'md:border-l md:border-ink-100' : '',
+                'md:border-t-0',
+              ]
+                .filter(Boolean)
+                .join(' ');
+              return (
+                <div key={s.k} className={classes}>
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-yellow/15 text-brand-yellow-dim md:size-12">
+                  <s.icon className="size-4 md:size-5" />
                 </div>
-                <div>
-                  <p className="font-display text-h1 font-bold leading-none text-ink-950">{s.v}</p>
-                  <p className="mt-1.5 text-small text-ink-500">{s.k}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="font-display text-[1.75rem] font-bold leading-none text-ink-950 md:text-h1">
+                    {s.v}
+                  </p>
+                  <p className="mt-1.5 text-[12px] leading-tight text-ink-500 md:text-small">
+                    {s.k}
+                  </p>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CATÁLOGO */}
-      <section id="produtos" className="bg-white py-24 md:py-32">
+      <section id="produtos" className="bg-white py-16 md:py-32">
         <div className="container-wide">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -145,7 +159,7 @@ export default function HomePage() {
       </section>
 
       {/* APLICAÇÕES */}
-      <section className="relative isolate overflow-hidden bg-ink-950 py-24 text-white md:py-32">
+      <section className="relative isolate overflow-hidden bg-ink-950 py-16 text-white md:py-32">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-yellow/40 to-transparent" aria-hidden />
         <div className="container-wide">
           <p className="inline-flex items-center gap-3 label-tracked !text-brand-yellow">
@@ -196,7 +210,7 @@ export default function HomePage() {
       </section>
 
       {/* MANUTENÇÃO */}
-      <section className="bg-surface-alt py-24 md:py-32">
+      <section className="bg-surface-alt py-16 md:py-32">
         <div className="container-wide grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
           <div className="relative">
             <div className="relative aspect-[5/6] overflow-hidden rounded-xl bg-ink-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)]">
@@ -256,7 +270,7 @@ export default function HomePage() {
       </section>
 
       {/* COBERTURA */}
-      <section className="bg-white py-24 md:py-32">
+      <section className="bg-white py-16 md:py-32">
         <div className="container-wide">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -265,10 +279,12 @@ export default function HomePage() {
                 Cobertura
               </p>
               <h2 className="mt-4 font-display text-h1 font-bold tracking-tight text-ink-950">
-                9 cidades. Litoral norte SC.
+                Atendemos em até 300 km de Penha.
               </h2>
               <p className="mt-3 max-w-xl text-body text-ink-500">
-                Vendas e manutenção com base em Penha. Atendimento em até 1 hora nas cidades vizinhas.
+                Sede em Penha (SC). Atendimento técnico em até 1 hora nas cidades vizinhas e
+                deslocamento pra obras e clientes em toda a região. Conheça algumas das cidades
+                onde já atuamos:
               </p>
             </div>
           </div>
@@ -295,7 +311,7 @@ export default function HomePage() {
       </section>
 
       {/* REVIEWS */}
-      <section className="border-t border-ink-100 bg-surface-alt py-24 md:py-32">
+      <section className="border-t border-ink-100 bg-surface-alt py-16 md:py-32">
         <div className="container-wide">
           <p className="inline-flex items-center gap-3 label-tracked text-ink-500">
             <ShieldCheck className="size-3.5 text-brand-yellow-dim" />
@@ -311,7 +327,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA FINAL */}
-      <section className="relative isolate overflow-hidden bg-ink-950 py-24 md:py-32">
+      <section className="relative isolate overflow-hidden bg-ink-950 py-16 md:py-32">
         <div className="absolute inset-0 opacity-30" aria-hidden>
           <Image
             src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=1600&q=80&auto=format&fit=crop"

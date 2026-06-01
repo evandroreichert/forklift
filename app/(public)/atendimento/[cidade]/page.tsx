@@ -39,7 +39,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
     <>
       <JsonLd data={buildLocalBusinessSchema(c.nomeCompleto)} />
 
-      <section className="border-b border-ink-100 bg-surface-alt py-20">
+      <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Atendimento Local</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
@@ -62,7 +62,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-ink-100 bg-white py-24">
+      <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Equipamentos para {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
@@ -77,7 +77,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-b border-ink-100 bg-surface-alt py-24">
+      <section className="border-b border-ink-100 bg-surface-alt py-14 md:py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Manutenção em {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
@@ -96,7 +96,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="bg-white py-24">
+      <section className="bg-white py-14 md:py-24">
         <div className="container-wide">
           <span className="label-tracked text-brand-yellow">Outras cidades</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Também atendemos</h2>

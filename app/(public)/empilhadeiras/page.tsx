@@ -20,7 +20,7 @@ export default function EmpilhadeirasPage() {
         titulo="Empilhadeiras industriais"
         descricao="GLP, diesel ou elétrica com bateria de lítio. Modelos para diferentes capacidades, ambientes internos e externos, com suporte e manutenção em toda a região do Vale do Itajaí."
       />
-      <section className="bg-white py-24">
+      <section className="bg-white py-14 md:py-24">
         <div className="container-wide">
           <ProductGrid produtos={produtos} />
         </div>
