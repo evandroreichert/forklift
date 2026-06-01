@@ -194,11 +194,30 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
           value={fields.titulo ?? ''}
           onChange={(v) => setFields({ ...fields, titulo: v })}
         />
-        <Input
-          label="Cliente (texto livre como o mecânico digitou)"
-          value={fields.cliente_nome ?? ''}
-          onChange={(v) => setFields({ ...fields, cliente_nome: v })}
-        />
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Input
+            label="Cliente (texto livre como o mecânico digitou)"
+            value={fields.cliente_nome ?? ''}
+            onChange={(v) => setFields({ ...fields, cliente_nome: v })}
+          />
+          <label className="block">
+            <span className="text-small text-ink-100/70">Cliente cadastrado (pra liberar visualização no portal)</span>
+            <select
+              className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+              value={fields.client_company_id ?? ''}
+              onChange={(e) =>
+                setFields({ ...fields, client_company_id: e.target.value || null })
+              }
+            >
+              <option value="">— selecione —</option>
+              {companies.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
         <Input
           label="Identificador da máquina"
           value={fields.maquina_identificador ?? ''}
@@ -253,36 +272,17 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
       </Section>
 
       <Section title="Serviço executado">
-        <div className="grid gap-4 md:grid-cols-[1fr_280px]">
-          <label className="block">
-            <span className="text-small text-ink-100/70">
-              Observações do serviço (descrição, peças/materiais utilizados e valores)
-            </span>
-            <textarea
-              className="mt-1 w-full min-h-[240px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-              value={fields.sumario_defeitos ?? ''}
-              onChange={(e) => setFields({ ...fields, sumario_defeitos: e.target.value })}
-              placeholder="O que foi feito, peças usadas e valores cobrados"
-            />
-          </label>
-          <label className="block">
-            <span className="text-small text-ink-100/70">Cliente cadastrado</span>
-            <select
-              className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-              value={fields.client_company_id ?? ''}
-              onChange={(e) =>
-                setFields({ ...fields, client_company_id: e.target.value || null })
-              }
-            >
-              <option value="">— selecione —</option>
-              {companies.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+        <label className="block">
+          <span className="text-small text-ink-100/70">
+            Observações do serviço (descrição, peças/materiais utilizados e valores)
+          </span>
+          <textarea
+            className="mt-1 w-full min-h-[260px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+            value={fields.sumario_defeitos ?? ''}
+            onChange={(e) => setFields({ ...fields, sumario_defeitos: e.target.value })}
+            placeholder="O que foi feito, peças usadas e valores cobrados"
+          />
+        </label>
       </Section>
 
       {error && (
