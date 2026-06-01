@@ -7,6 +7,7 @@ import { TipoAtividade } from '@/components/portal/TipoAtividade';
 import { MaquinaParadaRadio } from '@/components/portal/MaquinaParadaRadio';
 import { IntervalsList } from '@/components/portal/IntervalsList';
 import { SignaturePad } from '@/components/portal/SignaturePad';
+import { RejectedBanner } from '@/components/portal/RejectedBanner';
 import type { Report, ReportInterval } from '@/lib/reports/types';
 import {
   type AdminEditableFields,
@@ -200,6 +201,10 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
           </button>
         </div>
       </header>
+
+      {report.status === 'rejected' && report.rejected_reason && (
+        <RejectedBanner reason={report.rejected_reason} />
+      )}
 
       <Section title="Identificação">
         <Input

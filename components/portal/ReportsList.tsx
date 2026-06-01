@@ -61,11 +61,11 @@ export function ReportsList({
               href={`/portal/relatorios/${r.id}/pdf`}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 rounded-md border border-white/15 p-2 text-ink-100/70 hover:border-brand-yellow/40 hover:text-brand-yellow"
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-white/15 text-ink-100/70 transition-colors hover:border-brand-yellow/40 hover:text-brand-yellow"
               aria-label="Baixar PDF"
               title="Baixar PDF"
             >
-              <Download className="size-4" />
+              <Download className="size-5" />
             </a>
           )}
         </li>

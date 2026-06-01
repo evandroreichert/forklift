@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { Check } from 'lucide-react';
 import SignatureCanvas from 'react-signature-canvas';
 
 type Props = {
@@ -11,22 +12,31 @@ type Props = {
 
 export function SignaturePad({ initialUrl, onConfirm, disabled }: Props) {
   const ref = useRef<SignatureCanvas | null>(null);
-  const [confirmed, setConfirmed] = useState(!!initialUrl);
+  // displayUrl pode ser: initialUrl (carregado do server), ou data URL local recém capturado.
+  // Mantemos separado pra mostrar feedback imediato após "Confirmar" mesmo antes do
+  // upload propagar de volta.
+  const [displayUrl, setDisplayUrl] = useState<string | null>(initialUrl ?? null);
   const [saving, setSaving] = useState(false);
 
-  if (confirmed && initialUrl) {
+  if (displayUrl) {
     return (
       <div className="space-y-3">
-        <img
-          src={initialUrl}
-          alt="Assinatura do cliente"
-          className="w-full rounded-lg border border-white/15 bg-white"
-        />
+        <div className="relative rounded-lg border border-emerald-500/40 bg-white">
+          <img
+            src={displayUrl}
+            alt="Assinatura do cliente"
+            className="w-full rounded-lg"
+          />
+          <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-emerald-500 px-2 py-1 text-[11px] font-semibold text-white">
+            <Check className="size-3" />
+            Registrada
+          </span>
+        </div>
         <button
           type="button"
           className="text-small text-ink-100/70 underline"
           disabled={disabled}
-          onClick={() => setConfirmed(false)}
+          onClick={() => setDisplayUrl(null)}
         >
           Coletar nova assinatura
         </button>
@@ -64,7 +74,7 @@ export function SignaturePad({ initialUrl, onConfirm, disabled }: Props) {
             const dataUrl = ref.current.toDataURL('image/png');
             try {
               await onConfirm(dataUrl);
-              setConfirmed(true);
+              setDisplayUrl(dataUrl);
             } finally {
               setSaving(false);
             }

@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { Bell } from 'lucide-react';
 import type { Profile } from '@/lib/types';
+import { createClient } from '@/lib/supabase/server';
 import { MobileNavTrigger } from './Sidebar';
 
 const ROLE_LABEL: Record<Profile['role'], string> = {
@@ -8,12 +10,25 @@ const ROLE_LABEL: Record<Profile['role'], string> = {
   client: 'Cliente',
 };
 
-export function Topbar({ profile }: { profile: Profile }) {
+async function getAdminPendingCount(): Promise<number> {
+  const supabase = await createClient();
+  const { count } = await supabase
+    .from('reports')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'pending_approval');
+  return count ?? 0;
+}
+
+export async function Topbar({ profile }: { profile: Profile }) {
   const iniciais = profile.full_name
     .split(' ')
     .slice(0, 2)
     .map((w) => (w[0] ?? '').toUpperCase())
     .join('');
+
+  // Só admin vê o sino — link direto pra fila de pendentes, com indicador
+  // visual quando há algo. Pra mechanic/client o sino não tinha função, removido.
+  const pendingCount = profile.role === 'admin' ? await getAdminPendingCount() : 0;
 
   return (
     <header className="flex h-14 items-center justify-between gap-3 border-b border-white/10 bg-ink-900 px-4 md:px-6">
@@ -26,12 +41,25 @@ export function Topbar({ profile }: { profile: Profile }) {
       </div>
       <div className="flex items-center gap-3 md:gap-4">
         <span className="hidden text-small text-ink-100/70 md:inline">{profile.full_name}</span>
-        <button
-          className="relative text-ink-100/70 transition-colors hover:text-brand-yellow"
-          aria-label="Notificações"
-        >
-          <Bell className="size-5" />
-        </button>
+        {profile.role === 'admin' && (
+          <Link
+            href="/portal/admin/relatorios"
+            className="relative text-ink-100/70 transition-colors hover:text-brand-yellow"
+            aria-label={
+              pendingCount > 0
+                ? `${pendingCount} relatório(s) aguardando aprovação`
+                : 'Nenhum relatório pendente'
+            }
+            title={pendingCount > 0 ? `${pendingCount} aguardando` : 'Sem pendências'}
+          >
+            <Bell className="size-5" />
+            {pendingCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-brand-yellow text-[10px] font-bold text-ink-950">
+                {pendingCount > 9 ? '9+' : pendingCount}
+              </span>
+            )}
+          </Link>
+        )}
         <div className="flex size-9 items-center justify-center rounded-full bg-brand-yellow text-small font-bold text-ink-950">
           {iniciais}
         </div>

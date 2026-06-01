@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 
 type Props = {
-  /** Valor atual em ISO (UTC) — pode ser null pra "fim em aberto" */
+  /** Valor atual em ISO (UTC). Null = vazio. */
   value: string | null;
-  /** Chamado quando ambos os campos formam uma data válida (ou quando limpa) */
+  /** Chamado quando ambos os campos formam uma data válida (ou quando limpa). */
   onChange: (iso: string | null) => void;
   disabled?: boolean;
   ariaLabel?: string;
@@ -37,6 +37,8 @@ function partsToIso(data: string, hora: string): string | null {
   if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || h > 23 || m > 59) return null;
   const local = new Date(ano, mes - 1, dia, h, m);
   if (isNaN(local.getTime())) return null;
+  // Rejeita data inválida do tipo 31/02 (Date faz overflow pra mar/01)
+  if (local.getDate() !== dia || local.getMonth() !== mes - 1) return null;
   return local.toISOString();
 }
 
@@ -76,36 +78,56 @@ export function DateTimeBRInput({ value, onChange, disabled, ariaLabel }: Props)
     if (iso) onChange(iso);
   }
 
+  // Validação visual: input completo (atingiu maxLength) mas não bate com o regex.
+  // Vermelho avisa o usuário que algo está errado antes dele tentar salvar.
+  const dataCompleta = data.length === 10;
+  const horaCompleta = hora.length === 5;
+  const dataInvalida = dataCompleta && !partsToIso(data, '00:00');
+  const horaInvalida =
+    horaCompleta && !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hora);
+
+  const baseClasses = 'rounded-md border bg-ink-950 px-3 py-2 text-white tracking-wider';
+  const dataClasses = `flex-1 ${baseClasses} ${dataInvalida ? 'border-red-500/60' : 'border-white/15'}`;
+  const horaClasses = `w-24 ${baseClasses} ${horaInvalida ? 'border-red-500/60' : 'border-white/15'}`;
+
   return (
-    <div className="flex gap-2" aria-label={ariaLabel}>
-      <input
-        type="text"
-        inputMode="numeric"
-        placeholder="DD/MM/AAAA"
-        maxLength={10}
-        className="flex-1 rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white tracking-wider"
-        disabled={disabled}
-        value={data}
-        onChange={(e) => {
-          const masked = maskDate(e.target.value);
-          setData(masked);
-          commit(masked, hora);
-        }}
-      />
-      <input
-        type="text"
-        inputMode="numeric"
-        placeholder="HH:MM"
-        maxLength={5}
-        className="w-24 rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white tracking-wider"
-        disabled={disabled}
-        value={hora}
-        onChange={(e) => {
-          const masked = maskTime(e.target.value);
-          setHora(masked);
-          commit(data, masked);
-        }}
-      />
+    <div className="space-y-1" aria-label={ariaLabel}>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          inputMode="numeric"
+          placeholder="DD/MM/AAAA"
+          maxLength={10}
+          className={dataClasses}
+          disabled={disabled}
+          value={data}
+          onChange={(e) => {
+            const masked = maskDate(e.target.value);
+            setData(masked);
+            commit(masked, hora);
+          }}
+        />
+        <input
+          type="text"
+          inputMode="numeric"
+          placeholder="HH:MM"
+          maxLength={5}
+          className={horaClasses}
+          disabled={disabled}
+          value={hora}
+          onChange={(e) => {
+            const masked = maskTime(e.target.value);
+            setHora(masked);
+            commit(data, masked);
+          }}
+        />
+      </div>
+      {(dataInvalida || horaInvalida) && (
+        <p className="text-xs text-red-400">
+          {dataInvalida && 'Data inválida. '}
+          {horaInvalida && 'Hora inválida (use 00:00 a 23:59).'}
+        </p>
+      )}
     </div>
   );
 }
