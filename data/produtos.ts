@@ -95,7 +95,7 @@ export const PRODUTOS: Produto[] = [
     nome: 'Paleteira Elétrica Lítio',
     titulo: 'Movimentação de palets sem esforço',
     descricao:
-      'Paleteira (transpaleteira) elétrica com bateria de lítio para movimentação de palets em armazéns, supermercados e indústrias. Modelos PTE15 (1.5T) e PTE20 (2.0T). Bateria de lítio com carga rápida e sem efeito memória — operação contínua em jornadas longas. Compacta, fácil de operar e ideal pra substituir a paleteira manual em operações de alta rotatividade.',
+      'Paleteira (transpaleteira) elétrica com bateria de lítio para movimentação de palets em armazéns, supermercados e indústrias. Modelos PTE15 (1.5T) e PTE20 (2.0T). Bateria de lítio com carga rápida e sem efeito memória, garantindo operação contínua em jornadas longas. Compacta, fácil de operar e ideal pra substituir a paleteira manual em operações de alta rotatividade.',
     imagemCapa: '/images/un-br-paleteira-lithium.jpg',
     imagensGaleria: ['/images/un-br-paleteira-lithium.jpg'],
     variantes: [

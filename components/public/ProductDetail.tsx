@@ -11,20 +11,20 @@ export function ProductDetail({ produto }: { produto: Produto }) {
     <>
       <section className="border-b border-ink-100 bg-surface-alt py-20">
         <div className="container-wide grid items-center gap-12 md:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden bg-white">
+          <div className="relative aspect-[4/3] overflow-hidden bg-white p-6">
             <Image
               src={produto.imagemCapa}
               alt={produto.nome}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
               priority
-              className="object-cover"
+              className="object-contain"
             />
           </div>
           <div>
             <span className="label-tracked text-brand-yellow-dim">{produto.categoriaPai === 'empilhadeiras' ? 'Empilhadeira' : 'Construção Civil'}</span>
             <h1 className="mt-4 font-display text-h1 text-ink-950">{produto.nome}</h1>
-            <p className="mt-3 text-body text-brand-yellow">{produto.titulo}</p>
+            <p className="mt-3 text-body text-brand-yellow-dim">{produto.titulo}</p>
             <p className="mt-6 text-body text-ink-500">{produto.descricao}</p>
             <a
               href={whatsappUrl}
@@ -47,7 +47,7 @@ export function ProductDetail({ produto }: { produto: Produto }) {
               {produto.variantes.map((v) => (
                 <div key={v.nome} className="border border-ink-100 p-6">
                   <h3 className="font-display text-h3 text-ink-950">{v.nome}</h3>
-                  <p className="mt-2 font-mono text-small text-brand-yellow">{v.capacidade}</p>
+                  <p className="mt-2 font-mono text-small text-brand-yellow-dim">{v.capacidade}</p>
                 </div>
               ))}
             </div>

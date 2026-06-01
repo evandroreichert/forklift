@@ -7,7 +7,7 @@ export const CIDADES: Cidade[] = [
     nomeCompleto: 'Penha',
     uf: 'SC',
     descricaoEconomica:
-      'Sede da Fabiano Bratti Empilhadeiras. Cidade litorânea com economia ligada ao turismo (Beto Carrero World), pesca e indústria local. Hotelaria, parques, indústria pesqueira e construção civil utilizam empilhadeiras e equipamentos pesados para operações diárias — todos com atendimento imediato a partir da nossa base.',
+      'Sede da Fabiano Bratti Empilhadeiras. Cidade litorânea com economia ligada ao turismo (Beto Carrero World), pesca e indústria local. Hotelaria, parques, indústria pesqueira e construção civil utilizam empilhadeiras e equipamentos pesados para operações diárias. Todos com atendimento imediato a partir da nossa base.',
     tempoAtendimentoEstimado: 'atendimento imediato (sede)',
   },
   {
@@ -16,7 +16,7 @@ export const CIDADES: Cidade[] = [
     nomeCompleto: 'Navegantes',
     uf: 'SC',
     descricaoEconomica:
-      'Lar de aeroporto regional e porto privado, Navegantes é hub de logística aérea e marítima vizinho à nossa sede em Penha. Operações de cargo, armazéns aeroportuários e estaleiros utilizam empilhadeiras de diversos portes diariamente — com atendimento técnico em até 1 hora.',
+      'Lar de aeroporto regional e porto privado, Navegantes é hub de logística aérea e marítima vizinho à nossa sede em Penha. Operações de cargo, armazéns aeroportuários e estaleiros utilizam empilhadeiras de diversos portes diariamente, com atendimento técnico em até 1 hora.',
     tempoAtendimentoEstimado: 'até 1 hora',
   },
   {
@@ -34,7 +34,7 @@ export const CIDADES: Cidade[] = [
     nomeCompleto: 'Itajaí',
     uf: 'SC',
     descricaoEconomica:
-      'Sede de um dos maiores portos do Brasil, Itajaí concentra operações logísticas, indústrias de pesca, transporte e distribuição. Empilhadeiras e equipamentos de movimentação são essenciais para a operação portuária, armazéns alfandegados e centros de distribuição da cidade — atendidos rapidamente a partir da nossa base em Penha.',
+      'Sede de um dos maiores portos do Brasil, Itajaí concentra operações logísticas, indústrias de pesca, transporte e distribuição. Empilhadeiras e equipamentos de movimentação são essenciais para a operação portuária, armazéns alfandegados e centros de distribuição da cidade, atendidos rapidamente a partir da nossa base em Penha.',
     tempoAtendimentoEstimado: 'até 2 horas',
   },
   {
