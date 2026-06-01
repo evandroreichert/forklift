@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Trash2, Save } from 'lucide-react';
 import { TipoAtividade } from '@/components/portal/TipoAtividade';
@@ -25,15 +25,6 @@ type Props = {
   signatureUrl: string | null;
   companies: ClientCompany[];
 };
-
-function moneyToString(v: number | null | undefined): string {
-  if (v == null) return '0,00';
-  return Number(v).toFixed(2).replace('.', ',');
-}
-
-function parseMoney(v: string): number {
-  return Number(v.replace(/\./g, '').replace(',', '.')) || 0;
-}
 
 const STATUS_LABEL = {
   draft: 'Rascunho',
@@ -108,23 +99,12 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
     produtos: null,
     responsavel_nome: report.responsavel_nome,
     assinatura_path: report.assinatura_path,
-    preco_servicos: report.preco_servicos,
-    preco_pecas: report.preco_pecas,
-    preco_total: report.preco_total,
+    preco_servicos: null,
+    preco_pecas: null,
+    preco_total: null,
   });
-  const [precoServicosStr, setPrecoServicosStr] = useState(moneyToString(report.preco_servicos));
-  const [precoPecasStr, setPrecoPecasStr] = useState(moneyToString(report.preco_pecas));
-  const [precoTotalStr, setPrecoTotalStr] = useState(moneyToString(report.preco_total));
   const [intervals, setIntervals] = useState<ReportInterval[]>(initialIntervals);
   const [error, setError] = useState<string | null>(null);
-
-  // Soma automática: serviços + peças → total (a menos que o admin sobreescreva)
-  const totalOverriddenRef = useRef(report.preco_total != null);
-  useEffect(() => {
-    if (totalOverriddenRef.current) return;
-    const soma = parseMoney(precoServicosStr) + parseMoney(precoPecasStr);
-    setPrecoTotalStr(soma.toFixed(2).replace('.', ','));
-  }, [precoServicosStr, precoPecasStr]);
 
   async function handleUpsertInterval(item: {
     id?: string;
@@ -168,13 +148,7 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
   function handleSave() {
     setError(null);
     startSave(async () => {
-      const payload: AdminEditableFields = {
-        ...fields,
-        preco_servicos: parseMoney(precoServicosStr),
-        preco_pecas: parseMoney(precoPecasStr),
-        preco_total: parseMoney(precoTotalStr),
-      };
-      const res = await adminSaveAndFinalize(report.id, payload);
+      const res = await adminSaveAndFinalize(report.id, fields);
       if (res.ok) router.push('/portal/admin/relatorios');
       else setError(res.error);
     });
@@ -278,51 +252,36 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         </div>
       </Section>
 
-      <Section title="Serviço executado e valores">
+      <Section title="Serviço executado">
         <div className="grid gap-4 md:grid-cols-[1fr_280px]">
           <label className="block">
             <span className="text-small text-ink-100/70">
-              Observações do serviço (descrição + peças/materiais utilizados)
+              Observações do serviço (descrição, peças/materiais utilizados e valores)
             </span>
             <textarea
-              className="mt-1 w-full min-h-[220px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+              className="mt-1 w-full min-h-[240px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
               value={fields.sumario_defeitos ?? ''}
               onChange={(e) => setFields({ ...fields, sumario_defeitos: e.target.value })}
-              placeholder="O que foi feito + peças/produtos usados"
+              placeholder="O que foi feito, peças usadas e valores cobrados"
             />
           </label>
-          <div className="space-y-3">
-            <label className="block">
-              <span className="text-small text-ink-100/70">Cliente cadastrado</span>
-              <select
-                className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-                value={fields.client_company_id ?? ''}
-                onChange={(e) =>
-                  setFields({ ...fields, client_company_id: e.target.value || null })
-                }
-              >
-                <option value="">— selecione —</option>
-                {companies.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <Input label="Serviços (R$)" value={precoServicosStr} onChange={setPrecoServicosStr} />
-            <Input label="Peças (R$)" value={precoPecasStr} onChange={setPrecoPecasStr} />
-            <Input
-              label="Total (R$)"
-              value={precoTotalStr}
-              onChange={(v) => {
-                totalOverriddenRef.current = true;
-                setPrecoTotalStr(v);
-              }}
-            />
-            <p className="text-xs text-ink-100/55">
-              Total = Serviços + Peças (auto). Pode sobrescrever.
-            </p>
-          </div>
+          <label className="block">
+            <span className="text-small text-ink-100/70">Cliente cadastrado</span>
+            <select
+              className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+              value={fields.client_company_id ?? ''}
+              onChange={(e) =>
+                setFields({ ...fields, client_company_id: e.target.value || null })
+              }
+            >
+              <option value="">— selecione —</option>
+              {companies.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       </Section>
 

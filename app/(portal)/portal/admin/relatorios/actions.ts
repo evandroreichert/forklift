@@ -145,9 +145,7 @@ export async function adminSaveAndFinalize(
   const profile = await requireRole('admin');
   const supabase = await createClient();
 
-  if (!fields.client_company_id) return { ok: false, error: 'Selecione a empresa-cliente' };
-  if (fields.preco_total == null || Number(fields.preco_total) < 0)
-    return { ok: false, error: 'Informe o valor total (ou zero)' };
+  if (!fields.client_company_id) return { ok: false, error: 'Selecione o cliente cadastrado' };
 
   const { data: current } = await supabase
     .from('reports')
