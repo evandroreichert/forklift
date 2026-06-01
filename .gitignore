@@ -25,3 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .claude/
+
+# Vídeos pesados — hospedados externamente (Vercel Blob).
+# hero.mp4 vai via NEXT_PUBLIC_HERO_VIDEO_URL.
+public/videos/hero.mp4
