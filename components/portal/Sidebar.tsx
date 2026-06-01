@@ -20,7 +20,7 @@ const NAV_BY_ROLE: Record<Profile['role'], NavItem[]> = {
     { href: '/portal/mecanico/relatorios', label: 'Relatórios', icon: Wrench },
   ],
   client: [
-    { href: '/portal', label: 'Relatórios', icon: Wrench },
+    { href: '/portal/cliente/relatorios', label: 'Relatórios', icon: ClipboardList },
   ],
 };
 
