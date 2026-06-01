@@ -109,12 +109,14 @@ create trigger trg_reports_updated before update on reports
 
 -- =========================================================================
 -- 6. Helper: gerar próximo numero sequencial (usado na Fatia 3)
+-- Continua a numeração do sistema antigo (Produttivo): último relatório
+-- emitido foi nº 145 → primeiro emitido por este portal será 146.
 -- =========================================================================
 create or replace function private.next_report_numero()
 returns integer
 language sql security definer volatile
 set search_path = ''
-as $$ select coalesce(max(numero), 0) + 1 from public.reports $$;
+as $$ select coalesce(max(numero), 145) + 1 from public.reports $$;
 
 revoke execute on function private.next_report_numero() from public, anon;
 grant execute on function private.next_report_numero() to authenticated;

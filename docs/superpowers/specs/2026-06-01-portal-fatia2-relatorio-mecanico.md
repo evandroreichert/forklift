@@ -58,7 +58,7 @@ Esta fatia substitui parcialmente o sistema externo **Produttivo** que a FB usa 
 | Assinatura do cliente | Canvas (signature pad) → PNG → Supabase Storage privado | Cliente assina no celular do mecânico; embebida no PDF da Fatia 4 |
 | Rascunho | Persistido no backend (status `draft`), auto-save | Mecânico pode perder sinal em campo; rascunho no servidor sobrevive a perda de bateria |
 | Rejeição | Volta a ser editável pelo mecânico (status `pending_approval` → `rejected` → mecânico edita → `pending_approval` de novo) | Preserva histórico, evita recriar do zero |
-| Numeração sequencial | Atribuída só na aprovação (Fatia 3) | Decisão herdada; campo `numero` é nullable até aprovação |
+| Numeração sequencial | Atribuída só na aprovação (Fatia 3); **continua de 145** (próximo = 146) | Mantém continuidade do sistema antigo (Produttivo). Helper `private.next_report_numero()` retorna `coalesce(max(numero), 145) + 1` |
 | Notificação ao admin | Resend imediato quando status muda pra `pending_approval` | Sem digest; admin precisa ver na hora |
 | Edição de relatório aprovado | Bloqueada (admin pode reabrir no Fatia 3 se precisar) | Aprovado = imutável pelo mecânico |
 
@@ -181,12 +181,14 @@ create trigger trg_reports_updated before update on reports
 
 -- =========================================================================
 -- 6. Helper: gerar próximo numero sequencial (usado na Fatia 3)
+-- Continua de 145 (último relatório do sistema antigo Produttivo).
+-- Primeiro relatório aprovado por este portal terá numero = 146.
 -- =========================================================================
 create or replace function private.next_report_numero()
 returns integer
 language sql security definer volatile
 set search_path = ''
-as $$ select coalesce(max(numero), 0) + 1 from public.reports $$;
+as $$ select coalesce(max(numero), 145) + 1 from public.reports $$;
 
 revoke execute on function private.next_report_numero() from public, anon;
 grant execute on function private.next_report_numero() to authenticated;
