@@ -7,13 +7,14 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira GLP',
     titulo: 'Potência e robustez para desafios',
     descricao:
-      'Desempenho é a chave. A Empilhadeira GLP da UN Forklift é a resposta quando a demanda é alta. Enfrentando tarefas complexas e difíceis, este equipamento está pronto para superar obstáculos e elevar sua produtividade.',
-    imagemCapa: '/images/empilhadeira-glp.jpeg',
-    imagensGaleria: ['/images/empilhadeira-glp.jpeg'],
+      'Meio-termo entre diesel e elétrica: a linha GLP da UN Forklift entrega desempenho comparável ao diesel com operação mais econômica e menor impacto ambiental. Modelo N-Series 2.5T–3.5T atende armazéns e indústria leve; modelo 4.5T expande capacidade pra cargas mais pesadas. Boa pra operações mistas indoor/outdoor, com baixo custo de manutenção e abastecimento simples por cilindro.',
+    imagemCapa: '/images/un-br-glp.jpg',
+    imagensGaleria: ['/images/un-br-glp.jpg', '/images/un-br-glp-4t-5t.jpg'],
     videoUrl: '/videos/glp.mp4',
     variantes: [
       { nome: 'GLP 2.5T', capacidade: '2.500 kg' },
       { nome: 'GLP 3T - 3.5T', capacidade: '3.000 - 3.500 kg' },
+      { nome: 'GLP 4T - 5T', capacidade: '4.000 - 5.000 kg' },
     ],
   },
   {
@@ -22,9 +23,20 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira Diesel',
     titulo: 'Força e autonomia para operações intensas',
     descricao:
-      'Empilhadeiras Diesel da UN Forklift entregam alta capacidade de carga, torque robusto e autonomia para operações contínuas em ambientes externos e de uso pesado.',
-    imagemCapa: '/images/empilhadeira-diesel.jpeg',
-    imagensGaleria: ['/images/empilhadeira-diesel.jpeg', '/images/empilhadeira-diesel-2.webp'],
+      'A linha diesel UN Forklift cobre múltiplas faixas de capacidade pra operações industriais robustas. F-Series e N-Series 2.5T–3.5T pra movimentação geral, modelos pesados N-Series 7T–10T pra cargas extremas e variante Todo-Terreno (2.5T–3.5T) com tração 2WD ou 4WD pra terrenos irregulares. Projetadas pra ambientes externos exigentes, onde potência constante e durabilidade em uso contínuo são essenciais.',
+    imagemCapa: '/images/un-br-diesel-fseries.jpg',
+    imagensGaleria: [
+      '/images/un-br-diesel-fseries.jpg',
+      '/images/un-br-diesel-nseries.jpg',
+      '/images/un-br-diesel-todo-terreno.jpg',
+      '/images/un-br-diesel-7t.jpg',
+    ],
+    variantes: [
+      { nome: 'F-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
+      { nome: 'N-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
+      { nome: 'N-Series 7T - 10T', capacidade: '7.000 - 10.000 kg' },
+      { nome: 'Todo-Terreno 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
+    ],
   },
   {
     slug: 'eletricas',
@@ -32,9 +44,21 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira Elétrica',
     titulo: 'Silenciosa, limpa e eficiente',
     descricao:
-      'Linha elétrica com baterias de lítio para operações internas. Zero emissões, baixo nível de ruído e excelente custo operacional. Ideal para armazéns e indústrias.',
-    imagemCapa: '/images/empilhadeira-eletrica.jpeg',
-    imagensGaleria: ['/images/empilhadeira-eletrica.jpeg', '/images/empilhadeira-eletrica-2.webp'],
+      'Alternativa sustentável e silenciosa em várias especificações. F-Series e N-Series 2.5T–3.5T pra armazéns e operações industriais. Modelo compacto FE-Series de 3 rodas (1.5T–2.0T) pra corredores estreitos. Linha pesada N-Series 7T–10T pra operações de maior porte. Modelos 4T–5T com bateria de lítio-íon entregam autonomia estendida e baixa manutenção comparado ao chumbo-ácido. Zero emissões, baixo ruído e excelente custo operacional.',
+    imagemCapa: '/images/un-br-eletrica-fseries.jpg',
+    imagensGaleria: [
+      '/images/un-br-eletrica-fseries.jpg',
+      '/images/un-br-eletrica-nseries.jpg',
+      '/images/un-br-eletrica-4t-5t.jpg',
+      '/images/un-br-eletrica-3rodas.jpg',
+      '/images/un-br-eletrica-retratil.jpg',
+    ],
+    variantes: [
+      { nome: '3 rodas FE-Series', capacidade: '1.500 - 2.000 kg' },
+      { nome: 'F-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
+      { nome: 'N-Series 4T - 5T lítio', capacidade: '4.000 - 5.000 kg' },
+      { nome: 'N-Series 7T - 10T', capacidade: '7.000 - 10.000 kg' },
+    ],
   },
   {
     slug: 'carregadeiras',
@@ -43,8 +67,8 @@ export const PRODUTOS: Produto[] = [
     titulo: 'Produtividade em movimentação de materiais',
     descricao:
       'Carregadeiras para obras de construção civil, mineração e movimentação de granéis. Robustas, ágeis e com excelente capacidade de carga.',
-    imagemCapa: '/images/carregadeira.jpeg',
-    imagensGaleria: ['/images/carregadeira.jpeg'],
+    imagemCapa: '/images/un-carregadeira-sl130.png',
+    imagensGaleria: ['/images/un-carregadeira-sl130.png', '/images/carregadeira.jpeg'],
   },
   {
     slug: 'escavadeiras',

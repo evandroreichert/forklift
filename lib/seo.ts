@@ -4,7 +4,7 @@ export const SITE_URL = 'https://fabianobratti.com';
 export const SITE_NAME = 'Fabiano Bratti Empilhadeiras';
 export const DEFAULT_DESCRIPTION =
   'Venda, aluguel e manutenção de empilhadeiras no Vale do Itajaí. Empilhadeiras GLP, diesel, elétricas e equipamentos para construção civil.';
-export const DEFAULT_OG_IMAGE = '/images/empilhadeira-glp.jpeg';
+export const DEFAULT_OG_IMAGE = '/images/un-br-glp.jpg';
 export const GOOGLE_BUSINESS_URL = 'https://share.google/qlJlxWgMJJtevQxeo';
 export const INSTAGRAM_URL = 'https://www.instagram.com/fabianobratti.empilhadeiras/';
 export const WHATSAPP_NUMBER = '5547991926463';
