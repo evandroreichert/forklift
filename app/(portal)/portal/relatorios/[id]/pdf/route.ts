@@ -44,7 +44,8 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     }
   }
 
-  const logoBuf = await readFile(path.join(process.cwd(), 'public', 'logo.png'));
+  // logo2.png = logo específica do PDF do relatório (não a do site)
+  const logoBuf = await readFile(path.join(process.cwd(), 'public', 'logo2.png'));
   const logoDataUrl = `data:image/png;base64,${logoBuf.toString('base64')}`;
 
   // RelatorioPDF retorna um <Document> internamente — o tipo do wrapper
