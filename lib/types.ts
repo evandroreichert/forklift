@@ -19,6 +19,8 @@ export interface Produto {
   imagemCapa: string;
   imagensGaleria: string[];
   videoUrl?: string;
+  /** Caminho local ou URL externa do catálogo técnico em PDF. */
+  pdfCatalogo?: string;
   specs?: ProdutoSpec[];
   variantes?: ProdutoVariante[];
 }

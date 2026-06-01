@@ -11,10 +11,11 @@ export const PRODUTOS: Produto[] = [
     imagemCapa: '/images/un-br-glp.jpg',
     imagensGaleria: ['/images/un-br-glp.jpg', '/images/un-br-glp-4t-5t.jpg'],
     videoUrl: '/videos/glp.mp4',
+    pdfCatalogo: '/catalogos/diesel-glp-2.5t-3.5t.pdf',
     variantes: [
       { nome: 'GLP 2.5T', capacidade: '2.500 kg' },
-      { nome: 'GLP 3T - 3.5T', capacidade: '3.000 - 3.500 kg' },
-      { nome: 'GLP 4T - 5T', capacidade: '4.000 - 5.000 kg' },
+      { nome: 'GLP 3T a 3.5T', capacidade: '3.000 a 3.500 kg' },
+      { nome: 'GLP 4T a 5T', capacidade: '4.000 a 5.000 kg' },
     ],
   },
   {
@@ -23,7 +24,7 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira Diesel',
     titulo: 'Força e autonomia para operações intensas',
     descricao:
-      'Empilhadeira diesel F-Series com capacidade de 2.500 a 3.500 kg, projetada pra operações industriais e logísticas em ambientes externos. Motor diesel com torque robusto, transmissão automática e estrutura reforçada pra uso contínuo. Ideal pra carga e descarga em pátios, armazéns e operações onde autonomia e potência constante são essenciais. Veja outras configurações (N-Series, modelos pesados 7T–10T e Off-Road) nas variantes abaixo.',
+      'Empilhadeira diesel F-Series com capacidade de 2.500 a 3.500 kg, projetada pra operações industriais e logísticas em ambientes externos. Motor diesel com torque robusto, transmissão automática e estrutura reforçada pra uso contínuo. Ideal pra carga e descarga em pátios, armazéns e operações onde autonomia e potência constante são essenciais. Veja outras configurações (N-Series, modelos pesados 7T a 10T e Off-Road) nas variantes abaixo.',
     imagemCapa: '/images/un-br-diesel-fseries.jpg',
     imagensGaleria: [
       '/images/un-br-diesel-fseries.jpg',
@@ -31,11 +32,12 @@ export const PRODUTOS: Produto[] = [
       '/images/un-br-diesel-todo-terreno.jpg',
       '/images/un-br-diesel-7t.jpg',
     ],
+    pdfCatalogo: '/catalogos/diesel-glp-2.5t-3.5t.pdf',
     variantes: [
-      { nome: 'F-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
-      { nome: 'N-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
-      { nome: 'N-Series 7T - 10T', capacidade: '7.000 - 10.000 kg' },
-      { nome: 'Todo-Terreno 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
+      { nome: 'F-Series 2.5T a 3.5T', capacidade: '2.500 a 3.500 kg' },
+      { nome: 'N-Series 2.5T a 3.5T', capacidade: '2.500 a 3.500 kg' },
+      { nome: 'N-Series 7T a 10T', capacidade: '7.000 a 10.000 kg' },
+      { nome: 'Todo-Terreno 2.5T a 3.5T', capacidade: '2.500 a 3.500 kg' },
     ],
   },
   {
@@ -52,11 +54,12 @@ export const PRODUTOS: Produto[] = [
       '/images/un-br-eletrica-4t-5t.jpg',
       '/images/un-br-eletrica-3rodas.jpg',
     ],
+    pdfCatalogo: '/catalogos/eletrica-2.5t-3.5t-fseries.pdf',
     variantes: [
-      { nome: '3 rodas FE-Series', capacidade: '1.500 - 2.000 kg' },
-      { nome: 'F-Series 2.5T - 3.5T', capacidade: '2.500 - 3.500 kg' },
-      { nome: 'N-Series 4T - 5T lítio', capacidade: '4.000 - 5.000 kg' },
-      { nome: 'N-Series 7T - 10T', capacidade: '7.000 - 10.000 kg' },
+      { nome: '3 rodas FE-Series', capacidade: '1.500 a 2.000 kg' },
+      { nome: 'F-Series 2.5T a 3.5T', capacidade: '2.500 a 3.500 kg' },
+      { nome: 'N-Series 4T a 5T lítio', capacidade: '4.000 a 5.000 kg' },
+      { nome: 'N-Series 7T a 10T', capacidade: '7.000 a 10.000 kg' },
     ],
   },
   {
@@ -68,6 +71,7 @@ export const PRODUTOS: Produto[] = [
       'Empilhadeira retrátil (reach truck) elétrica com bateria de lítio, ideal pra armazéns verticais e operações intensivas em corredores estreitos. O mastro retrátil avança e recua, permitindo trabalhar em ruas mais apertadas que uma contrabalançada tradicional, sem perder capacidade nem altura de elevação. Bateria de lítio entrega carga rápida (sem necessidade de troca de bateria) e operação contínua em turnos de alta demanda.',
     imagemCapa: '/images/un-br-eletrica-retratil.jpg',
     imagensGaleria: ['/images/un-br-eletrica-retratil.jpg'],
+    pdfCatalogo: '/catalogos/eletrica-retratil.pdf',
     variantes: [
       { nome: 'Retrátil 1.6T', capacidade: '1.600 kg' },
       { nome: 'Retrátil 2.0T', capacidade: '2.000 kg' },
@@ -82,11 +86,12 @@ export const PRODUTOS: Produto[] = [
       'Empilhadeira a diesel projetada pra terrenos irregulares: canteiros de obra, áreas externas, pisos de terra, lama e pedras. Disponível em 2WD (tração simples) e 4WD (tração nas 4 rodas) para máxima aderência. Pneus de borracha reforçada com banda larga, vão livre alto e robustez mecânica pra suportar o uso pesado fora do asfalto. Capacidades de 2.5T a 3.5T.',
     imagemCapa: '/images/un-br-diesel-todo-terreno.jpg',
     imagensGaleria: ['/images/un-br-diesel-todo-terreno.jpg'],
+    pdfCatalogo: '/catalogos/diesel-todo-terreno.pdf',
     variantes: [
-      { nome: 'Off-Road 2.5T - 2WD', capacidade: '2.500 kg' },
-      { nome: 'Off-Road 2.5T - 4WD', capacidade: '2.500 kg' },
-      { nome: 'Off-Road 3.5T - 2WD', capacidade: '3.500 kg' },
-      { nome: 'Off-Road 3.5T - 4WD', capacidade: '3.500 kg' },
+      { nome: 'Off-Road 2.5T 2WD', capacidade: '2.500 kg' },
+      { nome: 'Off-Road 2.5T 4WD', capacidade: '2.500 kg' },
+      { nome: 'Off-Road 3.5T 2WD', capacidade: '3.500 kg' },
+      { nome: 'Off-Road 3.5T 4WD', capacidade: '3.500 kg' },
     ],
   },
   {
@@ -98,6 +103,7 @@ export const PRODUTOS: Produto[] = [
       'Paleteira (transpaleteira) elétrica com bateria de lítio para movimentação de palets em armazéns, supermercados e indústrias. Modelos PTE15 (1.5T) e PTE20 (2.0T). Bateria de lítio com carga rápida e sem efeito memória, garantindo operação contínua em jornadas longas. Compacta, fácil de operar e ideal pra substituir a paleteira manual em operações de alta rotatividade.',
     imagemCapa: '/images/un-br-paleteira-lithium.jpg',
     imagensGaleria: ['/images/un-br-paleteira-lithium.jpg'],
+    pdfCatalogo: '/catalogos/paleteira-pte15-pte20.pdf',
     variantes: [
       { nome: 'PTE15 (lítio)', capacidade: '1.500 kg' },
       { nome: 'PTE20 (lítio)', capacidade: '2.000 kg' },
@@ -112,11 +118,12 @@ export const PRODUTOS: Produto[] = [
       'Patolada elétrica (stacker / empilhador pedestrian) para movimentação e empilhamento de palets a alturas elevadas em armazéns. Operação em pé ou caminhando, ocupa pouco espaço e atende operações que não justificam uma empilhadeira contrabalançada completa. Disponível em versões chumbo-ácido (PS16 e PW15) e em versão com bateria de lítio (1,6T a 2,0T), com carga rápida e sem efeito memória.',
     imagemCapa: '/images/un-br-patolada-ps16.jpg',
     imagensGaleria: ['/images/un-br-patolada-ps16.jpg', '/images/un-br-patolada-pw15.jpg'],
+    pdfCatalogo: '/catalogos/patolada-ps16.pdf',
     variantes: [
       { nome: 'PS16 (operador em plataforma)', capacidade: '1.600 kg · até 5,5 m' },
       { nome: 'PW15 (operador em plataforma)', capacidade: '1.500 kg · até 5,5 m' },
       { nome: 'Operador andando 1.5T', capacidade: '1.500 kg' },
-      { nome: 'Patolada Lítio 1.6T - 2.0T', capacidade: '1.600 - 2.000 kg' },
+      { nome: 'Patolada Lítio 1.6T a 2.0T', capacidade: '1.600 a 2.000 kg' },
     ],
   },
   {

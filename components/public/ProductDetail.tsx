@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Download } from 'lucide-react';
 import { buildWhatsAppUrl } from '@/lib/seo';
 import type { Produto } from '@/lib/types';
 
@@ -26,14 +27,27 @@ export function ProductDetail({ produto }: { produto: Produto }) {
             <h1 className="mt-4 font-display text-h1 text-ink-950">{produto.nome}</h1>
             <p className="mt-3 text-body text-brand-yellow-dim">{produto.titulo}</p>
             <p className="mt-6 text-body text-ink-500">{produto.descricao}</p>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-block border border-brand-yellow bg-brand-yellow px-6 py-3 text-small font-semibold uppercase tracking-wider text-ink-950 transition-colors hover:bg-transparent hover:text-brand-yellow"
-            >
-              Solicitar Orçamento
-            </a>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-brand-yellow bg-brand-yellow px-6 py-3 text-small font-semibold uppercase tracking-wider text-ink-950 transition-colors hover:bg-transparent hover:text-brand-yellow-dim"
+              >
+                Solicitar Orçamento
+              </a>
+              {produto.pdfCatalogo && (
+                <a
+                  href={produto.pdfCatalogo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-ink-200 px-6 py-3 text-small font-semibold uppercase tracking-wider text-ink-950 transition-colors hover:border-ink-950"
+                >
+                  <Download className="size-4" />
+                  Baixar Catálogo
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </section>
