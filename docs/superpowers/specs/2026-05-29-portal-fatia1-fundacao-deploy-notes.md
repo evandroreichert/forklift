@@ -114,3 +114,28 @@ vercel --prod
 A spec prevê CI rodando testes RLS estruturais antes de qualquer merge. Implementação fica pra task futura — adicionar quando criar fluxo de PRs.
 
 Quando criar: usar um projeto Supabase dedicado a CI (separado de dev/prod), aplicar migrations no início do workflow, rodar `npm test`, e zerar dados no final (via `wipeAll()`).
+
+---
+
+## Fatia 2 — Bucket Storage `signatures`
+
+Criar bucket manualmente no painel Supabase (uma vez por projeto):
+
+1. Painel → **Storage** → "New bucket"
+2. Nome: `signatures`
+3. Public: **OFF** (privado)
+4. File size limit: **200 KB**
+5. Allowed MIME types: `image/png`
+6. **Sem policies** — acesso intermediado por server actions usando service role (`lib/supabase/admin.ts`)
+
+Estrutura de paths: `signatures/<report_id>/cliente.png` (upsert quando mecânico coleta nova assinatura).
+
+## Fatia 2 — Variáveis de ambiente novas
+
+`.env.local` e Vercel (preview + production):
+
+```
+SITE_URL=https://fabianobratti.com   # localhost:3000 em dev
+```
+
+Usada nos emails transactionais pra montar link absoluto pro relatório (`${SITE_URL}/portal/admin/relatorios/<id>`).
