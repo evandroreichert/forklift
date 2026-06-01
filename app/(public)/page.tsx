@@ -201,7 +201,7 @@ export default function HomePage() {
           <div className="relative">
             <div className="relative aspect-[5/6] overflow-hidden rounded-xl bg-ink-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)]">
               <Image
-                src="/images/un-servico-tecnica.jpg"
+                src="/images/manutencao.webp"
                 alt="Equipe técnica em atendimento de manutenção"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
