@@ -52,6 +52,7 @@ export const PRODUTOS: Produto[] = [
     imagensGaleria: [
       '/images/un-br-eletrica-fseries.jpg',
       '/images/un-br-eletrica-nseries.jpg',
+      '/images/un-br-nseries-lithium-green.jpg',
       '/images/un-br-eletrica-4t-5t.jpg',
       '/images/un-br-eletrica-3rodas.jpg',
       '/images/un-br-eletrica-7t-10t.jpg',
