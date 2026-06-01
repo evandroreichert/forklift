@@ -1,133 +1,204 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { requireRole } from '@/lib/auth';
-import { sendEmail } from '@/lib/email';
-import { relatorioAprovadoEmail } from '@/lib/email/templates/relatorioAprovado';
-import { relatorioRejeitadoEmail } from '@/lib/email/templates/relatorioRejeitado';
+import { uploadSignature } from '@/lib/storage/signatures';
+import type { Report, ReportUpdate } from '@/lib/reports/types';
 
-type ActionResult = { ok: true } | { ok: false; error: string };
+type ActionResult<T = void> = { ok: true; data?: T } | { ok: false; error: string };
 
-type ApproveInput = {
-  reportId: string;
-  clientCompanyId: string;
-  precoServicos: number;
-  precoPecas: number;
-  precoTotal: number;
-};
+// Campos que o admin pode editar (basicamente tudo, exceto auditoria).
+export type AdminEditableFields = Pick<
+  Report,
+  | 'titulo'
+  | 'cliente_nome'
+  | 'client_company_id'
+  | 'maquina_identificador'
+  | 'horimetro'
+  | 'is_preventiva'
+  | 'is_corretiva'
+  | 'maquina_parada'
+  | 'sumario_defeitos'
+  | 'produtos'
+  | 'responsavel_nome'
+  | 'assinatura_path'
+  | 'preco_servicos'
+  | 'preco_pecas'
+  | 'preco_total'
+>;
 
-export async function approveReport(input: ApproveInput): Promise<ActionResult> {
+export async function adminUpdateReport(
+  reportId: string,
+  fields: Partial<AdminEditableFields>,
+): Promise<ActionResult> {
+  await requireRole('admin');
+  const supabase = await createClient();
+
+  const ALLOWED_KEYS: (keyof AdminEditableFields)[] = [
+    'titulo',
+    'cliente_nome',
+    'client_company_id',
+    'maquina_identificador',
+    'horimetro',
+    'is_preventiva',
+    'is_corretiva',
+    'maquina_parada',
+    'sumario_defeitos',
+    'produtos',
+    'responsavel_nome',
+    'assinatura_path',
+    'preco_servicos',
+    'preco_pecas',
+    'preco_total',
+  ];
+
+  const payload: Partial<AdminEditableFields> = {};
+  for (const k of ALLOWED_KEYS) {
+    if (k in fields) {
+      (payload as Record<typeof k, AdminEditableFields[typeof k]>)[k] = fields[k] as AdminEditableFields[typeof k];
+    }
+  }
+
+  const { error } = await supabase.from('reports').update(payload).eq('id', reportId);
+  if (error) return { ok: false, error: error.message };
+
+  revalidatePath(`/portal/admin/relatorios/${reportId}`);
+  return { ok: true };
+}
+
+export async function adminUpsertInterval(
+  reportId: string,
+  interval: { id?: string; ordem: number; inicio: string; fim: string | null },
+): Promise<ActionResult<{ id: string }>> {
+  await requireRole('admin');
+  const supabase = await createClient();
+
+  if (interval.id) {
+    const { data, error } = await supabase
+      .from('report_intervals')
+      .update({ ordem: interval.ordem, inicio: interval.inicio, fim: interval.fim })
+      .eq('id', interval.id)
+      .select('id')
+      .single();
+    if (error) return { ok: false, error: error.message };
+    revalidatePath(`/portal/admin/relatorios/${reportId}`);
+    return { ok: true, data: { id: data.id } };
+  }
+
+  const { data, error } = await supabase
+    .from('report_intervals')
+    .insert({
+      report_id: reportId,
+      ordem: interval.ordem,
+      inicio: interval.inicio,
+      fim: interval.fim,
+    })
+    .select('id')
+    .single();
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/portal/admin/relatorios/${reportId}`);
+  return { ok: true, data: { id: data.id } };
+}
+
+export async function adminDeleteInterval(
+  intervalId: string,
+  reportId: string,
+): Promise<ActionResult> {
+  await requireRole('admin');
+  const supabase = await createClient();
+  const { error } = await supabase.from('report_intervals').delete().eq('id', intervalId);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/portal/admin/relatorios/${reportId}`);
+  return { ok: true };
+}
+
+export async function adminUploadSignature(
+  reportId: string,
+  pngBase64: string,
+): Promise<ActionResult<{ path: string }>> {
+  await requireRole('admin');
+  const supabase = await createClient();
+  try {
+    const path = await uploadSignature(reportId, pngBase64);
+    const upd = await supabase.from('reports').update({ assinatura_path: path }).eq('id', reportId);
+    if (upd.error) return { ok: false, error: upd.error.message };
+    return { ok: true, data: { path } };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : 'Falha no upload' };
+  }
+}
+
+/**
+ * Salva o relatório e o finaliza:
+ * - Valida que empresa-cliente e valor total estão preenchidos
+ * - Se ainda não tem `numero`, atribui o próximo (continua do 145 do sistema antigo)
+ * - Marca status=approved + approved_by + approved_at
+ * - Para relatórios já aprovados, só atualiza os campos (status/numero/approved_at preservados)
+ */
+export async function adminSaveAndFinalize(
+  reportId: string,
+  fields: AdminEditableFields,
+): Promise<ActionResult> {
   const profile = await requireRole('admin');
   const supabase = await createClient();
 
-  if (!input.clientCompanyId) return { ok: false, error: 'Selecione a empresa-cliente' };
-  if (input.precoServicos < 0 || input.precoPecas < 0 || input.precoTotal < 0)
-    return { ok: false, error: 'Valores não podem ser negativos' };
+  if (!fields.client_company_id) return { ok: false, error: 'Selecione a empresa-cliente' };
+  if (fields.preco_total == null || Number(fields.preco_total) < 0)
+    return { ok: false, error: 'Informe o valor total (ou zero)' };
 
-  const { data: report } = await supabase
+  const { data: current } = await supabase
     .from('reports')
-    .select('id, status, mechanic_id, cliente_nome, titulo')
-    .eq('id', input.reportId)
+    .select('id, status, numero')
+    .eq('id', reportId)
     .single();
-  if (!report) return { ok: false, error: 'Relatório não encontrado' };
-  if (report.status !== 'pending_approval')
-    return { ok: false, error: 'Só relatórios pendentes podem ser aprovados' };
+  if (!current) return { ok: false, error: 'Relatório não encontrado' };
 
-  // Próximo número sequencial: continua de 145 (último do sistema antigo).
-  // Mesma semântica que private.next_report_numero() — calculado em JS porque
-  // o schema private não é exposto via PostgREST.
-  const adminCli = createAdminClient();
-  const { data: maxRow } = await adminCli
-    .from('reports')
-    .select('numero')
-    .not('numero', 'is', null)
-    .order('numero', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  const numero = ((maxRow?.numero ?? 145) as number) + 1;
-
-  const { error: upErr } = await supabase
-    .from('reports')
-    .update({
-      status: 'approved',
-      numero,
-      client_company_id: input.clientCompanyId,
-      preco_servicos: input.precoServicos,
-      preco_pecas: input.precoPecas,
-      preco_total: input.precoTotal,
-      approved_by: profile.id,
-      approved_at: new Date().toISOString(),
-    })
-    .eq('id', input.reportId);
-  if (upErr) return { ok: false, error: upErr.message };
-
-  try {
-    const { data: u } = await adminCli.auth.admin.getUserById(report.mechanic_id);
-    if (u.user?.email) {
-      const { subject, html } = relatorioAprovadoEmail({
-        reportId: input.reportId,
-        numero,
-        titulo: report.titulo,
-        clienteNome: report.cliente_nome,
-        siteUrl: process.env.SITE_URL ?? 'http://localhost:3000',
-      });
-      await sendEmail({ to: u.user.email, subject, html });
-    }
-  } catch (err) {
-    console.error('[approveReport] notificação ao mecânico falhou:', err);
+  // Próximo numero — só calcula se ainda não foi atribuído
+  let numero = current.numero;
+  if (numero == null) {
+    const adminCli = createAdminClient();
+    const { data: maxRow } = await adminCli
+      .from('reports')
+      .select('numero')
+      .not('numero', 'is', null)
+      .order('numero', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    numero = ((maxRow?.numero ?? 145) as number) + 1;
   }
 
+  const wasApproved = current.status === 'approved';
+
+  const payload: ReportUpdate = {
+    ...fields,
+    numero,
+  };
+  if (!wasApproved) {
+    payload.status = 'approved';
+    payload.approved_by = profile.id;
+    payload.approved_at = new Date().toISOString();
+    payload.rejected_reason = null;
+    payload.rejected_at = null;
+  }
+
+  const { error } = await supabase.from('reports').update(payload).eq('id', reportId);
+  if (error) return { ok: false, error: error.message };
+
   revalidatePath('/portal/admin/relatorios');
-  revalidatePath(`/portal/admin/relatorios/${input.reportId}`);
+  revalidatePath(`/portal/admin/relatorios/${reportId}`);
   revalidatePath('/portal');
   return { ok: true };
 }
 
-export async function rejectReport(reportId: string, motivo: string): Promise<ActionResult> {
+export async function adminDeleteReport(reportId: string): Promise<ActionResult> {
   await requireRole('admin');
   const supabase = await createClient();
-
-  if (!motivo.trim()) return { ok: false, error: 'Informe o motivo da rejeição' };
-
-  const { data: report } = await supabase
-    .from('reports')
-    .select('id, status, mechanic_id, cliente_nome, titulo')
-    .eq('id', reportId)
-    .single();
-  if (!report) return { ok: false, error: 'Relatório não encontrado' };
-  if (report.status !== 'pending_approval')
-    return { ok: false, error: 'Só relatórios pendentes podem ser rejeitados' };
-
-  const { error: upErr } = await supabase
-    .from('reports')
-    .update({
-      status: 'rejected',
-      rejected_reason: motivo.trim(),
-      rejected_at: new Date().toISOString(),
-    })
-    .eq('id', reportId);
-  if (upErr) return { ok: false, error: upErr.message };
-
-  try {
-    const adminCli = createAdminClient();
-    const { data: u } = await adminCli.auth.admin.getUserById(report.mechanic_id);
-    if (u.user?.email) {
-      const { subject, html } = relatorioRejeitadoEmail({
-        reportId,
-        titulo: report.titulo,
-        clienteNome: report.cliente_nome,
-        motivo: motivo.trim(),
-        siteUrl: process.env.SITE_URL ?? 'http://localhost:3000',
-      });
-      await sendEmail({ to: u.user.email, subject, html });
-    }
-  } catch (err) {
-    console.error('[rejectReport] notificação ao mecânico falhou:', err);
-  }
-
+  const { error } = await supabase.from('reports').delete().eq('id', reportId);
+  if (error) return { ok: false, error: error.message };
   revalidatePath('/portal/admin/relatorios');
-  revalidatePath(`/portal/admin/relatorios/${reportId}`);
-  return { ok: true };
+  revalidatePath('/portal');
+  redirect('/portal/admin/relatorios');
 }
