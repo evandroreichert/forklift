@@ -83,20 +83,17 @@ function Input({
   );
 }
 
-function Textarea({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  return (
-    <textarea
-      className="w-full min-h-[120px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    />
-  );
-}
-
 export function AdminEditarForm({ report, initialIntervals, signatureUrl, companies }: Props) {
   const router = useRouter();
   const [saving, startSave] = useTransition();
   const [deleting, startDelete] = useTransition();
+
+  // Combina sumário + produtos numa única textarea pra reduzir atrito no admin.
+  // Tudo é gravado em sumario_defeitos; produtos vai como null daqui pra frente.
+  const initialObs = [report.sumario_defeitos, report.produtos]
+    .map((s) => (s ?? '').trim())
+    .filter(Boolean)
+    .join('\n\n');
 
   const [fields, setFields] = useState<AdminEditableFields>({
     titulo: report.titulo,
@@ -107,8 +104,8 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
     is_preventiva: report.is_preventiva,
     is_corretiva: report.is_corretiva,
     maquina_parada: report.maquina_parada,
-    sumario_defeitos: report.sumario_defeitos,
-    produtos: report.produtos,
+    sumario_defeitos: initialObs,
+    produtos: null,
     responsavel_nome: report.responsavel_nome,
     assinatura_path: report.assinatura_path,
     preco_servicos: report.preco_servicos,
@@ -217,26 +214,6 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         </button>
       </header>
 
-      <Section title="Empresa-cliente">
-        <label className="block">
-          <span className="text-small text-ink-100/70">Empresa cadastrada (vai amarrar o relatório a este cliente)</span>
-          <select
-            className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-            value={fields.client_company_id ?? ''}
-            onChange={(e) =>
-              setFields({ ...fields, client_company_id: e.target.value || null })
-            }
-          >
-            <option value="">— selecione —</option>
-            {companies.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </Section>
-
       <Section title="Identificação">
         <Input
           label="Título"
@@ -286,20 +263,6 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         />
       </Section>
 
-      <Section title="Sumário dos defeitos executados">
-        <Textarea
-          value={fields.sumario_defeitos ?? ''}
-          onChange={(v) => setFields({ ...fields, sumario_defeitos: v })}
-        />
-      </Section>
-
-      <Section title="Produtos / peças utilizadas">
-        <Textarea
-          value={fields.produtos ?? ''}
-          onChange={(v) => setFields({ ...fields, produtos: v ?? null })}
-        />
-      </Section>
-
       <Section title="Responsável (cliente)">
         <Input
           label="Nome do responsável"
@@ -315,26 +278,52 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         </div>
       </Section>
 
-      <Section title="Valores do serviço (R$)">
-        <div className="grid gap-3 sm:grid-cols-3">
-          <Input
-            label="Serviços"
-            value={precoServicosStr}
-            onChange={setPrecoServicosStr}
-          />
-          <Input label="Peças e materiais" value={precoPecasStr} onChange={setPrecoPecasStr} />
-          <Input
-            label="Total"
-            value={precoTotalStr}
-            onChange={(v) => {
-              totalOverriddenRef.current = true;
-              setPrecoTotalStr(v);
-            }}
-          />
+      <Section title="Serviço executado e valores">
+        <div className="grid gap-4 md:grid-cols-[1fr_280px]">
+          <label className="block">
+            <span className="text-small text-ink-100/70">
+              Observações do serviço (descrição + peças/materiais utilizados)
+            </span>
+            <textarea
+              className="mt-1 w-full min-h-[220px] rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+              value={fields.sumario_defeitos ?? ''}
+              onChange={(e) => setFields({ ...fields, sumario_defeitos: e.target.value })}
+              placeholder="O que foi feito + peças/produtos usados"
+            />
+          </label>
+          <div className="space-y-3">
+            <label className="block">
+              <span className="text-small text-ink-100/70">Cliente cadastrado</span>
+              <select
+                className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
+                value={fields.client_company_id ?? ''}
+                onChange={(e) =>
+                  setFields({ ...fields, client_company_id: e.target.value || null })
+                }
+              >
+                <option value="">— selecione —</option>
+                {companies.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <Input label="Serviços (R$)" value={precoServicosStr} onChange={setPrecoServicosStr} />
+            <Input label="Peças (R$)" value={precoPecasStr} onChange={setPrecoPecasStr} />
+            <Input
+              label="Total (R$)"
+              value={precoTotalStr}
+              onChange={(v) => {
+                totalOverriddenRef.current = true;
+                setPrecoTotalStr(v);
+              }}
+            />
+            <p className="text-xs text-ink-100/55">
+              Total = Serviços + Peças (auto). Pode sobrescrever.
+            </p>
+          </div>
         </div>
-        <p className="text-xs text-ink-100/55">
-          Total preenche automaticamente como Serviços + Peças — pode sobrescrever manualmente.
-        </p>
       </Section>
 
       {error && (
