@@ -31,6 +31,7 @@ export const PRODUTOS: Produto[] = [
       '/images/un-br-diesel-nseries.jpg',
       '/images/un-br-diesel-todo-terreno.jpg',
       '/images/un-br-diesel-7t.jpg',
+      '/images/un-br-diesel-fseries-7t.jpg',
     ],
     pdfCatalogo: '/catalogos/diesel-glp-2.5t-3.5t.pdf',
     variantes: [
@@ -53,6 +54,7 @@ export const PRODUTOS: Produto[] = [
       '/images/un-br-eletrica-nseries.jpg',
       '/images/un-br-eletrica-4t-5t.jpg',
       '/images/un-br-eletrica-3rodas.jpg',
+      '/images/un-br-eletrica-7t-10t.jpg',
     ],
     pdfCatalogo: '/catalogos/eletrica-2.5t-3.5t-fseries.pdf',
     variantes: [
