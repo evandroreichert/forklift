@@ -201,8 +201,8 @@ export default function HomePage() {
           <div className="relative">
             <div className="relative aspect-[5/6] overflow-hidden rounded-xl bg-ink-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)]">
               <Image
-                src="/images/empilhadeira-diesel-2.webp"
-                alt="Empilhadeira diesel em operação"
+                src="/images/un-servico-tecnica.jpg"
+                alt="Equipe técnica em atendimento de manutenção"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
