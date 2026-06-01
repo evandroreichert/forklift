@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { requireRole } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
+import { translateError } from '@/lib/errors/translate';
 
 export type ClienteFormState = { error: string | null };
 
@@ -26,7 +27,7 @@ export async function createClienteAction(
 
   const supabase = await createClient();
   const { error } = await supabase.from('client_companies').insert(payload);
-  if (error) return { error: error.message };
+  if (error) return { error: translateError(error) };
 
   revalidatePath('/portal/admin/clientes');
   redirect('/portal/admin/clientes');
@@ -43,7 +44,7 @@ export async function updateClienteAction(
 
   const supabase = await createClient();
   const { error } = await supabase.from('client_companies').update(payload).eq('id', id);
-  if (error) return { error: error.message };
+  if (error) return { error: translateError(error) };
 
   revalidatePath('/portal/admin/clientes');
   redirect('/portal/admin/clientes');

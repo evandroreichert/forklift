@@ -2,6 +2,7 @@
 
 import { requireRole } from '@/lib/auth';
 import { sendEmail } from '@/lib/email';
+import { translateError } from '@/lib/errors/translate';
 
 export type TestEmailState = { message: string | null; error: string | null };
 
@@ -23,6 +24,6 @@ export async function sendTestEmailAction(
     });
     return { message: `Email enviado para ${to}.`, error: null };
   } catch (e) {
-    return { message: null, error: e instanceof Error ? e.message : 'Erro desconhecido.' };
+    return { message: null, error: translateError(e) };
   }
 }

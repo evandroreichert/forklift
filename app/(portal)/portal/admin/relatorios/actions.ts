@@ -7,6 +7,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { requireRole } from '@/lib/auth';
 import { uploadSignature } from '@/lib/storage/signatures';
 import type { Report, ReportUpdate } from '@/lib/reports/types';
+import { translateError } from '@/lib/errors/translate';
 
 type ActionResult<T = void> = { ok: true; data?: T } | { ok: false; error: string };
 
@@ -63,7 +64,7 @@ export async function adminUpdateReport(
   }
 
   const { error } = await supabase.from('reports').update(payload).eq('id', reportId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
 
   revalidatePath(`/portal/admin/relatorios/${reportId}`);
   return { ok: true };
@@ -83,7 +84,7 @@ export async function adminUpsertInterval(
       .eq('id', interval.id)
       .select('id')
       .single();
-    if (error) return { ok: false, error: error.message };
+    if (error) return { ok: false, error: translateError(error) };
     revalidatePath(`/portal/admin/relatorios/${reportId}`);
     return { ok: true, data: { id: data.id } };
   }
@@ -98,7 +99,7 @@ export async function adminUpsertInterval(
     })
     .select('id')
     .single();
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath(`/portal/admin/relatorios/${reportId}`);
   return { ok: true, data: { id: data.id } };
 }
@@ -110,7 +111,7 @@ export async function adminDeleteInterval(
   await requireRole('admin');
   const supabase = await createClient();
   const { error } = await supabase.from('report_intervals').delete().eq('id', intervalId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath(`/portal/admin/relatorios/${reportId}`);
   return { ok: true };
 }
@@ -124,10 +125,10 @@ export async function adminUploadSignature(
   try {
     const path = await uploadSignature(reportId, pngBase64);
     const upd = await supabase.from('reports').update({ assinatura_path: path }).eq('id', reportId);
-    if (upd.error) return { ok: false, error: upd.error.message };
+    if (upd.error) return { ok: false, error: translateError(upd.error) };
     return { ok: true, data: { path } };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Falha no upload' };
+    return { ok: false, error: translateError(e) };
   }
 }
 
@@ -183,7 +184,7 @@ export async function adminSaveAndFinalize(
   }
 
   const { error } = await supabase.from('reports').update(payload).eq('id', reportId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
 
   revalidatePath('/portal/admin/relatorios');
   revalidatePath(`/portal/admin/relatorios/${reportId}`);
@@ -212,7 +213,7 @@ export async function adminCreateDraft(): Promise<ActionResult<{ id: string }>> 
     .select('id')
     .single();
 
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath('/portal/admin/relatorios');
   return { ok: true, data: { id: data.id } };
 }
@@ -221,7 +222,7 @@ export async function adminDeleteReport(reportId: string): Promise<ActionResult>
   await requireRole('admin');
   const supabase = await createClient();
   const { error } = await supabase.from('reports').delete().eq('id', reportId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath('/portal/admin/relatorios');
   revalidatePath('/portal');
   redirect('/portal/admin/relatorios');

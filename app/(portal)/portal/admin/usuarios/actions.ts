@@ -6,6 +6,7 @@ import { requireRole } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import type { UserRole } from '@/lib/types';
+import { translateError } from '@/lib/errors/translate';
 
 export type UsuarioFormState = { error: string | null };
 
@@ -36,7 +37,7 @@ export async function createUsuarioAction(
     password,
     email_confirm: true,
   });
-  if (userErr || !user.user) return { error: `Erro Auth: ${userErr?.message ?? 'desconhecido'}` };
+  if (userErr || !user.user) return { error: translateError(userErr) };
 
   const { error: profErr } = await admin.from('profiles').insert({
     id: user.user.id,
@@ -47,7 +48,7 @@ export async function createUsuarioAction(
   if (profErr) {
     // rollback: deletar user que criamos
     await admin.auth.admin.deleteUser(user.user.id);
-    return { error: `Erro profile: ${profErr.message}` };
+    return { error: translateError(profErr) };
   }
 
   revalidatePath('/portal/admin/usuarios');
@@ -75,7 +76,7 @@ export async function updateUsuarioAction(
   const { error } = await supabase.from('profiles').update({
     full_name, role, client_company_id: role === 'client' ? client_company_id : null, active,
   }).eq('id', id);
-  if (error) return { error: error.message };
+  if (error) return { error: translateError(error) };
 
   revalidatePath('/portal/admin/usuarios');
   redirect('/portal/admin/usuarios');
@@ -94,7 +95,7 @@ export async function resetSenhaAction(
 
   const admin = createAdminClient();
   const { error } = await admin.auth.admin.updateUserById(userId, { password: newPassword });
-  if (error) return { message: null, error: error.message };
+  if (error) return { message: null, error: translateError(error) };
 
   return { message: 'Senha atualizada. Comunique ao usuário.', error: null };
 }

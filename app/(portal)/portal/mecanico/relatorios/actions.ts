@@ -9,6 +9,7 @@ import { novoRelatorioEmail } from '@/lib/email/templates/novoRelatorio';
 import { uploadSignature } from '@/lib/storage/signatures';
 import { validateForSubmit } from '@/lib/reports/validate';
 import type { ReportEditable, ReportUpdate } from '@/lib/reports/types';
+import { translateError } from '@/lib/errors/translate';
 
 type ActionResult<T = void> = { ok: true; data?: T } | { ok: false; error: string };
 
@@ -46,7 +47,7 @@ export async function createDraft(): Promise<ActionResult<{ id: string }>> {
     .select('id')
     .single();
 
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath('/portal/mecanico/relatorios');
   return { ok: true, data: { id: data.id } };
 }
@@ -66,7 +67,7 @@ export async function updateDraft(
   }
 
   const { error } = await supabase.from('reports').update(payload).eq('id', reportId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
 
   revalidatePath(`/portal/mecanico/relatorios/${reportId}/editar`);
   return { ok: true };
@@ -86,7 +87,7 @@ export async function upsertInterval(
       .eq('id', interval.id)
       .select('id')
       .single();
-    if (error) return { ok: false, error: error.message };
+    if (error) return { ok: false, error: translateError(error) };
     revalidatePath(`/portal/mecanico/relatorios/${reportId}/editar`);
     return { ok: true, data: { id: data.id } };
   }
@@ -101,7 +102,7 @@ export async function upsertInterval(
     })
     .select('id')
     .single();
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath(`/portal/mecanico/relatorios/${reportId}/editar`);
   return { ok: true, data: { id: data.id } };
 }
@@ -113,7 +114,7 @@ export async function deleteInterval(
   await requireRole('mechanic');
   const supabase = await createClient();
   const { error } = await supabase.from('report_intervals').delete().eq('id', intervalId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath(`/portal/mecanico/relatorios/${reportId}/editar`);
   return { ok: true };
 }
@@ -138,10 +139,10 @@ export async function uploadSignatureAction(
   try {
     const path = await uploadSignature(reportId, pngBase64);
     const upd = await supabase.from('reports').update({ assinatura_path: path }).eq('id', reportId);
-    if (upd.error) return { ok: false, error: upd.error.message };
+    if (upd.error) return { ok: false, error: translateError(upd.error) };
     return { ok: true, data: { path } };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : 'Falha no upload' };
+    return { ok: false, error: translateError(e) };
   }
 }
 
@@ -183,7 +184,7 @@ export async function submitReport(reportId: string): Promise<ActionResult> {
     .from('reports')
     .update(submitPayload)
     .eq('id', reportId);
-  if (upErr) return { ok: false, error: upErr.message };
+  if (upErr) return { ok: false, error: translateError(upErr) };
 
   try {
     let emails: string[] = [];
@@ -242,7 +243,7 @@ export async function reopenRejected(reportId: string): Promise<ActionResult> {
     .from('reports')
     .update({ status: 'draft', rejected_reason: null, rejected_at: null })
     .eq('id', reportId);
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
 
   revalidatePath(`/portal/mecanico/relatorios/${reportId}`);
   return { ok: true };
@@ -256,7 +257,7 @@ export async function deleteDraft(reportId: string): Promise<ActionResult> {
     .delete()
     .eq('id', reportId)
     .eq('status', 'draft');
-  if (error) return { ok: false, error: error.message };
+  if (error) return { ok: false, error: translateError(error) };
   revalidatePath('/portal/mecanico/relatorios');
   return { ok: true };
 }
