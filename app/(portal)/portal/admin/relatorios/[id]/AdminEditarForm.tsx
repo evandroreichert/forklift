@@ -6,6 +6,7 @@ import { Trash2, Save, Download } from 'lucide-react';
 import { TipoAtividade } from '@/components/portal/TipoAtividade';
 import { MaquinaParadaRadio } from '@/components/portal/MaquinaParadaRadio';
 import { IntervalsList } from '@/components/portal/IntervalsList';
+import { ShareReportButton } from '@/components/portal/ShareReportButton';
 import { SignaturePad } from '@/components/portal/SignaturePad';
 import { RejectedBanner } from '@/components/portal/RejectedBanner';
 import type { Report, ReportInterval } from '@/lib/reports/types';
@@ -178,17 +179,24 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
             {STATUS_LABEL[report.status]}
           </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {report.status === 'approved' && (
-            <a
-              href={`/portal/relatorios/${report.id}/pdf`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-small text-white hover:border-brand-yellow/40"
-            >
-              <Download className="size-4" />
-              Baixar PDF
-            </a>
+            <>
+              <ShareReportButton
+                reportId={report.id}
+                maquinaIdentificador={fields.maquina_identificador}
+                className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-small text-white hover:border-brand-yellow/40 disabled:cursor-not-allowed disabled:opacity-50"
+              />
+              <a
+                href={`/portal/relatorios/${report.id}/pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-small text-white hover:border-brand-yellow/40"
+              >
+                <Download className="size-4" />
+                Baixar PDF
+              </a>
+            </>
           )}
           <button
             type="button"

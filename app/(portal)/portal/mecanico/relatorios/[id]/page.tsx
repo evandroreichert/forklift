@@ -5,6 +5,7 @@ import { requireRole } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { ReportFieldsCard } from '@/components/portal/ReportFieldsCard';
 import { RejectedBanner } from '@/components/portal/RejectedBanner';
+import { ShareReportButton } from '@/components/portal/ShareReportButton';
 import { getSignatureSignedUrl } from '@/lib/storage/signatures';
 import { reopenRejected } from '../actions';
 
@@ -60,15 +61,21 @@ export default async function VerRelatorioPage({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {report.status === 'approved' && (
-            <a
-              href={`/portal/relatorios/${id}/pdf`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-small text-white hover:border-brand-yellow/40"
-            >
-              <Download className="size-4" />
-              Baixar PDF
-            </a>
+            <>
+              <ShareReportButton
+                reportId={id}
+                maquinaIdentificador={report.maquina_identificador}
+              />
+              <a
+                href={`/portal/relatorios/${id}/pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-small text-white hover:border-brand-yellow/40"
+              >
+                <Download className="size-4" />
+                Baixar PDF
+              </a>
+            </>
           )}
           {(report.status === 'draft' || report.status === 'rejected') && (
             <Link
