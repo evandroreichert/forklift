@@ -304,7 +304,7 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         </div>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-4">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex max-w-2xl gap-2">
           <button
             type="button"

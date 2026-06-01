@@ -82,14 +82,13 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             <Link
               href="/login"
               className="inline-flex items-center gap-2 rounded border border-brand-yellow/60 bg-brand-yellow/10 px-3.5 py-2 text-small font-semibold text-brand-yellow transition-colors hover:bg-brand-yellow hover:text-ink-950"
             >
               <User className="size-4" />
-              <span className="hidden lg:inline">Área do Cliente</span>
-              <span className="lg:hidden">Cliente</span>
+              Área do Cliente
             </Link>
             <a
               href={WHATSAPP_URL}
@@ -98,7 +97,7 @@ export function Header() {
               className="inline-flex items-center gap-2 rounded bg-brand-wa px-3.5 py-2 text-small font-semibold text-white transition-colors hover:bg-brand-wa-dark"
             >
               <WaIcon />
-              <span className="hidden lg:inline">WhatsApp</span>
+              WhatsApp
             </a>
           </div>
 

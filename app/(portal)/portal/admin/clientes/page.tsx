@@ -30,7 +30,8 @@ export default async function ClientesPage({ searchParams }: { searchParams: Pro
         />
       </form>
       <div className="overflow-hidden rounded-xl border border-white/10 bg-ink-900/60">
-        <table className="w-full text-small">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-small">
           <thead className="bg-white/[0.03] text-label uppercase tracking-wider text-ink-100/60">
             <tr>
               <th className="px-4 py-3 text-left">Nome</th>
@@ -63,6 +64,7 @@ export default async function ClientesPage({ searchParams }: { searchParams: Pro
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

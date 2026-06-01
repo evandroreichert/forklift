@@ -1,9 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/public/Logo';
-import { Wrench, LogOut, Users, Building2, LayoutDashboard, ClipboardList } from 'lucide-react';
+import {
+  Wrench,
+  LogOut,
+  Users,
+  Building2,
+  LayoutDashboard,
+  ClipboardList,
+  Menu,
+} from 'lucide-react';
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import type { Profile } from '@/lib/types';
 import { logoutAction } from '@/app/(portal)/portal/actions';
 
@@ -24,6 +34,58 @@ const NAV_BY_ROLE: Record<Profile['role'], NavItem[]> = {
   ],
 };
 
+function NavList({
+  nav,
+  pathname,
+  onItemClick,
+}: {
+  nav: NavItem[];
+  pathname: string;
+  onItemClick?: () => void;
+}) {
+  return (
+    <ul className="space-y-1">
+      {nav.map((item) => {
+        // /portal precisa de match exato (senão fica ativo em qualquer /portal/*)
+        const active =
+          item.href === '/portal'
+            ? pathname === '/portal'
+            : pathname === item.href || pathname.startsWith(`${item.href}/`);
+        return (
+          <li key={item.href}>
+            <Link
+              href={item.href}
+              onClick={onItemClick}
+              className={`flex items-center gap-3 rounded px-3 py-2.5 text-small font-medium transition-colors ${
+                active
+                  ? 'bg-brand-yellow/10 text-brand-yellow'
+                  : 'text-ink-100/80 hover:bg-white/5 hover:text-white'
+              }`}
+            >
+              <item.icon className="size-4" />
+              {item.label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function LogoutButton({ variant = 'sidebar' }: { variant?: 'sidebar' | 'drawer' }) {
+  return (
+    <form action={logoutAction} className={variant === 'sidebar' ? 'border-t border-white/10 p-4' : 'mt-4'}>
+      <button
+        type="submit"
+        className="flex w-full items-center justify-center gap-2 rounded border border-white/15 px-3 py-2.5 text-small text-ink-100/80 transition-colors hover:border-brand-yellow hover:text-brand-yellow"
+      >
+        <LogOut className="size-4" />
+        Sair
+      </button>
+    </form>
+  );
+}
+
 export function Sidebar({ profile }: { profile: Profile }) {
   const pathname = usePathname();
   const nav = NAV_BY_ROLE[profile.role];
@@ -33,43 +95,39 @@ export function Sidebar({ profile }: { profile: Profile }) {
       <div className="border-b border-white/10 p-6">
         <Logo className="brightness-0 invert" />
       </div>
-
       <nav className="flex-1 p-4" aria-label="Navegação do portal">
-        <ul className="space-y-1">
-          {nav.map((item) => {
-            // /portal precisa de match exato (senão fica ativo em qualquer /portal/*)
-            const active =
-              item.href === '/portal'
-                ? pathname === '/portal'
-                : pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-3 rounded px-3 py-2.5 text-small font-medium transition-colors ${
-                    active
-                      ? 'bg-brand-yellow/10 text-brand-yellow'
-                      : 'text-ink-100/80 hover:bg-white/5 hover:text-white'
-                  }`}
-                >
-                  <item.icon className="size-4" />
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <NavList nav={nav} pathname={pathname} />
       </nav>
-
-      <form action={logoutAction} className="border-t border-white/10 p-4">
-        <button
-          type="submit"
-          className="flex w-full items-center gap-2 rounded border border-white/10 px-3 py-2 text-small text-ink-100/70 transition-colors hover:border-brand-yellow hover:text-brand-yellow"
-        >
-          <LogOut className="size-4" />
-          Sair
-        </button>
-      </form>
+      <LogoutButton />
     </aside>
+  );
+}
+
+export function MobileNavTrigger({ profile }: { profile: Profile }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const nav = NAV_BY_ROLE[profile.role];
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger
+        className="inline-flex size-9 items-center justify-center rounded text-ink-100/80 hover:text-brand-yellow md:hidden"
+        aria-label="Abrir menu"
+      >
+        <Menu className="size-5" />
+      </SheetTrigger>
+      <SheetContent side="left" className="border-white/10 bg-ink-900 p-0">
+        <SheetTitle className="sr-only">Menu do portal</SheetTitle>
+        <div className="flex h-full flex-col">
+          <div className="border-b border-white/10 p-6">
+            <Logo className="brightness-0 invert" />
+          </div>
+          <nav className="flex-1 p-4" aria-label="Navegação móvel do portal">
+            <NavList nav={nav} pathname={pathname} onItemClick={() => setOpen(false)} />
+            <LogoutButton variant="drawer" />
+          </nav>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

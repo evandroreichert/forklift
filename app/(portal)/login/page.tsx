@@ -28,7 +28,7 @@ function LoginContent() {
   const displayError = state.error ?? inactiveError;
 
   return (
-    <main className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-6 py-12 text-white">
+    <main className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-4 py-10 sm:px-6 sm:py-12 text-white">
       <div
         className="absolute inset-0 -z-10 opacity-40"
         style={{
@@ -50,7 +50,7 @@ function LoginContent() {
         <Logo className="brightness-0 invert" />
 
         <div className="mt-10 overflow-hidden rounded-xl border border-white/10 bg-ink-900/60 backdrop-blur-sm">
-          <div className="border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent px-8 py-6">
+          <div className="border-b border-white/10 bg-gradient-to-b from-white/5 to-transparent px-5 py-5 sm:px-8 sm:py-6">
             <p className="inline-flex items-center gap-2 text-label uppercase tracking-[0.18em] text-brand-yellow">
               <ShieldCheck className="size-3.5" />
               Acesso restrito
@@ -61,7 +61,7 @@ function LoginContent() {
             </p>
           </div>
 
-          <form action={formAction} className="space-y-5 px-8 py-7">
+          <form action={formAction} className="space-y-5 px-5 py-6 sm:px-8 sm:py-7">
             <div>
               <Label htmlFor="email" className="text-ink-100">E-mail</Label>
               <Input
