@@ -13,6 +13,9 @@ import { translateError } from '@/lib/errors/translate';
 
 type ActionResult<T = void> = { ok: true; data?: T } | { ok: false; error: string };
 
+// assinatura_path NÃO entra aqui — só uploadSignatureAction define esse campo
+// (server-side, com path determinístico ${reportId}/cliente.png). Evita o cliente
+// injetar path arbitrário via payload de auto-save.
 const EDITABLE_FIELDS = [
   'titulo',
   'cliente_nome',
@@ -24,7 +27,6 @@ const EDITABLE_FIELDS = [
   'sumario_defeitos',
   'produtos',
   'responsavel_nome',
-  'assinatura_path',
 ] as const satisfies readonly (keyof ReportEditable)[];
 
 export async function createDraft(): Promise<ActionResult<{ id: string }>> {

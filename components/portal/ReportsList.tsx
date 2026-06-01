@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Download } from 'lucide-react';
+import { Download, ClipboardList } from 'lucide-react';
 import type { Report } from '@/lib/reports/types';
 
 const STATUS_LABEL: Record<Report['status'], string> = {
@@ -27,8 +27,9 @@ export function ReportsList({
 }) {
   if (reports.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-white/15 bg-ink-900/40 p-10 text-center text-ink-100/70">
-        {emptyMessage}
+      <div className="rounded-lg border border-dashed border-white/15 bg-ink-900/40 p-10 text-center">
+        <ClipboardList className="mx-auto size-10 text-ink-100/30" />
+        <p className="mt-4 text-small text-ink-100/70">{emptyMessage}</p>
       </div>
     );
   }

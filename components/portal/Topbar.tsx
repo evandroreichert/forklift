@@ -3,6 +3,7 @@ import { Bell } from 'lucide-react';
 import type { Profile } from '@/lib/types';
 import { createClient } from '@/lib/supabase/server';
 import { MobileNavTrigger } from './Sidebar';
+import { UserMenu } from './UserMenu';
 
 const ROLE_LABEL: Record<Profile['role'], string> = {
   admin: 'Administrador',
@@ -20,14 +21,6 @@ async function getAdminPendingCount(): Promise<number> {
 }
 
 export async function Topbar({ profile }: { profile: Profile }) {
-  const iniciais = profile.full_name
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => (w[0] ?? '').toUpperCase())
-    .join('');
-
-  // Só admin vê o sino — link direto pra fila de pendentes, com indicador
-  // visual quando há algo. Pra mechanic/client o sino não tinha função, removido.
   const pendingCount = profile.role === 'admin' ? await getAdminPendingCount() : 0;
 
   return (
@@ -60,9 +53,7 @@ export async function Topbar({ profile }: { profile: Profile }) {
             )}
           </Link>
         )}
-        <div className="flex size-9 items-center justify-center rounded-full bg-brand-yellow text-small font-bold text-ink-950">
-          {iniciais}
-        </div>
+        <UserMenu profile={profile} />
       </div>
     </header>
   );

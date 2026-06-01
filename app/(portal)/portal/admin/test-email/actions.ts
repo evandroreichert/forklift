@@ -11,6 +11,12 @@ export async function sendTestEmailAction(
   formData: FormData,
 ): Promise<TestEmailState> {
   await requireRole('admin');
+
+  const habilitada =
+    process.env.NODE_ENV !== 'production' || process.env.ALLOW_TEST_EMAIL_PAGE === '1';
+  if (!habilitada) {
+    return { message: null, error: 'Rota desabilitada em produção.' };
+  }
   const to = String(formData.get('to') ?? '').trim();
   if (!to.includes('@')) {
     return { message: null, error: 'Forneça um email válido.' };

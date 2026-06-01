@@ -50,10 +50,23 @@ export async function createTestUser(args: {
   return userData.user.id;
 }
 
+// Lista de projetos Supabase de PRODUÇÃO que NUNCA podem ser wipados via teste.
+// Evita destruir auth.users de prod por engano (CI, hook do editor, etc).
+const PROD_PROJECT_REFS = ['uhtodltjysbcnprexoiu'];
+
 export async function wipeAll() {
+  if (PROD_PROJECT_REFS.some((ref) => URL.includes(ref))) {
+    if (process.env.ALLOW_DESTRUCTIVE_WIPE !== '1') {
+      throw new Error(
+        `wipeAll() bloqueado: o NEXT_PUBLIC_SUPABASE_URL aponta pra um projeto Supabase de produção.\n` +
+          `Se você REALMENTE quer apagar todos os usuários ali, defina ALLOW_DESTRUCTIVE_WIPE=1.\n` +
+          `Caso contrário, aponte os testes pra um projeto Supabase separado de testes.`,
+      );
+    }
+    console.warn('[wipeAll] ALLOW_DESTRUCTIVE_WIPE=1 em projeto de produção. Procedendo MESMO ASSIM.');
+  }
+
   const admin = adminClient();
-  // reports antes de profiles (FK restrict em mechanic_id e approved_by);
-  // report_intervals desce em cascade com reports.
   await admin.from('reports').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('profiles').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('client_companies').delete().neq('id', '00000000-0000-0000-0000-000000000000');

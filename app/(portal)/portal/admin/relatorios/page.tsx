@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { requireRole } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { ReportsList } from '@/components/portal/ReportsList';
+import { PageHeader } from '@/components/portal/ui/PageHeader';
+import { Button } from '@/components/portal/ui/Button';
 import { adminCreateDraft } from './actions';
 
 export default async function AdminRelatoriosPage() {
@@ -32,25 +34,19 @@ export default async function AdminRelatoriosPage() {
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <p className="text-label uppercase tracking-wider text-ink-100/55">Manutenção</p>
-          <h1 className="mt-2 font-display text-h1 font-bold text-white">Relatórios</h1>
-          <p className="mt-2 text-small text-ink-100/60">
-            Clique num pendente pra editar e finalizar. Aprovados ficam aqui em &ldquo;Outros&rdquo;
-            e dá pra baixar o PDF direto pelo ícone à direita.
-          </p>
-        </div>
-        <form action={novoRelatorio}>
-          <button
-            type="submit"
-            className="inline-flex items-center gap-2 rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black hover:brightness-110"
-          >
-            <Plus className="size-4" />
-            Novo relatório
-          </button>
-        </form>
-      </div>
+      <PageHeader
+        kicker="Manutenção"
+        title="Relatórios"
+        description="Clique num pendente pra editar e finalizar. Aprovados ficam aqui em “Outros” e dá pra baixar o PDF direto pelo ícone à direita."
+        action={
+          <form action={novoRelatorio}>
+            <Button type="submit" leftIcon={<Plus className="size-4" />}>
+              <span className="sm:hidden">Novo</span>
+              <span className="hidden sm:inline">Novo relatório</span>
+            </Button>
+          </form>
+        }
+      />
 
       <section>
         <h2 className="text-label uppercase tracking-wider text-ink-100/55 mb-3">
@@ -59,7 +55,7 @@ export default async function AdminRelatoriosPage() {
         <ReportsList
           reports={pendentes ?? []}
           basePath="/portal/admin/relatorios"
-          emptyMessage="Nenhum relatório aguardando."
+          emptyMessage="Nenhum relatório aguardando aprovação."
         />
       </section>
 
@@ -70,7 +66,7 @@ export default async function AdminRelatoriosPage() {
         <ReportsList
           reports={outros ?? []}
           basePath="/portal/admin/relatorios"
-          emptyMessage="Nada por aqui."
+          emptyMessage="Sem rascunhos, aprovados ou rejeitados aqui."
         />
       </section>
     </div>

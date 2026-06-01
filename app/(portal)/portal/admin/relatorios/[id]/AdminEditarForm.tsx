@@ -106,6 +106,7 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
   });
   const [intervals, setIntervals] = useState<ReportInterval[]>(initialIntervals);
   const [error, setError] = useState<string | null>(null);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   async function handleUpsertInterval(item: {
     id?: string;
@@ -155,8 +156,7 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
     });
   }
 
-  function handleDelete() {
-    if (!confirm('Excluir este relatório? Não dá pra desfazer.')) return;
+  function confirmDelete() {
     setError(null);
     startDelete(async () => {
       const res = await adminDeleteReport(report.id);
@@ -192,7 +192,7 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
           )}
           <button
             type="button"
-            onClick={handleDelete}
+            onClick={() => setConfirmingDelete(true)}
             disabled={deleting || saving}
             className="inline-flex items-center gap-2 rounded-md border border-red-500/50 px-3 py-2 text-small text-red-300 hover:bg-red-500/10 disabled:opacity-50"
           >
@@ -204,6 +204,33 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
 
       {report.status === 'rejected' && report.rejected_reason && (
         <RejectedBanner reason={report.rejected_reason} />
+      )}
+
+      {confirmingDelete && (
+        <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-4 space-y-3">
+          <p className="text-small text-red-200">
+            Excluir <strong className="text-white">{fields.titulo || 'este relatório'}</strong>?
+            Esta ação não pode ser desfeita e remove o relatório e a assinatura do storage.
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={confirmDelete}
+              disabled={deleting}
+              className="rounded-md bg-red-500 px-4 py-2 text-small font-semibold text-white hover:bg-red-600 disabled:opacity-50"
+            >
+              {deleting ? 'Excluindo…' : 'Confirmar exclusão'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirmingDelete(false)}
+              disabled={deleting}
+              className="rounded-md border border-white/15 px-4 py-2 text-small text-white"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
       )}
 
       <Section title="Identificação">

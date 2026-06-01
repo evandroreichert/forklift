@@ -8,12 +8,16 @@ const BULLETS = [
   { icon: ShieldCheck, label: 'Peças originais' },
 ];
 
+// Em prod recomenda-se hostear o vídeo externamente (Vercel Blob/R2) e setar
+// NEXT_PUBLIC_HERO_VIDEO_URL pra não bloar o deploy. Sem env, usa local.
+const HERO_VIDEO_URL = process.env.NEXT_PUBLIC_HERO_VIDEO_URL || '/videos/hero.mp4';
+
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink-950">
       <video
         className="absolute inset-0 size-full object-cover opacity-40"
-        src="/videos/hero.mp4"
+        src={HERO_VIDEO_URL}
         autoPlay
         loop
         muted
