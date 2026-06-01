@@ -32,7 +32,7 @@ const TIPOS_SERVICO = [
   {
     titulo: 'Atendimento emergencial',
     descricao:
-      'Suporte em casos de parada inesperada. Atendimento prioritário em Itajaí, Navegantes, Balneário Camboriú e Camboriú.',
+      'Para clientes com equipamentos fora de operação ou máquina que quebrou repentinamente. Atendemos em até 100 km da base, com 90% dos casos resolvidos no mesmo dia (quando há tempo hábil pra solução).',
   },
   {
     titulo: 'Peças e suprimentos',
@@ -60,7 +60,7 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Serviço</span>
+          <span className="label-tracked text-brand-yellow-dim">Serviço</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
             Manutenção especializada de empilhadeiras no Vale do Itajaí
           </h1>
@@ -90,12 +90,12 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Tipos de manutenção</span>
+          <span className="label-tracked text-brand-yellow-dim">Tipos de manutenção</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Atendemos toda demanda</h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {TIPOS_SERVICO.map((s) => (
               <div key={s.titulo} className="border border-ink-100 p-8">
-                <h3 className="font-display text-h3 text-brand-yellow">{s.titulo}</h3>
+                <h3 className="font-display text-h3 text-ink-950">{s.titulo}</h3>
                 <p className="mt-3 text-body text-ink-500">{s.descricao}</p>
               </div>
             ))}
@@ -105,7 +105,7 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-surface-alt py-14 md:py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Cobertura</span>
+          <span className="label-tracked text-brand-yellow-dim">Cobertura</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Cidades onde atendemos</h2>
           <p className="mt-3 max-w-2xl text-body text-ink-500">
             Atendimento técnico para manutenção de empilhadeiras em toda região do Vale do Itajaí e
@@ -130,13 +130,13 @@ export default function ManutencaoPage() {
       <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
-            <span className="label-tracked text-brand-yellow">Diferenciais</span>
+            <span className="label-tracked text-brand-yellow-dim">Diferenciais</span>
             <h2 className="mt-4 font-display text-h2 text-ink-950">Por que escolher</h2>
           </div>
           <ul className="space-y-4 text-body text-ink-950">
             {DIFERENCIAIS.map((d) => (
               <li key={d} className="flex gap-3 border-b border-ink-100 pb-4">
-                <span className="text-brand-yellow">●</span>
+                <span className="text-brand-yellow-dim">●</span>
                 <span>{d}</span>
               </li>
             ))}
@@ -146,7 +146,7 @@ export default function ManutencaoPage() {
 
       <section className="bg-surface-alt py-14 md:py-24">
         <div className="container-wide max-w-3xl">
-          <span className="label-tracked text-brand-yellow">Dúvidas frequentes</span>
+          <span className="label-tracked text-brand-yellow-dim">Dúvidas frequentes</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Perguntas comuns</h2>
           <Accordion className="mt-10">
             {FAQ_MANUTENCAO.map((item, i) => (

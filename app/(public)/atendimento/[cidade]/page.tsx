@@ -41,7 +41,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Atendimento Local</span>
+          <span className="label-tracked text-brand-yellow-dim">Atendimento Local</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
             Empilhadeiras e manutenção em {c.nome}
           </h1>
@@ -49,7 +49,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
           <p className="mt-6 max-w-3xl text-body text-ink-500">
             Atendemos {c.nome} com venda, aluguel e manutenção de empilhadeiras GLP, diesel e
             elétricas, além de equipamentos para construção civil. Tempo médio de atendimento
-            técnico: <span className="text-brand-yellow">{c.tempoAtendimentoEstimado}</span>.
+            técnico: <span className="font-semibold text-ink-950">{c.tempoAtendimentoEstimado}</span>.
           </p>
           <a
             href={whatsappUrl}
@@ -64,7 +64,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-white py-14 md:py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Equipamentos para {c.nome}</span>
+          <span className="label-tracked text-brand-yellow-dim">Equipamentos para {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
             Linha completa de equipamentos
           </h2>
@@ -79,7 +79,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-surface-alt py-14 md:py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Manutenção em {c.nome}</span>
+          <span className="label-tracked text-brand-yellow-dim">Manutenção em {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
             Manutenção técnica especializada
           </h2>
@@ -98,7 +98,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="bg-white py-14 md:py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Outras cidades</span>
+          <span className="label-tracked text-brand-yellow-dim">Outras cidades</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Também atendemos</h2>
           <ul className="mt-8 flex flex-wrap gap-3">
             {CIDADES.filter((other) => other.slug !== c.slug).map((other) => (

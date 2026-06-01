@@ -96,15 +96,24 @@ export function buildLocalBusinessSchema(cidadeNome?: string) {
     areaServed: cidadeNome
       ? { '@type': 'City', name: cidadeNome }
       : [
+          'Penha',
+          'Navegantes',
+          'Balneário Piçarras',
+          'Barra Velha',
+          'São João do Itaperiú',
           'Itajaí',
           'Balneário Camboriú',
           'Camboriú',
-          'Navegantes',
-          'Penha',
-          'Balneário Piçarras',
           'Itapema',
           'Bombinhas',
           'Porto Belo',
+          'Tijucas',
+          'Ilhota',
+          'Luiz Alves',
+          'Gaspar',
+          'Brusque',
+          'Blumenau',
+          'Joinville',
         ].map((n) => ({ '@type': 'City', name: n })),
     sameAs: [GOOGLE_BUSINESS_URL, INSTAGRAM_URL],
   };

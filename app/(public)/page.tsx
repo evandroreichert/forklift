@@ -30,7 +30,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const STATS = [
-  { v: '300km', k: 'Raio de atendimento', icon: MapPin },
+  { v: '100km', k: 'Raio do atendimento emergencial', icon: MapPin },
   { v: '8', k: 'Categorias de equipamento', icon: Truck },
   { v: '1h', k: 'Atendimento técnico mínimo', icon: Clock },
   { v: '100%', k: 'Equipamentos com garantia', icon: Award },
@@ -63,7 +63,7 @@ const APLICACOES = [
 const SERVICOS_MANUTENCAO = [
   { titulo: 'Preventiva', desc: 'Planos periódicos por horímetro.' },
   { titulo: 'Corretiva', desc: 'Diagnóstico + reparo + teste.' },
-  { titulo: 'Emergencial', desc: 'Atendimento prioritário no dia.' },
+  { titulo: 'Emergencial', desc: 'Máquina parada? Até 100 km da base, 90% resolvidos no mesmo dia.' },
   { titulo: 'Peças', desc: 'Originais e homologadas.' },
 ];
 
@@ -279,12 +279,13 @@ export default function HomePage() {
                 Cobertura
               </p>
               <h2 className="mt-4 font-display text-h1 font-bold tracking-tight text-ink-950">
-                Atendemos em até 300 km de Penha.
+                Cobertura no Vale do Itajaí e região.
               </h2>
               <p className="mt-3 max-w-xl text-body text-ink-500">
-                Sede em Penha (SC). Atendimento técnico em até 1 hora nas cidades vizinhas e
-                deslocamento pra obras e clientes em toda a região. Conheça algumas das cidades
-                onde já atuamos:
+                Sede em Penha (SC). Venda, aluguel e manutenção preventiva em toda a região.
+                Atendimento <strong className="text-ink-950">emergencial até 100 km</strong> da
+                base, com 1 hora de resposta nas cidades vizinhas. Veja algumas das cidades onde
+                já atuamos:
               </p>
             </div>
           </div>

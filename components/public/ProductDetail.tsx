@@ -22,7 +22,7 @@ export function ProductDetail({ produto }: { produto: Produto }) {
             />
           </div>
           <div>
-            <span className="label-tracked text-brand-yellow">{produto.categoriaPai === 'empilhadeiras' ? 'Empilhadeira' : 'Construção Civil'}</span>
+            <span className="label-tracked text-brand-yellow-dim">{produto.categoriaPai === 'empilhadeiras' ? 'Empilhadeira' : 'Construção Civil'}</span>
             <h1 className="mt-4 font-display text-h1 text-ink-950">{produto.nome}</h1>
             <p className="mt-3 text-body text-brand-yellow">{produto.titulo}</p>
             <p className="mt-6 text-body text-ink-500">{produto.descricao}</p>
@@ -41,7 +41,7 @@ export function ProductDetail({ produto }: { produto: Produto }) {
       {produto.variantes && produto.variantes.length > 0 && (
         <section className="border-b border-ink-100 bg-white py-20">
           <div className="container-wide">
-            <span className="label-tracked text-brand-yellow">Variantes</span>
+            <span className="label-tracked text-brand-yellow-dim">Variantes</span>
             <h2 className="mt-4 font-display text-h2 text-ink-950">Modelos disponíveis</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {produto.variantes.map((v) => (
@@ -58,7 +58,7 @@ export function ProductDetail({ produto }: { produto: Produto }) {
       {produto.specs && produto.specs.length > 0 && (
         <section className="border-b border-ink-100 bg-surface-alt py-20">
           <div className="container-wide">
-            <span className="label-tracked text-brand-yellow">Especificações</span>
+            <span className="label-tracked text-brand-yellow-dim">Especificações</span>
             <h2 className="mt-4 font-display text-h2 text-ink-950">Specs técnicas</h2>
             <dl className="mt-10 grid gap-x-12 gap-y-4 sm:grid-cols-2">
               {produto.specs.map((s) => (

@@ -82,6 +82,87 @@ export const CIDADES: Cidade[] = [
       'Cidade litorânea com terminal portuário e turismo de cruzeiros. Operações portuárias, hotelaria e construção civil utilizam empilhadeiras e equipamentos pesados de forma intensa em temporada.',
     tempoAtendimentoEstimado: 'até 3 horas',
   },
+  {
+    slug: 'barra-velha',
+    nome: 'Barra Velha',
+    nomeCompleto: 'Barra Velha',
+    uf: 'SC',
+    descricaoEconomica:
+      'Cidade litorânea vizinha de Penha, com pesca, comércio e turismo sazonal aquecendo a economia. Atendemos indústrias locais, obras e operações de logística com empilhadeiras e equipamentos pesados em curto prazo.',
+    tempoAtendimentoEstimado: 'até 1 hora',
+  },
+  {
+    slug: 'sao-joao-do-itaperiu',
+    nome: 'São João do Itaperiú',
+    nomeCompleto: 'São João do Itaperiú',
+    uf: 'SC',
+    descricaoEconomica:
+      'Município de interior próximo à BR-101 com atividade rural, agroindústria e logística. Cooperativas e operações de armazenamento utilizam empilhadeiras para movimentação de cargas no dia a dia.',
+    tempoAtendimentoEstimado: 'até 1 hora',
+  },
+  {
+    slug: 'joinville',
+    nome: 'Joinville',
+    nomeCompleto: 'Joinville',
+    uf: 'SC',
+    descricaoEconomica:
+      'Maior polo industrial do estado, com metalurgia, plásticos, têxtil e operações logísticas em larga escala. Atendemos indústrias, centros de distribuição e construtoras com empilhadeiras e equipamentos pesados para operações de alto volume.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'blumenau',
+    nome: 'Blumenau',
+    nomeCompleto: 'Blumenau',
+    uf: 'SC',
+    descricaoEconomica:
+      'Polo industrial do Vale do Itajaí com forte presença têxtil, software e logística. Indústrias e centros logísticos da cidade utilizam empilhadeiras para movimentação de matéria-prima e produto acabado.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'brusque',
+    nome: 'Brusque',
+    nomeCompleto: 'Brusque',
+    uf: 'SC',
+    descricaoEconomica:
+      'Centro têxtil e atacadista do Vale do Itajaí. Indústrias, centros atacadistas e operações de logística demandam empilhadeiras para abastecimento e distribuição de produtos.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'gaspar',
+    nome: 'Gaspar',
+    nomeCompleto: 'Gaspar',
+    uf: 'SC',
+    descricaoEconomica:
+      'Cidade do Vale do Itajaí com indústria têxtil, metalurgia e logística. Galpões industriais e centros de distribuição utilizam empilhadeiras para operação contínua.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'tijucas',
+    nome: 'Tijucas',
+    nomeCompleto: 'Tijucas',
+    uf: 'SC',
+    descricaoEconomica:
+      'Cidade do litoral norte com indústria cerâmica e operações logísticas próximas à BR-101. Empilhadeiras e equipamentos pesados são essenciais pra produção e movimentação de cargas.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'ilhota',
+    nome: 'Ilhota',
+    nomeCompleto: 'Ilhota',
+    uf: 'SC',
+    descricaoEconomica:
+      'Município do Vale do Itajaí com forte atividade industrial e logística sobre a BR-470. Indústrias e centros de distribuição utilizam empilhadeiras para operação diária.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
+  {
+    slug: 'luiz-alves',
+    nome: 'Luiz Alves',
+    nomeCompleto: 'Luiz Alves',
+    uf: 'SC',
+    descricaoEconomica:
+      'Município vizinho de Ilhota e Itajaí, com perfil industrial e logístico em crescimento. Atendemos operações fabris e centros de armazenagem com empilhadeiras e equipamentos pesados.',
+    tempoAtendimentoEstimado: 'até 2 horas',
+  },
 ];
 
 export function getCidadeBySlug(slug: string): Cidade | undefined {

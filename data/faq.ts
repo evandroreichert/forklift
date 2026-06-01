@@ -14,7 +14,7 @@ export const FAQ_MANUTENCAO: FAQItem[] = [
   {
     pergunta: 'Qual o tempo médio de atendimento?',
     resposta:
-      'Nossa base é em Penha. Em Penha, Navegantes e Piçarras o atendimento é em até 1 hora. Em Itajaí, Balneário Camboriú, Camboriú e Itapema, em até 2 horas. Em Bombinhas e Porto Belo, em até 3 horas. Casos emergenciais têm prioridade.',
+      'Nossa base é em Penha. Em Penha, Navegantes, Piçarras, Barra Velha e São João do Itaperiú o atendimento é em até 1 hora. Em Itajaí, Balneário Camboriú, Camboriú e Itapema, em até 2 horas. Em Bombinhas e Porto Belo, em até 3 horas. Casos emergenciais têm prioridade dentro do raio de 100 km da base.',
   },
   {
     pergunta: 'Vocês usam peças originais?',
@@ -27,8 +27,8 @@ export const FAQ_MANUTENCAO: FAQItem[] = [
       'A forma mais rápida é pelo WhatsApp. Clientes já cadastrados também podem acompanhar o histórico de manutenções da frota pela área do cliente neste site.',
   },
   {
-    pergunta: 'Vocês atendem fora da região de Itajaí?',
+    pergunta: 'Vocês atendem fora da região?',
     resposta:
-      'Nosso atendimento principal é o litoral norte de Santa Catarina. Para outras regiões, entre em contato para avaliarmos a viabilidade.',
+      'Sim. Nosso raio de atendimento vai até 300 km da base em Penha (SC). Cada solicitação é avaliada individualmente, e o cliente define o atendimento (envolve custos de deslocamento). Para casos emergenciais, o raio com resposta mais rápida é de até 100 km.',
   },
 ];

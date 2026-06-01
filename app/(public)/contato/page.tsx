@@ -23,7 +23,7 @@ export default function ContatoPage() {
       <JsonLd data={buildLocalBusinessSchema()} />
       <section className="border-b border-ink-100 bg-surface-alt py-12 md:py-20">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">Contato</span>
+          <span className="label-tracked text-brand-yellow-dim">Contato</span>
           <h1 className="mt-4 font-display text-h1 text-ink-950">Fale com a gente</h1>
           <p className="mt-6 max-w-2xl text-body text-ink-500">
             Solicite um orçamento, tire dúvidas técnicas ou agende uma visita. Atendemos toda a
