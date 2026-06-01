@@ -186,17 +186,22 @@ export async function submitReport(reportId: string): Promise<ActionResult> {
   if (upErr) return { ok: false, error: upErr.message };
 
   try {
-    const adminClient = createAdminClient();
-    const { data: admins } = await adminClient
-      .from('profiles')
-      .select('id, full_name')
-      .eq('role', 'admin')
-      .eq('active', true);
-
-    const emails: string[] = [];
-    for (const a of admins ?? []) {
-      const { data: u } = await adminClient.auth.admin.getUserById(a.id);
-      if (u.user?.email) emails.push(u.user.email);
+    let emails: string[] = [];
+    const override = process.env.ADMIN_NOTIFICATION_EMAIL?.trim();
+    if (override) {
+      emails = [override];
+    } else {
+      // fallback: emails dos profiles com role=admin no auth.users
+      const adminClient = createAdminClient();
+      const { data: admins } = await adminClient
+        .from('profiles')
+        .select('id')
+        .eq('role', 'admin')
+        .eq('active', true);
+      for (const a of admins ?? []) {
+        const { data: u } = await adminClient.auth.admin.getUserById(a.id);
+        if (u.user?.email) emails.push(u.user.email);
+      }
     }
 
     if (emails.length > 0) {
