@@ -1,15 +1,39 @@
 import { requireProfile } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import Link from 'next/link';
-import { Users, Building2, Wrench } from 'lucide-react';
+import { Users, Building2, Wrench, ClipboardList } from 'lucide-react';
 
 async function getAdminStats() {
   const supabase = await createClient();
-  const [{ count: usuarios }, { count: clientes }] = await Promise.all([
+  const [{ count: usuarios }, { count: clientes }, { count: pendentes }] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
     supabase.from('client_companies').select('*', { count: 'exact', head: true }),
+    supabase
+      .from('reports')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending_approval'),
   ]);
-  return { usuarios: usuarios ?? 0, clientes: clientes ?? 0 };
+  return {
+    usuarios: usuarios ?? 0,
+    clientes: clientes ?? 0,
+    pendentes: pendentes ?? 0,
+  };
+}
+
+async function getMechanicStats(mechanicId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('reports')
+    .select('status')
+    .eq('mechanic_id', mechanicId);
+  const rows = data ?? [];
+  return {
+    total: rows.length,
+    draft: rows.filter((r) => r.status === 'draft').length,
+    pending: rows.filter((r) => r.status === 'pending_approval').length,
+    rejected: rows.filter((r) => r.status === 'rejected').length,
+    approved: rows.filter((r) => r.status === 'approved').length,
+  };
 }
 
 export default async function PortalPage() {
@@ -18,8 +42,25 @@ export default async function PortalPage() {
   if (profile.role === 'admin') {
     const stats = await getAdminStats();
     const cards = [
-      { href: '/portal/admin/usuarios', label: 'Usuários', count: stats.usuarios, icon: Users },
-      { href: '/portal/admin/clientes', label: 'Clientes', count: stats.clientes, icon: Building2 },
+      {
+        href: '/portal/admin/relatorios',
+        label: 'Pendentes de aprovação',
+        count: stats.pendentes,
+        icon: ClipboardList,
+        accent: true,
+      },
+      {
+        href: '/portal/admin/usuarios',
+        label: 'Usuários',
+        count: stats.usuarios,
+        icon: Users,
+      },
+      {
+        href: '/portal/admin/clientes',
+        label: 'Clientes',
+        count: stats.clientes,
+        icon: Building2,
+      },
     ];
     return (
       <div className="space-y-10">
@@ -29,12 +70,16 @@ export default async function PortalPage() {
             Olá, <span className="text-brand-yellow">{profile.full_name}</span>
           </h1>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {cards.map(({ href, label, count, icon: Icon }) => (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map(({ href, label, count, icon: Icon, accent }) => (
             <Link
               key={href}
               href={href}
-              className="group rounded-xl border border-white/10 bg-ink-900/60 p-6 transition-colors hover:border-brand-yellow/40"
+              className={`group rounded-xl border p-6 transition-colors ${
+                accent && count > 0
+                  ? 'border-brand-yellow/40 bg-brand-yellow/10 hover:border-brand-yellow'
+                  : 'border-white/10 bg-ink-900/60 hover:border-brand-yellow/40'
+              }`}
             >
               <Icon className="size-6 text-brand-yellow" />
               <p className="mt-4 text-label uppercase tracking-wider text-ink-100/60">{label}</p>
@@ -46,9 +91,33 @@ export default async function PortalPage() {
     );
   }
 
-  const placeholderTitle = profile.role === 'mechanic'
-    ? 'Em breve: criar relatório de manutenção'
-    : 'Em breve: visualizar relatórios da sua empresa';
+  if (profile.role === 'mechanic') {
+    const stats = await getMechanicStats(profile.id);
+    return (
+      <div className="space-y-10">
+        <div>
+          <p className="text-label uppercase tracking-wider text-ink-100/55">Bem-vindo</p>
+          <h1 className="mt-2 font-display text-h1 font-bold text-white">
+            Olá, <span className="text-brand-yellow">{profile.full_name}</span>
+          </h1>
+        </div>
+        <Link
+          href="/portal/mecanico/relatorios"
+          className="block rounded-xl border border-white/10 bg-ink-900/60 p-6 hover:border-brand-yellow/40"
+        >
+          <Wrench className="size-6 text-brand-yellow" />
+          <p className="mt-4 text-label uppercase tracking-wider text-ink-100/60">
+            Meus relatórios
+          </p>
+          <p className="mt-1 font-display text-h2 font-bold text-white">{stats.total}</p>
+          <p className="mt-2 text-small text-ink-100/60">
+            {stats.draft} rascunho · {stats.pending} aguardando · {stats.rejected} rejeitado ·{' '}
+            {stats.approved} aprovado
+          </p>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -60,8 +129,12 @@ export default async function PortalPage() {
       </div>
       <div className="rounded-xl border border-dashed border-white/15 bg-ink-900/40 px-8 py-12 text-center">
         <Wrench className="mx-auto size-10 text-brand-yellow/70" />
-        <h2 className="mt-4 font-display text-h3 font-bold text-white">{placeholderTitle}</h2>
-        <p className="mt-2 text-small text-ink-100/60">Esta funcionalidade chega na próxima fatia.</p>
+        <h2 className="mt-4 font-display text-h3 font-bold text-white">
+          Em breve: visualizar relatórios da sua empresa
+        </h2>
+        <p className="mt-2 text-small text-ink-100/60">
+          Esta funcionalidade chega na próxima fatia.
+        </p>
       </div>
     </div>
   );
