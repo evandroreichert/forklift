@@ -160,7 +160,7 @@ export function EditarForm({ report, initialIntervals, signatureUrl }: Props) {
 
   return (
     <div className="space-y-8 pb-32">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="font-display text-h2 font-bold text-white">Editar relatório</h1>
         <AutoSaveStatus state={autoSave} lastSavedAt={lastSaved} />
       </header>

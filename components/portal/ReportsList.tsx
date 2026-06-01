@@ -39,14 +39,19 @@ export function ReportsList({
           key={r.id}
           className="flex items-center gap-3 rounded-lg border border-white/10 bg-ink-900/40 p-4 hover:border-brand-yellow/40"
         >
-          <Link href={`${basePath}/${r.id}`} className="flex flex-1 items-center justify-between gap-3">
-            <div>
-              <p className="font-semibold text-white">{r.titulo || '(sem título)'}</p>
-              <p className="text-small text-ink-100/70">
+          <Link
+            href={`${basePath}/${r.id}`}
+            className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3 min-w-0"
+          >
+            <div className="min-w-0">
+              <p className="truncate font-semibold text-white">{r.titulo || '(sem título)'}</p>
+              <p className="truncate text-small text-ink-100/70">
                 {r.cliente_nome || '(cliente vazio)'} · Máquina {r.maquina_identificador || '—'}
               </p>
             </div>
-            <span className={`shrink-0 rounded-full px-3 py-1 text-small ${STATUS_CLASS[r.status]}`}>
+            <span
+              className={`shrink-0 self-start whitespace-nowrap rounded-full px-3 py-1 text-small sm:self-auto ${STATUS_CLASS[r.status]}`}
+            >
               {STATUS_LABEL[r.status]}
               {r.numero ? ` · #${r.numero}` : ''}
             </span>
