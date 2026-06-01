@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 
 export const SITE_URL = 'https://fabianobratti.com';
 export const SITE_NAME = 'Fabiano Bratti Empilhadeiras';
+export const COMPANY_LEGAL_NAME = 'FABIANO BRATTI E CIA LTDA';
+export const COMPANY_CNPJ = '50.982.211/0001-45';
 export const DEFAULT_DESCRIPTION =
   'Venda, aluguel e manutenção de empilhadeiras no Vale do Itajaí. Empilhadeiras GLP, diesel, elétricas e equipamentos para construção civil.';
 export const DEFAULT_OG_IMAGE = '/images/un-br-glp.jpg';
@@ -149,9 +151,73 @@ export function buildServiceSchema() {
     '@type': 'Service',
     serviceType: 'Manutenção de Empilhadeiras',
     provider: { '@type': 'LocalBusiness', name: SITE_NAME, url: SITE_URL },
-    areaServed: 'Vale do Itajaí, Santa Catarina',
+    areaServed: {
+      '@type': 'GeoCircle',
+      geoMidpoint: {
+        '@type': 'GeoCoordinates',
+        latitude: GEO.latitude,
+        longitude: GEO.longitude,
+      },
+      geoRadius: 100000, // 100 km — raio emergencial
+    },
     description:
-      'Manutenção preventiva, corretiva e atendimento emergencial para empilhadeiras de todas as marcas e modelos.',
+      'Manutenção preventiva, corretiva e atendimento emergencial para empilhadeiras de todas as marcas e modelos. 90% dos casos resolvidos no mesmo dia dentro de 100 km da base em Penha/SC.',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Serviços de manutenção',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Manutenção preventiva',
+            description:
+              'Planos periódicos com revisões agendadas conforme horímetro. Evita paradas inesperadas e prolonga vida útil do equipamento.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Manutenção corretiva',
+            description:
+              'Reparo de falhas e quebras com diagnóstico técnico, troca de peças originais ou homologadas e teste de operação.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Atendimento emergencial',
+            description:
+              'Para clientes com equipamentos fora de operação. Atendemos em até 100 km da base, com 90% dos casos resolvidos no mesmo dia.',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Peças e suprimentos',
+            description: 'Fornecimento de peças originais e de reposição para diversas marcas.',
+          },
+        },
+      ],
+    },
+  };
+}
+
+export function buildBreadcrumbSchema(
+  items: { name: string; url: string }[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 }
 
