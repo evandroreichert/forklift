@@ -7,7 +7,7 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira GLP',
     titulo: 'Potência e robustez para desafios',
     descricao:
-      'Meio-termo entre diesel e elétrica: a linha GLP da UN Forklift entrega desempenho comparável ao diesel com operação mais econômica e menor impacto ambiental. Modelo N-Series 2.5T–3.5T atende armazéns e indústria leve; modelo 4.5T expande capacidade pra cargas mais pesadas. Boa pra operações mistas indoor/outdoor, com baixo custo de manutenção e abastecimento simples por cilindro.',
+      'Empilhadeira GLP N-Series com capacidade de 2.500 a 3.500 kg, atendendo armazéns, indústria leve e operações mistas (indoor e outdoor). Equilibra a potência do diesel com operação mais econômica e menor impacto ambiental. Abastecimento simples por cilindro, baixo custo de manutenção, motor a gás com transmissão automática e cabine ergonômica para o operador.',
     imagemCapa: '/images/un-br-glp.jpg',
     imagensGaleria: ['/images/un-br-glp.jpg', '/images/un-br-glp-4t-5t.jpg'],
     videoUrl: '/videos/glp.mp4',
@@ -23,7 +23,7 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira Diesel',
     titulo: 'Força e autonomia para operações intensas',
     descricao:
-      'A linha diesel UN Forklift cobre múltiplas faixas de capacidade pra operações industriais robustas. F-Series e N-Series 2.5T–3.5T pra movimentação geral, modelos pesados N-Series 7T–10T pra cargas extremas e variante Todo-Terreno (2.5T–3.5T) com tração 2WD ou 4WD pra terrenos irregulares. Projetadas pra ambientes externos exigentes, onde potência constante e durabilidade em uso contínuo são essenciais.',
+      'Empilhadeira diesel F-Series com capacidade de 2.500 a 3.500 kg, projetada pra operações industriais e logísticas em ambientes externos. Motor diesel com torque robusto, transmissão automática e estrutura reforçada pra uso contínuo. Ideal pra carga e descarga em pátios, armazéns e operações onde autonomia e potência constante são essenciais. Veja outras configurações (N-Series, modelos pesados 7T–10T e Off-Road) nas variantes abaixo.',
     imagemCapa: '/images/un-br-diesel-fseries.jpg',
     imagensGaleria: [
       '/images/un-br-diesel-fseries.jpg',
@@ -44,7 +44,7 @@ export const PRODUTOS: Produto[] = [
     nome: 'Empilhadeira Elétrica',
     titulo: 'Silenciosa, limpa e eficiente',
     descricao:
-      'Alternativa sustentável e silenciosa em várias especificações. F-Series e N-Series 2.5T–3.5T pra armazéns e operações industriais. Modelo compacto FE-Series de 3 rodas (1.5T–2.0T) pra corredores estreitos. Linha pesada N-Series 7T–10T pra operações de maior porte. Modelos 4T–5T com bateria de lítio-íon entregam autonomia estendida e baixa manutenção comparado ao chumbo-ácido. Zero emissões, baixo ruído e excelente custo operacional.',
+      'Empilhadeira elétrica F-Series com capacidade de 2.500 a 3.500 kg, ideal pra armazéns, indústria leve e operações com requisitos ambientais (frigorífico, alimentos, farma). Motor elétrico silencioso, zero emissão e baixo custo operacional. Bateria de chumbo-ácido ou lítio conforme demanda. Veja outras configurações (3 rodas FE-Series, N-Series lítio 4T-5T e modelos pesados 7T-10T) nas variantes abaixo.',
     imagemCapa: '/images/un-br-eletrica-fseries.jpg',
     imagensGaleria: [
       '/images/un-br-eletrica-fseries.jpg',
@@ -109,12 +109,14 @@ export const PRODUTOS: Produto[] = [
     nome: 'Patolada Elétrica',
     titulo: 'Empilhadeira pedestrian de elevação alta',
     descricao:
-      'Patolada elétrica (stacker/empilhador pedestrian) para movimentação e empilhamento de palets a alturas elevadas em armazéns. Modelos PS16 e PW15 com capacidade entre 1.5T e 1.6T e elevação até 5.5 metros. Operação em pé ou caminhando, ocupa pouco espaço e atende operações que não justificam uma empilhadeira contrabalançada completa.',
+      'Patolada elétrica (stacker / empilhador pedestrian) para movimentação e empilhamento de palets a alturas elevadas em armazéns. Operação em pé ou caminhando, ocupa pouco espaço e atende operações que não justificam uma empilhadeira contrabalançada completa. Disponível em versões chumbo-ácido (PS16 e PW15) e em versão com bateria de lítio (1,6T a 2,0T), com carga rápida e sem efeito memória.',
     imagemCapa: '/images/un-br-patolada-ps16.jpg',
     imagensGaleria: ['/images/un-br-patolada-ps16.jpg', '/images/un-br-patolada-pw15.jpg'],
     variantes: [
-      { nome: 'PS16', capacidade: '1.600 kg · até 5,5 m' },
-      { nome: 'PW15', capacidade: '1.500 kg · até 5,5 m' },
+      { nome: 'PS16 (operador em plataforma)', capacidade: '1.600 kg · até 5,5 m' },
+      { nome: 'PW15 (operador em plataforma)', capacidade: '1.500 kg · até 5,5 m' },
+      { nome: 'Operador andando 1.5T', capacidade: '1.500 kg' },
+      { nome: 'Patolada Lítio 1.6T - 2.0T', capacidade: '1.600 - 2.000 kg' },
     ],
   },
   {
