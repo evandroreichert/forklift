@@ -25,7 +25,8 @@ export default async function AdminRelatoriosPage() {
         <p className="text-label uppercase tracking-wider text-ink-100/55">Manutenção</p>
         <h1 className="mt-2 font-display text-h1 font-bold text-white">Relatórios</h1>
         <p className="mt-2 text-small text-ink-100/60">
-          Aprovação completa chega na próxima fatia — por enquanto você consegue ver a fila.
+          Clique num pendente pra editar e finalizar. Aprovados ficam aqui em &ldquo;Outros&rdquo; e
+          dá pra baixar o PDF direto pelo ícone à direita.
         </p>
       </div>
 

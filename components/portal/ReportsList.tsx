@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Download } from 'lucide-react';
 import type { Report } from '@/lib/reports/types';
 
 const STATUS_LABEL: Record<Report['status'], string> = {
@@ -34,23 +35,34 @@ export function ReportsList({
   return (
     <ul className="space-y-3">
       {reports.map((r) => (
-        <li key={r.id}>
-          <Link
-            href={`${basePath}/${r.id}`}
-            className="flex items-center justify-between rounded-lg border border-white/10 bg-ink-900/40 p-4 hover:border-brand-yellow/40"
-          >
+        <li
+          key={r.id}
+          className="flex items-center gap-3 rounded-lg border border-white/10 bg-ink-900/40 p-4 hover:border-brand-yellow/40"
+        >
+          <Link href={`${basePath}/${r.id}`} className="flex flex-1 items-center justify-between gap-3">
             <div>
               <p className="font-semibold text-white">{r.titulo || '(sem título)'}</p>
               <p className="text-small text-ink-100/70">
-                {r.cliente_nome || '(cliente vazio)'} · Máquina{' '}
-                {r.maquina_identificador || '—'}
+                {r.cliente_nome || '(cliente vazio)'} · Máquina {r.maquina_identificador || '—'}
               </p>
             </div>
-            <span className={`rounded-full px-3 py-1 text-small ${STATUS_CLASS[r.status]}`}>
+            <span className={`shrink-0 rounded-full px-3 py-1 text-small ${STATUS_CLASS[r.status]}`}>
               {STATUS_LABEL[r.status]}
               {r.numero ? ` · #${r.numero}` : ''}
             </span>
           </Link>
+          {r.status === 'approved' && (
+            <a
+              href={`/portal/relatorios/${r.id}/pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 rounded-md border border-white/15 p-2 text-ink-100/70 hover:border-brand-yellow/40 hover:text-brand-yellow"
+              aria-label="Baixar PDF"
+              title="Baixar PDF"
+            >
+              <Download className="size-4" />
+            </a>
+          )}
         </li>
       ))}
     </ul>
