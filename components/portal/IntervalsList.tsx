@@ -1,6 +1,7 @@
 'use client';
 
 import { Trash2, Plus } from 'lucide-react';
+import { DateTimeBRInput } from './DateTimeBRInput';
 import type { ReportInterval } from '@/lib/reports/types';
 
 type Item = Pick<ReportInterval, 'id' | 'ordem' | 'inicio' | 'fim'>;
@@ -16,18 +17,6 @@ type Props = {
   onDelete: (id: string) => void | Promise<void>;
   disabled?: boolean;
 };
-
-function toLocalInputValue(iso: string | null): string {
-  if (!iso) return '';
-  const d = new Date(iso);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function fromLocalInputValue(v: string): string | null {
-  if (!v) return null;
-  return new Date(v).toISOString();
-}
 
 export function IntervalsList({ intervals, onUpsert, onDelete, disabled }: Props) {
   const sorted = [...intervals].sort((a, b) => a.ordem - b.ordem);
@@ -51,40 +40,42 @@ export function IntervalsList({ intervals, onUpsert, onDelete, disabled }: Props
               <Trash2 className="size-4" />
             </button>
           </div>
-          <label className="block">
+          <div>
             <span className="text-small text-ink-100/70">Início</span>
-            <input
-              type="datetime-local"
-              className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-              disabled={disabled}
-              value={toLocalInputValue(iv.inicio)}
-              onChange={(e) =>
-                onUpsert({
-                  id: iv.id,
-                  ordem: iv.ordem,
-                  inicio: fromLocalInputValue(e.target.value) ?? iv.inicio,
-                  fim: iv.fim,
-                })
-              }
-            />
-          </label>
-          <label className="block">
+            <div className="mt-1">
+              <DateTimeBRInput
+                ariaLabel="Início do intervalo"
+                disabled={disabled}
+                value={iv.inicio}
+                onChange={(iso) =>
+                  onUpsert({
+                    id: iv.id,
+                    ordem: iv.ordem,
+                    inicio: iso ?? iv.inicio,
+                    fim: iv.fim,
+                  })
+                }
+              />
+            </div>
+          </div>
+          <div>
             <span className="text-small text-ink-100/70">Fim</span>
-            <input
-              type="datetime-local"
-              className="mt-1 w-full rounded-md border border-white/15 bg-ink-950 px-3 py-2 text-white"
-              disabled={disabled}
-              value={toLocalInputValue(iv.fim)}
-              onChange={(e) =>
-                onUpsert({
-                  id: iv.id,
-                  ordem: iv.ordem,
-                  inicio: iv.inicio,
-                  fim: fromLocalInputValue(e.target.value),
-                })
-              }
-            />
-          </label>
+            <div className="mt-1">
+              <DateTimeBRInput
+                ariaLabel="Fim do intervalo"
+                disabled={disabled}
+                value={iv.fim}
+                onChange={(iso) =>
+                  onUpsert({
+                    id: iv.id,
+                    ordem: iv.ordem,
+                    inicio: iv.inicio,
+                    fim: iso,
+                  })
+                }
+              />
+            </div>
+          </div>
         </div>
       ))}
       <button
