@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://fabianobratti.com'),
   title: {
-    default: 'Fabiano Bratti Empilhadeiras — Vale do Itajaí',
+    default: 'Fabiano Bratti Empilhadeiras no Vale do Itajaí',
     template: '%s | Fabiano Bratti Empilhadeiras',
   },
   description:

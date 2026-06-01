@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link href="/" className={className} aria-label="Fabiano Bratti Empilhadeiras — página inicial">
+    <Link href="/" className={className} aria-label="Fabiano Bratti Empilhadeiras, página inicial">
       <Image
         src="/logo.png"
         alt="Fabiano Bratti Empilhadeiras"

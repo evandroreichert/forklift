@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCidadeBySlug(cidade);
   if (!c) return { title: 'Não encontrado' };
   return buildMetadata({
-    title: `Empilhadeiras e Manutenção em ${c.nome} — ${c.uf}`,
+    title: `Empilhadeiras e Manutenção em ${c.nome}/${c.uf}`,
     description: `Venda, aluguel e manutenção de empilhadeiras em ${c.nome}/${c.uf}. Atendimento técnico ${c.tempoAtendimentoEstimado}. Fabiano Bratti Empilhadeiras.`,
     path: `/atendimento/${c.slug}`,
   });
@@ -41,7 +41,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-surface-alt py-20">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Atendimento Local</span>
+          <span className="label-tracked text-brand-yellow">Atendimento Local</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
             Empilhadeiras e manutenção em {c.nome}
           </h1>
@@ -64,7 +64,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-white py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Equipamentos para {c.nome}</span>
+          <span className="label-tracked text-brand-yellow">Equipamentos para {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
             Linha completa de equipamentos
           </h2>
@@ -79,7 +79,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="border-b border-ink-100 bg-surface-alt py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Manutenção em {c.nome}</span>
+          <span className="label-tracked text-brand-yellow">Manutenção em {c.nome}</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">
             Manutenção técnica especializada
           </h2>
@@ -98,7 +98,7 @@ export default async function AtendimentoCidadePage({ params }: Props) {
 
       <section className="bg-white py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Outras cidades</span>
+          <span className="label-tracked text-brand-yellow">Outras cidades</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Também atendemos</h2>
           <ul className="mt-8 flex flex-wrap gap-3">
             {CIDADES.filter((other) => other.slug !== c.slug).map((other) => (

@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Empilhadeiras e Equipamentos Pesados — Vale do Itajaí',
+  title: 'Empilhadeiras e Equipamentos Pesados no Vale do Itajaí',
   description:
     'Venda, aluguel e manutenção de empilhadeiras GLP, diesel e elétricas, além de equipamentos para construção civil. Atendemos Itajaí, Balneário Camboriú, Navegantes e região.',
   path: '/',
@@ -156,7 +156,7 @@ export default function HomePage() {
             Soluções para cada perfil de operação.
           </h2>
           <p className="mt-4 max-w-2xl text-body text-ink-100/70">
-            Do armazém portuário ao canteiro de obras de torre — equipamento certo, técnico próximo.
+            Do armazém portuário ao canteiro de obras de torre. Equipamento certo, técnico próximo.
           </p>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -201,8 +201,8 @@ export default function HomePage() {
           <div className="relative">
             <div className="relative aspect-[5/6] overflow-hidden rounded-xl bg-ink-950 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.5)]">
               <Image
-                src="https://images.unsplash.com/photo-1605600659908-0ef719419d41?w=1200&q=85&auto=format&fit=crop"
-                alt="Técnico realizando manutenção em empilhadeira"
+                src="/images/empilhadeira-diesel-2.webp"
+                alt="Empilhadeira diesel em operação"
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
@@ -268,7 +268,7 @@ export default function HomePage() {
                 9 cidades. Litoral norte SC.
               </h2>
               <p className="mt-3 max-w-xl text-body text-ink-500">
-                Vendas e manutenção com base em Penha — atendimento em até 1 hora nas cidades vizinhas.
+                Vendas e manutenção com base em Penha. Atendimento em até 1 hora nas cidades vizinhas.
               </p>
             </div>
           </div>

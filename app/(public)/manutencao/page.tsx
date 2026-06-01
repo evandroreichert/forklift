@@ -12,7 +12,7 @@ import { FAQ_MANUTENCAO } from '@/data/faq';
 import { buildFaqSchema, buildMetadata, buildServiceSchema, buildWhatsAppUrl } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Manutenção de Empilhadeiras — Vale do Itajaí',
+  title: 'Manutenção de Empilhadeiras no Vale do Itajaí',
   description:
     'Manutenção preventiva, corretiva e atendimento emergencial para empilhadeiras de todas as marcas no Vale do Itajaí. Itajaí, Navegantes, Balneário Camboriú e região.',
   path: '/manutencao',
@@ -60,13 +60,13 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-surface-alt py-20">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Serviço</span>
+          <span className="label-tracked text-brand-yellow">Serviço</span>
           <h1 className="mt-4 max-w-3xl font-display text-h1 text-ink-950">
             Manutenção especializada de empilhadeiras no Vale do Itajaí
           </h1>
           <p className="mt-6 max-w-2xl text-body text-ink-500">
             Equipe técnica certificada para manutenção preventiva, corretiva e atendimento
-            emergencial. Atendemos empilhadeiras de todas as marcas — GLP, diesel e elétricas — em
+            emergencial. Atendemos empilhadeiras de todas as marcas (GLP, diesel e elétricas) em
             toda a região litorânea de Santa Catarina.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -90,7 +90,7 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-white py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Tipos de manutenção</span>
+          <span className="label-tracked text-brand-yellow">Tipos de manutenção</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Atendemos toda demanda</h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {TIPOS_SERVICO.map((s) => (
@@ -105,7 +105,7 @@ export default function ManutencaoPage() {
 
       <section className="border-b border-ink-100 bg-surface-alt py-24">
         <div className="container-wide">
-          <span className="label-tracked text-brand-yellow">— Cobertura</span>
+          <span className="label-tracked text-brand-yellow">Cobertura</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Cidades onde atendemos</h2>
           <p className="mt-3 max-w-2xl text-body text-ink-500">
             Atendimento técnico para manutenção de empilhadeiras em toda região do Vale do Itajaí e
@@ -130,7 +130,7 @@ export default function ManutencaoPage() {
       <section className="border-b border-ink-100 bg-white py-24">
         <div className="container-wide grid gap-12 md:grid-cols-2">
           <div>
-            <span className="label-tracked text-brand-yellow">— Diferenciais</span>
+            <span className="label-tracked text-brand-yellow">Diferenciais</span>
             <h2 className="mt-4 font-display text-h2 text-ink-950">Por que escolher</h2>
           </div>
           <ul className="space-y-4 text-body text-ink-950">
@@ -146,7 +146,7 @@ export default function ManutencaoPage() {
 
       <section className="bg-surface-alt py-24">
         <div className="container-wide max-w-3xl">
-          <span className="label-tracked text-brand-yellow">— Dúvidas frequentes</span>
+          <span className="label-tracked text-brand-yellow">Dúvidas frequentes</span>
           <h2 className="mt-4 font-display text-h2 text-ink-950">Perguntas comuns</h2>
           <Accordion className="mt-10">
             {FAQ_MANUTENCAO.map((item, i) => (

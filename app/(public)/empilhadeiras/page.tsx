@@ -5,7 +5,7 @@ import { getProdutosByCategoria } from '@/data/produtos';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Empilhadeiras GLP, Diesel e Elétricas — Venda e Aluguel em Itajaí',
+  title: 'Empilhadeiras GLP, Diesel e Elétricas. Venda e Aluguel em Itajaí',
   description:
     'Empilhadeiras industriais GLP, diesel e elétricas (lítio) para indústria, logística e armazéns no Vale do Itajaí. Venda, aluguel e manutenção.',
   path: '/empilhadeiras',

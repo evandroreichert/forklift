@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Não encontrado' };
   }
   return buildMetadata({
-    title: `${produto.nome} — Venda e Manutenção em Itajaí`,
+    title: `${produto.nome}. Venda e Manutenção em Itajaí`,
     description: produto.descricao.slice(0, 155),
     path: `/empilhadeiras/${produto.slug}`,
     image: produto.imagemCapa,

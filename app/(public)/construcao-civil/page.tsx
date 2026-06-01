@@ -5,7 +5,7 @@ import { getProdutosByCategoria } from '@/data/produtos';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Equipamentos para Construção Civil — Vale do Itajaí',
+  title: 'Equipamentos para Construção Civil no Vale do Itajaí',
   description:
     'Carregadeiras, escavadeiras hidráulicas, retroescavadeiras, rolos compactadores e tratores de esteira para obras e construção civil. Vendas e aluguel na região de Itajaí.',
   path: '/construcao-civil',

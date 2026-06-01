@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'Não encontrado' };
   }
   return buildMetadata({
-    title: `${produto.nome} — Construção Civil no Vale do Itajaí`,
+    title: `${produto.nome}. Construção Civil no Vale do Itajaí`,
     description: produto.descricao.slice(0, 155),
     path: `/construcao-civil/${produto.slug}`,
     image: produto.imagemCapa,
