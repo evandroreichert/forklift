@@ -52,8 +52,33 @@ export function ProductDetail({ produto }: { produto: Produto }) {
         </div>
       </section>
 
+      {produto.imagensGaleria && produto.imagensGaleria.length > 1 && (
+        <section className="border-b border-ink-100 bg-white py-14 md:py-20">
+          <div className="container-wide">
+            <span className="label-tracked text-brand-yellow-dim">Galeria</span>
+            <h2 className="mt-4 font-display text-h2 text-ink-950">Variações do modelo</h2>
+            <div className="mt-10 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+              {produto.imagensGaleria.map((src, i) => (
+                <div
+                  key={src}
+                  className="relative aspect-[4/3] overflow-hidden rounded border border-ink-100 bg-white p-3"
+                >
+                  <Image
+                    src={src}
+                    alt={`${produto.nome} — imagem ${i + 1}`}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                    className="object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {produto.variantes && produto.variantes.length > 0 && (
-        <section className="border-b border-ink-100 bg-white py-20">
+        <section className="border-b border-ink-100 bg-surface-alt py-14 md:py-20" data-section="variantes">
           <div className="container-wide">
             <span className="label-tracked text-brand-yellow-dim">Variantes</span>
             <h2 className="mt-4 font-display text-h2 text-ink-950">Modelos disponíveis</h2>
