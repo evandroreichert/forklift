@@ -27,15 +27,16 @@
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-inter), system-ui, sans-serif;
 
-  --text-display: 64px;
+  /* Headings escalam fluidamente entre mobile e desktop via clamp(min, preferred, max). */
+  --text-display: clamp(40px, 7vw, 64px);
   --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.025em;
 
-  --text-h1: 44px;
+  --text-h1: clamp(28px, 4.5vw, 44px);
   --text-h1--line-height: 1.1;
   --text-h1--letter-spacing: -0.02em;
 
-  --text-h2: 32px;
+  --text-h2: clamp(22px, 3vw, 32px);
   --text-h2--line-height: 1.15;
   --text-h2--letter-spacing: -0.015em;
 

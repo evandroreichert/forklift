@@ -1,6 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Download } from 'lucide-react';
+import { Download, ArrowLeft } from 'lucide-react';
 import { requireRole } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { ReportFieldsCard } from '@/components/portal/ReportFieldsCard';
@@ -43,15 +43,22 @@ export default async function VerRelatorioPage({
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between">
-        <div>
+      <Link
+        href="/portal/mecanico/relatorios"
+        className="inline-flex items-center gap-1 text-small text-ink-100/60 hover:text-brand-yellow"
+      >
+        <ArrowLeft className="size-4" />
+        Voltar pra lista
+      </Link>
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
           <p className="text-label uppercase tracking-wider text-ink-100/55">Relatório</p>
-          <h1 className="mt-2 font-display text-h2 font-bold text-white">
+          <h1 className="mt-2 font-display text-h2 font-bold text-white break-words">
             {report.titulo || '(sem título)'}
             {report.numero ? ` · #${report.numero}` : ''}
           </h1>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {report.status === 'approved' && (
             <a
               href={`/portal/relatorios/${id}/pdf`}
@@ -66,7 +73,7 @@ export default async function VerRelatorioPage({
           {(report.status === 'draft' || report.status === 'rejected') && (
             <Link
               href={`/portal/mecanico/relatorios/${id}/editar`}
-              className="rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black"
+              className="rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black hover:brightness-110"
             >
               Editar
             </Link>

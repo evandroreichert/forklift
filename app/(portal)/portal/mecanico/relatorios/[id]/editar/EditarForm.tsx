@@ -253,22 +253,22 @@ export function EditarForm({ report, initialIntervals, signatureUrl }: Props) {
         </div>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:p-4">
         <div className="mx-auto flex max-w-2xl gap-2">
           <button
             type="button"
-            className="flex-1 rounded-md border border-white/20 px-4 py-3 text-white"
+            className="flex-1 rounded-md border border-white/20 px-3 py-3 text-small text-white sm:text-base"
             onClick={() => router.push('/portal/mecanico/relatorios')}
           >
             Salvar e sair
           </button>
           <button
             type="button"
-            className="flex-1 rounded-md bg-brand-yellow px-4 py-3 font-semibold text-black disabled:opacity-50"
+            className="flex-[2] rounded-md bg-brand-yellow px-3 py-3 text-small font-semibold text-black disabled:opacity-50 sm:text-base"
             onClick={handleSubmit}
             disabled={pending}
           >
-            {pending ? 'Enviando...' : 'Enviar pra aprovação'}
+            {pending ? 'Enviando...' : 'Enviar para aprovação'}
           </button>
         </div>
       </div>

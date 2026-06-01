@@ -309,22 +309,22 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
         </div>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <div className="fixed inset-x-0 bottom-0 z-10 border-t border-white/10 bg-ink-950 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:p-4">
         <div className="mx-auto flex max-w-2xl gap-2">
           <button
             type="button"
-            className="flex-1 rounded-md border border-white/20 px-4 py-3 text-white"
+            className="flex-1 rounded-md border border-white/20 px-3 py-3 text-small text-white sm:text-base"
             onClick={() => router.push('/portal/admin/relatorios')}
           >
             Voltar
           </button>
           <button
             type="button"
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-md bg-brand-yellow px-4 py-3 font-semibold text-black hover:brightness-110 disabled:opacity-50"
+            className="flex-[2] inline-flex items-center justify-center gap-2 rounded-md bg-brand-yellow px-3 py-3 text-small font-semibold text-black hover:brightness-110 disabled:opacity-50 sm:text-base"
             onClick={handleSave}
             disabled={saving || deleting}
           >
-            <Save className="size-4" />
+            <Save className="size-4 shrink-0" />
             {saving ? 'Salvando...' : report.status === 'approved' ? 'Salvar alterações' : 'Salvar e finalizar'}
           </button>
         </div>

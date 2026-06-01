@@ -38,7 +38,7 @@ export function AutoSaveStatus({
   // pra mecânico não achar que precisa salvar manualmente.
   return (
     <span className="inline-flex items-center gap-1.5 text-small text-ink-100/55">
-      <CloudUpload className="size-3.5" /> Suas alterações são salvas automaticamente
+      <CloudUpload className="size-3.5" /> Salvamento automático ativo
     </span>
   );
 }

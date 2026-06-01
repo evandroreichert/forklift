@@ -24,18 +24,19 @@ export default async function MeusRelatoriosPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
           <p className="text-label uppercase tracking-wider text-ink-100/55">Manutenção</p>
           <h1 className="mt-2 font-display text-h1 font-bold text-white">Meus relatórios</h1>
         </div>
         <form action={novoRelatorio}>
           <button
             type="submit"
-            className="inline-flex items-center gap-2 rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black"
+            className="inline-flex items-center gap-2 rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black hover:brightness-110"
           >
             <Plus className="size-4" />
-            Novo relatório
+            <span className="sm:hidden">Novo</span>
+            <span className="hidden sm:inline">Novo relatório</span>
           </button>
         </form>
       </div>
