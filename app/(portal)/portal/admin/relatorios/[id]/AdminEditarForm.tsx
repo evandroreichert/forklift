@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Trash2, Save } from 'lucide-react';
+import { Trash2, Save, Download } from 'lucide-react';
 import { TipoAtividade } from '@/components/portal/TipoAtividade';
 import { MaquinaParadaRadio } from '@/components/portal/MaquinaParadaRadio';
 import { IntervalsList } from '@/components/portal/IntervalsList';
@@ -177,15 +177,28 @@ export function AdminEditarForm({ report, initialIntervals, signatureUrl, compan
             {STATUS_LABEL[report.status]}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={deleting || saving}
-          className="inline-flex items-center gap-2 rounded-md border border-red-500/50 px-3 py-2 text-small text-red-300 hover:bg-red-500/10 disabled:opacity-50"
-        >
-          <Trash2 className="size-4" />
-          {deleting ? 'Excluindo...' : 'Excluir'}
-        </button>
+        <div className="flex items-center gap-2">
+          {report.status === 'approved' && (
+            <a
+              href={`/portal/relatorios/${report.id}/pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-2 text-small text-white hover:border-brand-yellow/40"
+            >
+              <Download className="size-4" />
+              Baixar PDF
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleting || saving}
+            className="inline-flex items-center gap-2 rounded-md border border-red-500/50 px-3 py-2 text-small text-red-300 hover:bg-red-500/10 disabled:opacity-50"
+          >
+            <Trash2 className="size-4" />
+            {deleting ? 'Excluindo...' : 'Excluir'}
+          </button>
+        </div>
       </header>
 
       <Section title="Identificação">

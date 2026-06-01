@@ -37,7 +37,11 @@ export function Sidebar({ profile }: { profile: Profile }) {
       <nav className="flex-1 p-4" aria-label="Navegação do portal">
         <ul className="space-y-1">
           {nav.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            // /portal precisa de match exato (senão fica ativo em qualquer /portal/*)
+            const active =
+              item.href === '/portal'
+                ? pathname === '/portal'
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <li key={item.href}>
                 <Link

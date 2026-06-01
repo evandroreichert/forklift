@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
+import { Download } from 'lucide-react';
 import { requireRole } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { ReportFieldsCard } from '@/components/portal/ReportFieldsCard';
@@ -50,14 +51,27 @@ export default async function VerRelatorioPage({
             {report.numero ? ` · #${report.numero}` : ''}
           </h1>
         </div>
-        {(report.status === 'draft' || report.status === 'rejected') && (
-          <Link
-            href={`/portal/mecanico/relatorios/${id}/editar`}
-            className="rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black"
-          >
-            Editar
-          </Link>
-        )}
+        <div className="flex items-center gap-2">
+          {report.status === 'approved' && (
+            <a
+              href={`/portal/relatorios/${id}/pdf`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-small text-white hover:border-brand-yellow/40"
+            >
+              <Download className="size-4" />
+              Baixar PDF
+            </a>
+          )}
+          {(report.status === 'draft' || report.status === 'rejected') && (
+            <Link
+              href={`/portal/mecanico/relatorios/${id}/editar`}
+              className="rounded-md bg-brand-yellow px-4 py-2 text-small font-semibold text-black"
+            >
+              Editar
+            </Link>
+          )}
+        </div>
       </header>
 
       {report.status === 'rejected' && report.rejected_reason && (
