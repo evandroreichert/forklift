@@ -191,6 +191,32 @@ export async function adminSaveAndFinalize(
   return { ok: true };
 }
 
+export async function adminCreateDraft(): Promise<ActionResult<{ id: string }>> {
+  const profile = await requireRole('admin');
+  const supabase = await createClient();
+
+  // mechanic_id aceita qualquer profile (FK); usamos o próprio admin que tá criando.
+  const { data, error } = await supabase
+    .from('reports')
+    .insert({
+      mechanic_id: profile.id,
+      cliente_nome: '',
+      titulo: '',
+      maquina_identificador: '',
+      horimetro: 0,
+      maquina_parada: false,
+      sumario_defeitos: '',
+      is_preventiva: false,
+      is_corretiva: true,
+    })
+    .select('id')
+    .single();
+
+  if (error) return { ok: false, error: error.message };
+  revalidatePath('/portal/admin/relatorios');
+  return { ok: true, data: { id: data.id } };
+}
+
 export async function adminDeleteReport(reportId: string): Promise<ActionResult> {
   await requireRole('admin');
   const supabase = await createClient();
