@@ -52,6 +52,9 @@ export async function createTestUser(args: {
 
 export async function wipeAll() {
   const admin = adminClient();
+  // reports antes de profiles (FK restrict em mechanic_id e approved_by);
+  // report_intervals desce em cascade com reports.
+  await admin.from('reports').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('profiles').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   await admin.from('client_companies').delete().neq('id', '00000000-0000-0000-0000-000000000000');
   const { data: users } = await admin.auth.admin.listUsers();
