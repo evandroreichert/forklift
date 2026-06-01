@@ -1,14 +1,17 @@
 import { notFound } from 'next/navigation';
 import { UsuarioForm } from '@/components/portal/admin/UsuarioForm';
 import { ResetSenhaButton } from '@/components/portal/admin/ResetSenhaButton';
+import { ExcluirUsuarioButton } from '@/components/portal/admin/ExcluirUsuarioButton';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { requireProfile } from '@/lib/auth';
 import { updateUsuarioAction } from '../actions';
 
 export default async function EditarUsuarioPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await createClient();
   const admin = createAdminClient();
+  const meuProfile = await requireProfile();
 
   const [{ data: profile }, { data: empresas }, { data: authUser }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', id).single(),
@@ -19,6 +22,7 @@ export default async function EditarUsuarioPage({ params }: { params: Promise<{ 
   if (!profile) notFound();
 
   const initial = { ...profile, email: authUser.user?.email };
+  const isSelf = meuProfile.id === id;
 
   return (
     <div className="max-w-xl space-y-6">
@@ -33,6 +37,12 @@ export default async function EditarUsuarioPage({ params }: { params: Promise<{ 
         <h2 className="text-label uppercase tracking-wider text-ink-100/60">Senha</h2>
         <ResetSenhaButton userId={id} />
       </div>
+      {!isSelf && (
+        <div className="space-y-3 border-t border-white/10 pt-6">
+          <h2 className="text-label uppercase tracking-wider text-red-300/70">Zona perigosa</h2>
+          <ExcluirUsuarioButton userId={id} userName={profile.full_name} />
+        </div>
+      )}
     </div>
   );
 }

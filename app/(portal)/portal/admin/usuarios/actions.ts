@@ -82,6 +82,46 @@ export async function updateUsuarioAction(
   redirect('/portal/admin/usuarios');
 }
 
+export type DeleteUsuarioState = { error: string | null };
+
+export async function deleteUsuarioAction(
+  userId: string,
+  _prev: DeleteUsuarioState,
+): Promise<DeleteUsuarioState> {
+  const profile = await requireRole('admin');
+
+  if (userId === profile.id) {
+    return { error: 'Você não pode excluir a própria conta.' };
+  }
+
+  const admin = createAdminClient();
+
+  // Bloqueia exclusão se o usuário tem relatórios associados (autor ou aprovador)
+  const { count: autorou } = await admin
+    .from('reports')
+    .select('*', { count: 'exact', head: true })
+    .eq('mechanic_id', userId);
+
+  const { count: aprovou } = await admin
+    .from('reports')
+    .select('*', { count: 'exact', head: true })
+    .eq('approved_by', userId);
+
+  const total = (autorou ?? 0) + (aprovou ?? 0);
+  if (total > 0) {
+    return {
+      error: `Não é possível excluir: este usuário está vinculado a ${total} relatório(s). Exclua ou reatribua os relatórios primeiro, ou desative a conta (toggle Ativo).`,
+    };
+  }
+
+  // auth.users CASCADE → profiles via FK
+  const { error } = await admin.auth.admin.deleteUser(userId);
+  if (error) return { error: translateError(error) };
+
+  revalidatePath('/portal/admin/usuarios');
+  redirect('/portal/admin/usuarios');
+}
+
 export type ResetSenhaState = { message: string | null; error: string | null };
 
 export async function resetSenhaAction(
