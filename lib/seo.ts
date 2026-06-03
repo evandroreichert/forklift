@@ -128,6 +128,8 @@ export function buildProductSchema(produto: {
   slug: string;
   categoriaPai: string;
 }) {
+  // Sem `offers` por design: venda é B2B sob consulta (sem preço público).
+  // Adicionar `offers` sem `price` quebra Product Snippet e Merchant Listing no Search Console.
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -135,13 +137,7 @@ export function buildProductSchema(produto: {
     description: produto.descricao,
     image: `${SITE_URL}${produto.imagemCapa}`,
     brand: { '@type': 'Brand', name: 'UN Forklift' },
-    offers: {
-      '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      priceCurrency: 'BRL',
-      seller: { '@type': 'Organization', name: SITE_NAME },
-      url: `${SITE_URL}/${produto.categoriaPai}/${produto.slug}`,
-    },
+    url: `${SITE_URL}/${produto.categoriaPai}/${produto.slug}`,
   };
 }
 
