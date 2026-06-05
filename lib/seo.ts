@@ -121,26 +121,6 @@ export function buildLocalBusinessSchema(cidadeNome?: string) {
   };
 }
 
-export function buildProductSchema(produto: {
-  nome: string;
-  descricao: string;
-  imagemCapa: string;
-  slug: string;
-  categoriaPai: string;
-}) {
-  // Sem `offers` por design: venda é B2B sob consulta (sem preço público).
-  // Adicionar `offers` sem `price` quebra Product Snippet e Merchant Listing no Search Console.
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: produto.nome,
-    description: produto.descricao,
-    image: `${SITE_URL}${produto.imagemCapa}`,
-    brand: { '@type': 'Brand', name: 'UN Forklift' },
-    url: `${SITE_URL}/${produto.categoriaPai}/${produto.slug}`,
-  };
-}
-
 export function buildServiceSchema() {
   return {
     '@context': 'https://schema.org',
